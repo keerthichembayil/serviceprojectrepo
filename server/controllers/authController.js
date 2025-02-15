@@ -79,6 +79,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+   
 
     if (!user) {
         return res.status(400).json({ message: 'Invalid email or password.' });
@@ -112,7 +113,9 @@ const loginUser = async (req, res) => {
 
 const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).select('-password');
+    
+    
+    const user = await User.findById(req.user._id).select('-password');
     if (!user) {
       return res.status(404).json({ message: 'User not found.' });
     }

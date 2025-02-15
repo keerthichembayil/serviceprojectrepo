@@ -7,7 +7,10 @@ const {protect,authorize}=require("../middleware/authmiddleware");
 router.post("/registerUser", registerUser);
 router.post("/registerAdmin",registerAdmin);
 router.post("/login", loginUser);
-router.get("/getProfile", protect,authorize("admin"),getProfile);
+router.get("/getProfileadmin", protect,authorize("admin"),getProfile);
+router.get("/getProfileclient", protect,authorize("client"),getProfile);
+router.get("/getProfileprovider", protect,authorize("provider"),getProfile);
+
 
 
 
