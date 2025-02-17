@@ -5,4 +5,4 @@ router.post('/checkout', protect, authorize("client"),createCheckoutSession);
 router.get('/success',paymentSuccess);                         
 router.get('/cancel',paymentCancel);                          
 
-module.exports = router;
+module.exports = router;    
