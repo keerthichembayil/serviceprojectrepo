@@ -23,11 +23,19 @@ const Login = () => {
         
   
         // Redirect based on role
-        if (res.data.user.role === "admin") {
-          navigate("/admin-dashboard");
-        } else {
+       
+         if(res.data.user.role=="client") {
           navigate("/");
+          
         }
+        else if(res.data.user.role=="provider") {
+          navigate("/providerdashboard");
+          
+        }
+        else {
+          setErrorMessage("Unauthorized access: Invalid user role.");
+        }
+
       } catch (err) {
         setError(err.response?.data?.message || "Login failed");
       }

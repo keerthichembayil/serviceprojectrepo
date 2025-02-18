@@ -41,12 +41,12 @@ const Register = () => {
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>name</Form.Label>
               <Form.Control
                 type="text"
-                name="username"
-                placeholder="Enter username"
-                value={formData.username}
+                name="name"
+                placeholder="Enter name"
+                value={formData.name}
                 onChange={handleChange}
                 required
               />

@@ -34,46 +34,7 @@ const registerUser = async (req, res) => {
     res.status(500).json({ message: "Server error",error:error.message });
   }
 };
-const  registerAdmin=async (req, res) => {
-    try {
-      const { name, email, password, phone } = req.body;
-  
-      // Check if email already exists
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Email already registered.' });
-      }
-  
-      // Hash the password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-  
-      // Create new admin user
-      const newAdmin = new User({
-        name,
-        email,
-        password: hashedPassword,
-        phone,
-        role: 'admin',
-        isVerified: true
-      });
-  
-      await newAdmin.save();
 
-      const registeredAdmin = {
-        id: newAdmin._id,
-        name: newAdmin.name,
-        email: newAdmin.email,
-        phone: newAdmin.phone,
-        role: newAdmin.role,
-        isVerified: newAdmin.isVerified
-      };
-      res.status(201).json({ message: 'Admin registered successfully.',admin: registeredAdmin });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
 
 const loginUser = async (req, res) => {
   try {
@@ -126,4 +87,4 @@ const getProfile = async (req, res) => {
 };
 
 
-  module.exports={loginUser,registerUser,registerAdmin,getProfile};
+  module.exports={loginUser,registerUser,getProfile};

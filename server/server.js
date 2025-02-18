@@ -7,12 +7,10 @@ const bodyParser = require('body-parser');
 
 const authRoutes = require('./routes/auth');
 // const serviceRoutes=require('./routes/service');
-// const adminRoutes=require('./routes/adminroute');
+const adminRoutes=require('./routes/adminroute');
 // const clientRoutes=require('./routes/clientprofile');
 // const paymentRoutes=require('./routes/paymentroute');
 // const providerRoutes=require('./routes/providerroute');
-
-
 
 
 const app = express();
@@ -20,8 +18,6 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
-
-
 
 mongoose
   .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -35,7 +31,7 @@ mongoose
   // Routes
 app.use("/api/auth", authRoutes);
 // app.use("api/service",serviceRoutes);
-// app.use("api/admin",adminRoutes);
+app.use("api/admin",adminRoutes);
 // app.use("api/client",clientRoutes);
 // app.use("api/provider",providerRoutes);
 // app.use("api/payment",paymentRoutes);
