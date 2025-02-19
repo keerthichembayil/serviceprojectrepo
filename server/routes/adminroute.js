@@ -1,12 +1,14 @@
 const express=require('express');
 const router=express.Router();
 const {protect,authorize}=require("../middleware/authmiddleware");
-const {registerAdmin,loginAdmin} = require("../controllers/adminController");
+const upload=require("../middleware/multer");
+const {registerAdmin,adminLogin, addProvider} = require("../controllers/adminController");
+console.log("enter route");
 
-//admin
-// ie to display users client and serviceprovider in admin dashboard
 router.post("/registerAdmin",registerAdmin);
-router.post("/adminlogin", loginAdmin);
+router.post("/adminlogin", adminLogin);
+router.post("/addprovider",upload.single("image"),addProvider)
+
 // router.get('/users', protect, authorize("admin"), getAllUsers);
 // router.delete('/user/:id',protect,authorize("admin"),deleteUser);
 

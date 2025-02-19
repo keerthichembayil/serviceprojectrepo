@@ -1,9 +1,14 @@
 const Admin = require("../models/Admin");
+const User= require("../models/User");
+const Serviceprovider=require("../models/ServiceProvider");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const uploadtoCloudinary = require("../utilities/imageupload");
+
+console.log("entered controller");
 const  registerAdmin=async (req, res) => {
     try {
-      const { name, email, password, phone } = req.body;
+      const { name, email, password } = req.body;
   
       // Check if email already exists
       const existingAdmin = await Admin.findOne({ email });
@@ -20,9 +25,9 @@ const  registerAdmin=async (req, res) => {
         name,
         email,
         password: hashedPassword,
-        phone,
+        
         role: 'admin',
-        isVerified: true
+      
       });
   
       await newAdmin.save();
@@ -31,9 +36,9 @@ const  registerAdmin=async (req, res) => {
         id: newAdmin._id,
         name: newAdmin.name,
         email: newAdmin.email,
-        phone: newAdmin.phone,
+        
         role: newAdmin.role,
-        isVerified: newAdmin.isVerified
+        
       };
       res.status(201).json({ message: 'Admin registered successfully.',admin: registeredAdmin });
     } catch (error) {
@@ -45,7 +50,7 @@ const  registerAdmin=async (req, res) => {
 
 
   
-  const loginAdmin = async (req, res) => {
+  const adminLogin = async (req, res) => {
     try {
       const { email, password } = req.body;
       const admin = await Admin.findOne({ email });
@@ -78,5 +83,55 @@ const  registerAdmin=async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   };
+  const addProvider=async(req,res)=>{
+    try{
+      const{userId,service,experience}=req.body;
+      const userExists = await User.findById(userId);
+      const name = userExists.name; // Populate name from User
+      if (!userExists) {
+        return res.status(400).json({ message: "User not found" });
+      }
+      if(!service||!experience){
+        return res.status(400).json({error:"all fields are required"})
+      }
+      const existingProvider = await Serviceprovider.findOne({userId});
+      if (existingProvider) {
+        return res.status(400).json({ message: 'provider already added.' });
+      }
+      //multer attach image to req.file
+      if(!req.file){
+        return res.status(400).json({error:'image not found'})
 
-  module.exports={registerAdmin,loginAdmin};
+      }
+      //i used inner try here bcoz image was geting uploaded to cloudinary but it was not waiting so used anothertry
+    try{
+     const result=await uploadtoCloudinary(req.file.path);
+     
+     
+      if (!result) {
+        return res.status(500).json({ error: "Image upload failed" });
+      }
+      
+      const newserviceprovider=new Serviceprovider({
+        userId,
+       name,service,experience,image:result
+      })
+      let savedprovider=await newserviceprovider.save();
+      if(savedprovider){
+        return res.status(200).json({message:"provider added",savedprovider});
+      }}
+      catch(cloudinaryError){
+        console.error("Cloudinary error:", cloudinaryError);
+            return res.status(500).json({ error: "Image upload to Cloudinary failed" });
+      }
+
+    }
+    catch(error)
+    {
+      console.log(error);
+      res.status(error.status||500).json({error:error.message||"internal server error"});
+    }
+
+  }
+
+  module.exports={registerAdmin,adminLogin,addProvider};

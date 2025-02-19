@@ -8,7 +8,7 @@ const Navbar2 = () => {
   return (
     <Navbar  variant="dark" expand="lg" className="px-3 navdesign">
       <Container>
-        <Navbar.Brand as={Link} to="/">ShopEase</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Service Hub</Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
