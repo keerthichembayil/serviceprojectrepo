@@ -1,10 +1,13 @@
 import React from 'react'
+import axios from "../axios";
+import Addprovider from './Addprovider'
+import Serviceproviderlist from './Serviceproviderlist'
 
 const Admindashboard = () => {
   return (
     <div>
-        this is the admin dashboard
-      
+    <Addprovider/>
+      <Serviceproviderlist/>
     </div>
   )
 }

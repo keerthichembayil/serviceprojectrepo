@@ -1,11 +1,15 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom";
 
-const Logout = () => {
-  return (
-    <div>
-      this is logout
-    </div>
-  )
-}
+const AdminLogout = () => {
+  const navigate = useNavigate();
 
-export default Logout
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove the authentication token
+    localStorage.removeItem("role"); // Remove the role
+    navigate("/adminlogin"); // Redirect to admin login page
+  };
+
+  return <button onClick={handleLogout}>Logout</button>;
+};
+
+export default AdminLogout;

@@ -3,14 +3,15 @@ const router=express.Router();
 const {protect,authorize}=require("../middleware/authmiddleware");
 const upload=require("../middleware/multer");
 const {registerAdmin,adminLogin, addProvider} = require("../controllers/adminController");
-console.log("enter route");
+console.log("entered adminroutes");
 
+
+router.post("/addProvider",protect,authorize("admin"),upload.single("image"),addProvider);
 router.post("/registerAdmin",registerAdmin);
 router.post("/adminlogin", adminLogin);
-router.post("/addprovider",upload.single("image"),addProvider)
 
-// router.get('/users', protect, authorize("admin"), getAllUsers);
-// router.delete('/user/:id',protect,authorize("admin"),deleteUser);
+
+
 
 // router.get('/providers/pending',protect,authorize("admin"),getpending)//to get the pending service provider
 

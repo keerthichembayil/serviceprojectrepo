@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const uploadtoCloudinary = require("../utilities/imageupload");
 
-console.log("entered controller");
 const  registerAdmin=async (req, res) => {
     try {
       const { name, email, password } = req.body;
@@ -83,14 +82,22 @@ const  registerAdmin=async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   };
+
+
   const addProvider=async(req,res)=>{
     try{
+     
+      
+   
       const{userId,service,experience}=req.body;
+      
       const userExists = await User.findById(userId);
-      const name = userExists.name; // Populate name from User
+      console.log("userExists",userExists);
+      
       if (!userExists) {
         return res.status(400).json({ message: "User not found" });
       }
+      const name = userExists.name; // Populate name from User
       if(!service||!experience){
         return res.status(400).json({error:"all fields are required"})
       }
@@ -106,6 +113,7 @@ const  registerAdmin=async (req, res) => {
       //i used inner try here bcoz image was geting uploaded to cloudinary but it was not waiting so used anothertry
     try{
      const result=await uploadtoCloudinary(req.file.path);
+     console.log(result);
      
      
       if (!result) {
@@ -126,11 +134,16 @@ const  registerAdmin=async (req, res) => {
       }
 
     }
-    catch(error)
+ 
+   catch(error)
     {
       console.log(error);
       res.status(error.status||500).json({error:error.message||"internal server error"});
     }
+
+
+
+    
 
   }
 

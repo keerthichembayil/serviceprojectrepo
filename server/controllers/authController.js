@@ -55,7 +55,8 @@ const loginUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
     // userId: Stores the unique identifier of the user (_id from the user object).
     // role: Stores the user's role (e.g., admin, customer). This is useful for authorization.
-    // This payload is encoded into the token and can be decoded later to identify the user and their permissions.
+    // This payload is encoded into the token and can be decoded later to identify the user and their permissions.ie in
+    // authmiddleware
     res.status(200).json({
         message: 'Login successful.',
         token,

@@ -4,10 +4,10 @@ import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import '../css/Navbar.css'
 
 
-const Navbar2 = () => {
+const AdminNavbar = () => {
   
   return (
-    <Navbar  variant="dark" expand="lg" className="px-3 navdesign">
+    <Navbar  variant="dark" expand="lg" className="px-3 navdesignadmin">
       <Container>
         <Navbar.Brand as={Link} to="/">Service Hub</Navbar.Brand>
         
@@ -19,7 +19,7 @@ const Navbar2 = () => {
          
 
     
-    <Nav.Link as={Link} to="/login">Login</Nav.Link>
+    <Nav.Link as={Link} to="/adminlogin">Login</Nav.Link>
     <Nav.Link as={Link} to="/register">Register</Nav.Link>
         </Nav>
         </Navbar.Collapse>
@@ -28,4 +28,4 @@ const Navbar2 = () => {
   );
 };
 
-export default Navbar2;
+export default AdminNavbar;

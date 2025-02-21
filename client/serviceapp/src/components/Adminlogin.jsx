@@ -15,7 +15,7 @@ const AdminLogin = () => {
         password,
       });
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("admintoken", response.data.token);
         localStorage.setItem("role", "admin");
         navigate("/admindashboard");
       } else {

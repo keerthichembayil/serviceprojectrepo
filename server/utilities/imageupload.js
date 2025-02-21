@@ -4,6 +4,7 @@ const cloudinary = require("../config/cloudinaryconfig");
 
 const uploadToCloudinary = async (filepath) => {
   const normalizedPath = filepath.replace(/\\/g, "/"); 
+ 
   
   if (!filepath || typeof filepath !== 'string') {
     throw new Error("Filepath is required and must be a string.");
