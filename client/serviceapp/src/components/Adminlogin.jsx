@@ -1,28 +1,27 @@
 import React, { useState } from "react";
-import axios from "../axios";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { adminLogin } from "../redux/slices/adminauthSlice";
+
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.adminAuth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/admin/adminlogin", {
-        email,
-        password,
-      });
-      if (response.data.token) {
-        localStorage.setItem("admintoken", response.data.token);
-        localStorage.setItem("role", "admin");
-        navigate("/admindashboard");
-      } else {
-        alert("Invalid credentials");
-      }
+      const result = await dispatch(adminLogin({ email, password })).unwrap();
+      console.log(result);
+     
+      navigate("/admindashboard");
     } catch (error) {
-      alert("Login failed");
+      console.error("Login error:", error);
+      alert(error.message || "Login failed");
     }
   };
 
@@ -44,8 +43,9 @@ const AdminLogin = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+       <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
       </form>
+      {error && <p className="error">{error.message || "Login failed"}</p>}
     </div>
   );
 };

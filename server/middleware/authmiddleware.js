@@ -12,7 +12,8 @@ const protect = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
      
         req.user = await User.findById(decoded.userId).select("-password");
-       
+
+       //attching user object with userid decoded from token ie (userId set while logging)
       
 
         next();
@@ -46,3 +47,5 @@ const protect = async (req, res, next) => {
 module.exports={protect,authorize};
 
 // Token Verification Doesn't Guarantee req.user: The presence of a token only means that a token was sent in the request. The token might be invalid or expired, or the user associated with that token might no longer exist in the database (e.g., the user was deleted).
+//because ofthat req.user is checked here we can decode userrole in above code and check for authorization
+//but not done in that manner

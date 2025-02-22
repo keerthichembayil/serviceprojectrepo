@@ -1,34 +1,30 @@
 import { useState } from "react";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Alert, Card } from "react-bootstrap";
 const Login = () => {
-    const [formData, setFormData] = useState({ email: "", password: "" });
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.auth);
   
-    const handleChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const res = await axios.post("auth/login", formData);
-        localStorage.setItem("token", res.data.token);
-  
-        
-        localStorage.setItem("user", JSON.stringify(res.data.user));
-        
-        
-  
+        const result = await dispatch(userLogin({ email, password })).unwrap();
+              console.log(result);
+             
+    
         // Redirect based on role
        
-         if(res.data.user.role=="client") {
+         if(result.data.user.role=="client") {
           navigate("/");
           
         }
-        else if(res.data.user.role=="provider") {
+        else if(result.data.user.role=="provider") {
           navigate("/providerdashboard");
           
         }
@@ -36,46 +32,37 @@ const Login = () => {
           setErrorMessage("Unauthorized access: Invalid user role.");
         }
 
-      } catch (err) {
-        setError(err.response?.data?.message || "Login failed");
+      } catch (error) {
+        console.error("Login error:", error);
+        alert(error.message || "Login failed");
       }
     };
   
     return (
       <div className="loginpage">
-       <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <Card style={{ width: "25rem", padding: "20px" }}>
+       {/* <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <Card style={{ width: "25rem", padding: "20px" }}> */}
           <h2 className="text-center">Login</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit" className="w-100">
-              Login
-            </Button>
-          </Form>
-        </Card>
-      </Container>
+          <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+       <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
+      </form>
+          {error && <p className="error">{error.message || "Login failed"}</p>}
+        {/* </Card>
+      </Container> */}
       </div>
     );
   };

@@ -65,7 +65,14 @@ const getClientRequests = async (req, res) => {
 // Get all requests for a provider
 const getProviderRequests = async (req, res) => {
     try {
-        const providerId = req.user.id;
+        const useridofprovider = req.user.id;
+        const provider=await Serviceprovider.findOne({userId:useridofprovider});
+        console.log(provider);
+        if (!provider) {
+            return res.status(404).json({ error: "Service provider not found" });
+        }
+        const  providerId=provider._id;//get providerid from that provider object
+
        
         //here clientid refer to user collection in schema so pouplate go to  user collection take data and dispaly
         //means provider when enter we get providerid using that provider id fetch client id from
