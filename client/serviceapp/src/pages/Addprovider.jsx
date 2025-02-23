@@ -1,55 +1,38 @@
 import { useState } from "react";
-import axios from "../axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addProvider} from "../redux/slices/providerSlice";
 
 const AddProvider = () => {
   const [userId, setUserId] = useState("");
   const [service, setService] = useState("");
   const [experience, setExperience] = useState("");
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState("");
+  
+  const dispatch = useDispatch();
+  const { loading, success, error, message } = useSelector((state) => state.provider);
+//   const providerState = useSelector((state) => state.provider || {});
+// const { loading = false, success, error, message } = providerState;
+
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]); // Capture the selected file
+    console.log(e.target.files[0]); // Debugging
+    setImage(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!userId || !service || !experience || !image) {
-      setMessage("All fields are required");
       return;
     }
-
-    const formData = new FormData();
-    formData.append("userId", userId);
-    formData.append("service", service);
-    formData.append("experience", experience);
-    formData.append("image", image);
-
-    try {
-      const token = localStorage.getItem("admintoken"); 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const response = await axios.post(
-        "admin/addProvider", // Update this URL as needed
-        formData,
-        config 
-      );
-
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage(error.response?.data?.error || "Something went wrong");
-    }
+    
+    dispatch(addProvider({ userId, service, experience, image }));
   };
 
   return (
     <div className="max-w-md mx-auto p-4 border rounded shadow-lg">
       <h2 className="text-xl font-bold mb-4">Add Service Provider</h2>
-      {message && <p className="text-red-500">{message}</p>}
+      {message && <p className={success ? "text-green-500" : "text-red-500"}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -90,10 +73,15 @@ const AddProvider = () => {
           <input type="file" className="w-full" onChange={handleImageChange} required />
         </div>
 
-        <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-          Add Provider
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white p-2 rounded"
+          disabled={loading}
+        >
+          {loading ? "Adding..." : "Add Provider"}
         </button>
       </form>
+      {error && <p className="text-red-500">{error}</p>}
     </div>
   );
 };

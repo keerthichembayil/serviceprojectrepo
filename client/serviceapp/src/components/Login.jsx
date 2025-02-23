@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../redux/slices/authSlice";
 import { Form, Button, Container, Alert, Card } from "react-bootstrap";
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,11 +21,11 @@ const Login = () => {
     
         // Redirect based on role
        
-         if(result.data.user.role=="client") {
+         if(result.user.role==="client") {
           navigate("/");
           
         }
-        else if(result.data.user.role=="provider") {
+        else if(result.user.role==="provider") {
           navigate("/providerdashboard");
           
         }

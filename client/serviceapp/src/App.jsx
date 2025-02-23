@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
-import axios from "./axios";
+import { useSelector} from "react-redux";
 import Login from './components/Login';
 import Navbar2 from "./components/Navbar";
 import AdminNavbar from "./components/AdminNavbar";
@@ -13,16 +13,17 @@ import Providerdashboard from "./pages/Providerdashboard";
 import Clientdashboard  from "./pages/Clientdashboard";
 import AdminLogin from "./components/Adminlogin";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Navigate } from "react-router-dom";
 
 
 function App() {
-  const [userRole, setUserRole] = useState(null);
+  // Get user role for client & provider
+  const userRole = useSelector((state) => state.auth.role); 
 
-  useEffect(() => {
-    // Fetch the user role from localStorage or API
-    const role = localStorage.getItem("userRole"); // Assuming role is stored as "admin", "client", "provider"
-    setUserRole(role);
-  }, []);
+  // Get admin authentication state separately
+  const isAdmin = useSelector((state) => state.adminAuth.role === "admin"); // Check admin role
+  console.log(isAdmin);
+
 
  
 
@@ -36,12 +37,27 @@ function App() {
   <Route path="/login" element={<Login/>} />
   <Route path="/register" element={<Register/>} />
   <Route path="/adminlogin" element={<AdminLogin/>} />
-  <Route path="/admindashboard" element={<><AdminNavbar/><Admindashboard/></>} />
-{/* //give ProtectedRoute to admindashboard seperately */}
+ 
+        {/* Admin Dashboard Route */}
+        <Route
+          path="/admindashboard"
+          element={
+            isAdmin ? (
+              <>
+                <AdminNavbar />
+                <Admindashboard />
+              </>
+            ) : (
+              <Navigate to="/adminlogin" />
+            )
+          }
+        />
+
+
 
   
   <Route path="/clientdashboard" element={<ProtectedRoute requiredRole="client"><Clientdashboard /></ProtectedRoute>} />
-  <Route path="/providerdashboard" element={<ProtectedRoute requiredRole="provider"><Providerdashboard /></ProtectedRoute>} />
+  <Route path="/providerdashboard" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerdashboard /></>}</ProtectedRoute>} />
 
 
 
