@@ -7,13 +7,14 @@ const bodyParser = require('body-parser');
 
 
 const authRoutes = require('./routes/auth');
-// const serviceRoutes=require('./routes/service');
-const adminRoutes=require('./routes/adminroute');
-const serviceRoutes=require('./routes/servicerequest');
 
-// const clientRoutes=require('./routes/clientprofile');
-// const paymentRoutes=require('./routes/paymentroute');
-// const providerRoutes=require('./routes/providerroute');
+const adminRoutes=require('./routes/adminroute');
+// const serviceRoutes=require('./routes/servicerequest');
+
+const clientRoutes=require('./routes/clientroutes');
+
+const providerRoutes=require('./routes/providerroute');
+
 
 
 const app = express();
@@ -41,8 +42,9 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/admin",adminRoutes);
 
-app.use("/api/service",serviceRoutes);
-
+// app.use("/api/service",serviceRoutes);
+app.use("/api/provider",providerRoutes);
+app.use("/api/client",clientRoutes);
 
 
 const PORT = process.env.PORT || 5000;

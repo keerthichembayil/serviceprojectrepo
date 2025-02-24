@@ -1,9 +1,8 @@
 const Admin = require("../models/Admin");
-const User= require("../models/User");
+
 const Serviceprovider=require("../models/ServiceProvider");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const uploadtoCloudinary = require("../utilities/imageupload");
 
 const  registerAdmin=async (req, res) => {
     try {
@@ -84,67 +83,41 @@ const  registerAdmin=async (req, res) => {
   };
 
 
-  const addProvider=async(req,res)=>{
-    try{
-     
-      
-   
-      const{userId,service,experience}=req.body;
-      
-      const userExists = await User.findById(userId);
-      console.log("userExists",userExists);
-      
-      if (!userExists) {
-        return res.status(400).json({ message: "User not found" });
-      }
-      const name = userExists.name; // Populate name from User
-      if(!service||!experience){
-        return res.status(400).json({error:"all fields are required"})
-      }
-      const existingProvider = await Serviceprovider.findOne({userId});
-      if (existingProvider) {
-        return res.status(400).json({ message: 'provider already added.' });
-      }
-      //multer attach image to req.file
-      if(!req.file){
-        return res.status(400).json({error:'image not found'})
+  
 
+  const listProviders = async (req, res) => {
+    try {
+      const providers = await Serviceprovider.find()
+      // Mongoose replaces userId in the serviceprovidertable
+      //  with the actual User document, but only includes the email field:
+        .populate('userId', 'email') // Populate email from User model
+        .select('name service image userId'); // Select required fields
+        console.log(providers);
+  
+      if (!providers.length) {
+        return res.status(404).json({ message: 'No service providers found' });
       }
-      //i used inner try here bcoz image was geting uploaded to cloudinary but it was not waiting so used anothertry
-    try{
-     const result=await uploadtoCloudinary(req.file.path);
-     console.log(result);
-     
-     
-      if (!result) {
-        return res.status(500).json({ error: "Image upload failed" });
-      }
-      
-      const newserviceprovider=new Serviceprovider({
-        userId,
-       name,service,experience,image:result
-      })
-      let savedprovider=await newserviceprovider.save();
-      if(savedprovider){
-        return res.status(200).json({message:"provider added",savedprovider});
-      }}
-      catch(cloudinaryError){
-        console.error("Cloudinary error:", cloudinaryError);
-            return res.status(500).json({ error: "Image upload to Cloudinary failed" });
-      }
-
+  
+      res.status(200).json(providers);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
     }
- 
-   catch(error)
-    {
-      console.log(error);
-      res.status(error.status||500).json({error:error.message||"internal server error"});
-    }
+  };
+  
 
 
 
-    
 
-  }
 
-  module.exports={registerAdmin,adminLogin,addProvider};
+
+
+
+
+
+
+
+
+
+
+  module.exports={registerAdmin,adminLogin,listProviders};

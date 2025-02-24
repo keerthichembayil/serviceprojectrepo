@@ -1,5 +1,5 @@
 const jwt=require('jsonwebtoken');
-const User=require("../models/User");
+const Admin=require("../models/Admin");
 const protect = async (req, res, next) => {
   
     let token;
@@ -8,12 +8,12 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
        
       try {
-        console.log("entered user middleware");
+        console.log("entered adminmiddleware");
         
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
      
-        req.user = await User.findById(decoded.userId).select("-password");
-        console.log(req.user);
+        req.admin = await Admin.findById(decoded.adminId).select("-password");
+        console.log("req.admin",req.admin);
 
        //attching user object with userid decoded from token ie (userId set while logging)
       
@@ -32,8 +32,8 @@ const protect = async (req, res, next) => {
 
   const authorize=(role)=>{
     return(req,res,next)=>{
-        if(req.user&&req.user.role!==role){
-            return res.status(403).json({message:"acess denied role is not correct"});
+        if(req.admin&&req.admin.role!==role){
+            return res.status(403).json({message:"acess denied role is not admin"});
         }
         next();
     }

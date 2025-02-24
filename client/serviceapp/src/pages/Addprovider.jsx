@@ -1,17 +1,29 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProvider} from "../redux/slices/providerSlice";
+import { addProvider,clearMessage} from "../redux/slices/providerSlice";
 
 const AddProvider = () => {
-  const [userId, setUserId] = useState("");
+ 
   const [service, setService] = useState("");
   const [experience, setExperience] = useState("");
   const [image, setImage] = useState(null);
   
   const dispatch = useDispatch();
+  // const authState = useSelector((state) => state.auth); // Only get 'auth' slice
+
+  // useEffect(() => {
+  //   console.log("Auth State:", authState);
+  // }, [authState]);
+  const userId = useSelector((state) => state.auth.user?.id);
+  useEffect(() => {
+    console.log("UserId updated:", userId);
+  }, [userId]);
   const { loading, success, error, message } = useSelector((state) => state.provider);
-//   const providerState = useSelector((state) => state.provider || {});
-// const { loading = false, success, error, message } = providerState;
+
+  useEffect(() => {
+    // Clear message on component mount
+    dispatch(clearMessage());
+  }, [dispatch]);
 
 
   const handleImageChange = (e) => {
@@ -22,29 +34,31 @@ const AddProvider = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!userId || !service || !experience || !image) {
+    if ( !service || !experience || !image) {
+      alert("All fields are required!");
       return;
     }
+
+     // Create FormData
+  const formData = new FormData();
+  formData.append("userId", userId);
+ 
+  formData.append("service", service);
+  formData.append("experience", experience);
+  formData.append("image", image); // Append image file
+
+  console.log("FormData before dispatch:", Object.fromEntries(formData.entries()));
     
-    dispatch(addProvider({ userId, service, experience, image }));
+  dispatch(addProvider(formData));
   };
 
   return (
     <div className="max-w-md mx-auto p-4 border rounded shadow-lg">
-      <h2 className="text-xl font-bold mb-4">Add Service Provider</h2>
+      <h2 className="text-xl font-bold mb-4">Add Service Details</h2>
       {message && <p className={success ? "text-green-500" : "text-red-500"}>{message}</p>}
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="block font-semibold">User ID</label>
-          <input
-            type="text"
-            className="w-full p-2 border rounded"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            required
-          />
-        </div>
+        
 
         <div className="mb-3">
           <label className="block font-semibold">Service</label>

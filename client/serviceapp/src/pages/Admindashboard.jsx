@@ -1,13 +1,16 @@
 import React from 'react'
-import axios from "../axios";
+
 import Addprovider from './Addprovider'
 import Serviceproviderlist from './Serviceproviderlist'
+import { Link } from 'react-router-dom';
 
 const Admindashboard = () => {
   return (
     <div>
-    <Addprovider/>
+  
       <Serviceproviderlist/>
+
+      
     </div>
   )
 }

@@ -52,6 +52,7 @@ const getClientRequests = async (req, res) => {
     try {
         const clientId = req.user.id;
         // The code fetches the name, service, and image from the Provider collection, as give ref in model
+        //we could populate only because we gave refernce in model
         const requests = await ServiceRequest.find({ clientId }).populate("providerId", "name service image");
         //will fetch full details from  servicerequest model and in that insteead of providerid will replace
         // with name,service,image from Serviceprovider model

@@ -1,9 +1,10 @@
 import React from 'react'
+import AddProvider from './Addprovider'
 
 const Providerdashboard = () => {
   return (
     <div>
-      providerdashbaord
+      <AddProvider/>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import axios from "../../axios";
 
 // Async thunk to fetch all service providers
 export const fetchProviders = createAsyncThunk(
-  "providers/fetchAll",
+  "admin/listproviders",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("admintoken");
@@ -11,7 +11,7 @@ export const fetchProviders = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      const response = await axios.get("admin/providers", config);
+      const response = await axios.get("admin/listproviders", config);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || "Something went wrong");
@@ -25,14 +25,16 @@ const providerListSlice = createSlice({
     providers: [],
     loading: false,
     error: null,
-    message: "",
+    // message: "",
   },
-  reducers: {
-    clearMessage: (state) => {
-      state.message = "";
-      state.error = null;
-    },
-  },
+  reducers: {},
+  // reducers: {
+  //   clearMessage: (state) => {  this is used if we need to add sucess mesage when provider fetched
+  //and clear that message after some time using this reducer 
+  //     state.message = "";
+  //     state.error = null;
+  //   },
+  // },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProviders.pending, (state) => {
@@ -41,7 +43,7 @@ const providerListSlice = createSlice({
       })
       .addCase(fetchProviders.fulfilled, (state, action) => {
         state.loading = false;
-        state.providers = action.payload.providers;
+        state.providers = action.payload || [];
       })
       .addCase(fetchProviders.rejected, (state, action) => {
         state.loading = false;

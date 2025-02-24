@@ -50,4 +50,11 @@ const AdminLogin = () => {
   );
 };
 
+
+// The extra reducer in Redux is responsible for managing state (loading, error, and user).
+// The loading state is updated when the login request starts (pending).
+// The error state is updated if the request fails (rejected).
+// The UI component accesses these states via useSelector. that state is in the button and p error
+
+
 export default AdminLogin;

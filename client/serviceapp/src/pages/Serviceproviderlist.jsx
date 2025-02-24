@@ -9,9 +9,9 @@ const ProviderList = () => {
   useEffect(() => {
     dispatch(fetchProviders());
 
-    return () => {
-      dispatch(clearMessage()); // Clears error message when leaving the page
-    };
+    // return () => {
+    //   dispatch(clearMessage()); // Clears error message when leaving the page
+    // };
   }, [dispatch]);
 
   if (loading) return <p>Loading providers...</p>;
@@ -22,9 +22,15 @@ const ProviderList = () => {
       <h2>Service Providers</h2>
       <ul>
         {providers.map((provider) => (
-          <li key={provider._id}>
-            <p>Name: {provider.name}</p>
-            <p>Service: {provider.service}</p>
+          <li key={provider._id} style={{ border: "1px solid #ddd", padding: "10px", marginBottom: "10px", borderRadius: "5px" }}>
+            <img 
+              src={provider.image} 
+              alt={provider.name} 
+              style={{ width: "100px", height: "100px", borderRadius: "50%", objectFit: "cover" }} 
+            />
+            <p><strong>Name:</strong> {provider.name}</p>
+            <p><strong>Service:</strong> {provider.service}</p>
+            <p><strong>Email:</strong> {provider.userId?.email}</p>
           </li>
         ))}
       </ul>

@@ -1,12 +1,13 @@
 const express=require('express');
 const router=express.Router();
-const {protect,authorize}=require("../middleware/authmiddleware");
-const upload=require("../middleware/multer");
-const {registerAdmin,adminLogin, addProvider} = require("../controllers/adminController");
-console.log("entered adminroutes");
+const {protect,authorize}=require("../middleware/adminmiddleware");
+
+const {registerAdmin,adminLogin,listProviders} = require("../controllers/adminController");
 
 
-router.post("/addProvider",protect,authorize("admin"),upload.single("image"),addProvider);
+
+router.get("/listproviders",protect,authorize("admin"),listProviders);
+//here we call admin but it is checking if it is admin by decoding token in authmiddlware
 router.post("/registerAdmin",registerAdmin);
 router.post("/adminlogin", adminLogin);
 

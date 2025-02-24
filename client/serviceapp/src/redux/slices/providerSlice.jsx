@@ -3,16 +3,12 @@ import axios from "../../axios";
 
 // Async thunk to add a service provider
 export const addProvider = createAsyncThunk(
-  "admin/addProvider",
-  async ({ userId, service, experience, image }, { rejectWithValue }) => {
+  "provider/addingProvider",
+  async (formData, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("admintoken");
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("service", service);
-      formData.append("experience", experience);
-      formData.append("image", image);
-      
+      const token = localStorage.getItem("token");
+    console.log("entered provierslice",formData);
+     
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -20,10 +16,11 @@ export const addProvider = createAsyncThunk(
         },
       };
       
-      const response = await axios.post("admin/addProvider", formData, config);
+      const response = await axios.post("provider/addProvider", formData, config);
+      console.log("response is",response);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.error || "Something went wrong");
+      return rejectWithValue(error.response?.data || "An unexpected error occurred");
     }
   }
 );
