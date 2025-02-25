@@ -7,7 +7,7 @@
       //  with the actual User document, but only includes the email field:
         .populate('userId', 'email') // Populate email from User model
         .select('name service image userId'); // Select required fields
-        console.log(providers);
+       
   
       if (!providers.length) {
         return res.status(404).json({ message: 'No service providers found' });

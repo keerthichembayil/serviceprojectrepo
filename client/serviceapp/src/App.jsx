@@ -56,7 +56,7 @@ function App() {
 
 
 
-  <Route path="/clientdashboard" element={<ProtectedRoute requiredRole="client"><Clientdashboard /></ProtectedRoute>} />
+  <Route path="/clientdashboard" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Clientdashboard /></>}</ProtectedRoute>} />
   <Route path="/providerdashboard" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerdashboard/></>}</ProtectedRoute>} />
 
 

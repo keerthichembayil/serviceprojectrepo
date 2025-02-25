@@ -35,6 +35,7 @@ const protect = async (req, res, next) => {
         if(req.user&&req.user.role!==role){
             return res.status(403).json({message:"acess denied role is not correct"});
         }
+        console.log("authorized as client");
         next();
     }
 }

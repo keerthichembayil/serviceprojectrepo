@@ -1,15 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClientProviders } from "../redux/slices/clientProviderSlice"; // New slice
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigation
   const { providers, loading, error } = useSelector((state) => state.clientProviderList);
-  const token = useSelector((state) => state.auth.token); // Check if user is logged in
+  console.log(providers);
+  //this is holding the providers fethced from backend
+  // const token = useSelector((state) => state.auth.token); // Check if user is logged in
+  const { token, user } = useSelector((state) => state.auth); 
 
   useEffect(() => {
     dispatch(fetchClientProviders());
   }, [dispatch]);
+  //ie fisrt  time rendering itself will fetch clientproviders
 
 
    // Handle "Request Service" button click
@@ -19,13 +25,32 @@ const Home = () => {
       navigate("/login"); // Redirect to login page
       return;
     }
+    if (user?.role === "provider") {
+      alert("Service providers cannot request services!");
+      return;
+    }
     console.log("Service Requested for Provider ID:", providerId);
     // Make API request to request service (if needed)
+  };
+
+
+  // Navigate to Client Dashboard
+  const handleViewProfile = () => {
+    navigate("/clientdashboard"); // Redirect to Client Dashboard
   };
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Available Service Providers</h2>
+      {/* Show View Profile Button only for Clients */}
+      {token && user?.role === "client" && (
+        <button
+          onClick={handleViewProfile}
+          className="mb-4 bg-green-500 text-white px-4 py-2 rounded"
+        >
+          View Profile
+        </button>
+      )}
       {loading && <p>Loading providers...</p>}
       {error && <p className="text-red-500">{error}</p>}
 

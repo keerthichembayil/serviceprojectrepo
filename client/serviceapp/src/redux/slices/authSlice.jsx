@@ -17,7 +17,8 @@ export const userLogin = createAsyncThunk("auth/login", async ({ email, password
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    // user:  localStorage.getItem("user") || null,
+    //i m using local storag ebcoz i am storing while logging so i can fetch it like this initiazliztion state
+    //if not local storage set during login how to fetch so call in other componets the state
     user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null, 
     token: localStorage.getItem("token") || null,
     role: localStorage.getItem("role") || null,
@@ -50,8 +51,8 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.role =  action.payload.user.role;
         state.error = null;
-        localStorage.setItem("token", action.payload.token);
-        localStorage.setItem("role", action.payload.user.role); // Role from backend
+        localStorage.setItem("token", action.payload.token);//setted in local storage to preserce do not lost aftr refresh
+        localStorage.setItem("role", action.payload.user.role); // Role from backend 
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(userLogin.rejected, (state, action) => {

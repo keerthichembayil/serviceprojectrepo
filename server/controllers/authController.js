@@ -5,7 +5,9 @@ const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
   try {
+    
     const { name, email, password, phone, role, address } = req.body;
+    
      // Check if role is valid (only client or provider can be registered via frontend)
      if (role !== 'client' && role !== 'provider') {
         return res.status(400).json({ message: 'Invalid role selection.' });
@@ -16,13 +18,25 @@ const registerUser = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+    let addressToSave = {};  // Initialize an empty object
+    
+      // Check if address exists and has properties
+      if (address && typeof address === 'object' && Object.keys(address).length > 0) {
+        addressToSave = {
+          street: address.street || "",
+          city: address.city || "",
+          state: address.state || ""
+         
+        };
+      }
+      
     const newUser = new User({
         name,
         email,
         password: hashedPassword,
         phone,
         role,
-        address
+        address:addressToSave
       });
 
     await newUser.save();

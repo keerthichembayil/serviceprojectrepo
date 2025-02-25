@@ -68,7 +68,7 @@ const getProviderRequests = async (req, res) => {
     try {
         const useridofprovider = req.user.id;
         const provider=await Serviceprovider.findOne({userId:useridofprovider});
-        console.log(provider);
+       
         if (!provider) {
             return res.status(404).json({ error: "Service provider not found" });
         }

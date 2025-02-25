@@ -9,10 +9,10 @@ const addProvider=async(req,res)=>{
       
    
       const{userId,service,experience}=req.body;
-      console.log("reqbody",req.body);
+      
       
       const userExists = await User.findById(userId);
-      console.log("userExists",userExists);
+     
       
       if (!userExists) {
         return res.status(400).json({ message: "User not found" });
@@ -33,7 +33,7 @@ const addProvider=async(req,res)=>{
       //i used inner try here bcoz image was geting uploaded to cloudinary but it was not waiting so used anothertry
     try{
      const result=await uploadtoCloudinary(req.file.path);
-     console.log(result);
+  
      
      
       if (!result) {
