@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Admindashboard from "./pages/Admindashboard"
 import Providerdashboard from "./pages/Providerdashboard";
 import Clientdashboard  from "./pages/Clientdashboard";
+import ProviderDetails from "./pages/Providerdetails";
+import ClientProfile from "./pages/ClientProfile";
 import AdminLogin from "./components/Adminlogin";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navigate } from "react-router-dom";
@@ -34,8 +36,8 @@ function App() {
 
   <Routes>
   <Route path="/" element={<><Navbar2/><Home/></>} />
-  <Route path="/login" element={<Login/>} />
-  <Route path="/register" element={<Register/>} />
+  <Route path="/login" element={<><Navbar2/><Login/></>} />
+  <Route path="/register" element={<><Navbar2/><Register/></>} />
   <Route path="/adminlogin" element={<AdminLogin/>} />
  
         {/* Admin Dashboard Route */}
@@ -58,6 +60,10 @@ function App() {
 
   <Route path="/clientdashboard" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Clientdashboard /></>}</ProtectedRoute>} />
   <Route path="/providerdashboard" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerdashboard/></>}</ProtectedRoute>} />
+  <Route path="/clientprofile" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ClientProfile/></>}</ProtectedRoute>} />
+  <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
+
+
 
 
 

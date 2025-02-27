@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 
 const adminRoutes=require('./routes/adminroute');
-// const serviceRoutes=require('./routes/servicerequest');
+const serviceRoutes=require('./routes/servicerequest');
 
 const clientRoutes=require('./routes/clientroutes');
 
@@ -42,7 +42,7 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/admin",adminRoutes);
 
-// app.use("/api/service",serviceRoutes);
+app.use("/api/service",serviceRoutes);
 app.use("/api/provider",providerRoutes);
 app.use("/api/client",clientRoutes);
 

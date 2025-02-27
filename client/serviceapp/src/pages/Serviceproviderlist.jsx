@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProviders, clearMessage } from "../redux/slices/providerListSlice";
+import { fetchProviders} from "../redux/slices/providerListSlice";
 
 const ProviderList = () => {
   const dispatch = useDispatch();

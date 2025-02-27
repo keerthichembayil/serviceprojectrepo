@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../axios";
 
 // Async action to fetch user profile
 export const fetchUserProfile = createAsyncThunk(
@@ -9,13 +9,14 @@ export const fetchUserProfile = createAsyncThunk(
       const token = getState().auth.token; // Get token from Redux store
       //No need to import authSlice – Redux slices are already part of the global store.
 //Keeps your thunk function modular – It can access Redux state without needing external imports.
-        console.log("entered provierslice",formData);
+        console.log("entered uerprofileslice");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in headers
         },
       };
       const response = await axios.get("client/getmyprofile", config);
+      console.log(response);
       return response.data; // User details from backend
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to fetch user profile");
@@ -26,12 +27,12 @@ export const fetchUserProfile = createAsyncThunk(
 
 // Update user profile
 export const updateUserProfile = createAsyncThunk(
-  "userProfile/updateUserProfile",
+  "userProfile/updatemyprofile",
   async (updatedData, { rejectWithValue, getState }) => {
     try {
       const token = getState().auth.token;
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      const response = await axios.put("client/updateprofile", updatedData, config);
+      const response = await axios.put("client/updatemyprofile", updatedData, config);
       return response.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to update profile");
@@ -47,7 +48,7 @@ export const deleteUserProfile = createAsyncThunk(
     try {
       const token = getState().auth.token;
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.delete("client/deleteprofile", config);
+      await axios.delete("client/deletemyprofile", config);
       return null; // Return null to reset user state
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to delete profile");
@@ -58,7 +59,7 @@ export const deleteUserProfile = createAsyncThunk(
 const userProfileSlice = createSlice({
   name: "userProfile",
   initialState: {
-    user: null,
+    user: {},
     loading: false,
     error: null,
   },

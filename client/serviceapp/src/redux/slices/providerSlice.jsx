@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-// Async thunk to add a service provider
+// Async thunk to add servicer details by provider
 export const addProvider = createAsyncThunk(
   "provider/addingProvider",
   async (formData, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem("token");
-    console.log("entered provierslice",formData);
+      const token = getState().auth.token; // Get token from Redux store
+      //when we implement here using token actually when we go to home and try to returned to prvider dashbaord
+      //not returning ie state not mainted properly so taken auth.token
+
+      
+   
      
       const config = {
         headers: {

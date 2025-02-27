@@ -9,14 +9,10 @@ const requestService = async (req, res) => {
     try {
         console.log("inside request service");
         const { providerId, additionalNotes } = req.body;
-        const clientId = req.user.id; // Assuming authentication middleware adds user to req
+        const clientId = req.user.id; // authentication middleware adds user to req
 
-        // Check if client exists
-        const clientExists = await User.findById(clientId);
-        if (!clientExists) {
-            return res.status(400).json({ error: "Client not found" });
-        }
-
+       
+        // extracting the clientId from the authenticated user (req.user.id), you do not need to pass it explicitly from the frontend.
         // Check if provider exists
         const providerExists = await Serviceprovider.findById(providerId);
         if (!providerExists) {

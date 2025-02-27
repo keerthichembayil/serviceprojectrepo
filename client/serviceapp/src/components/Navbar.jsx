@@ -19,25 +19,34 @@ const Navbar2 = () => {
   return (
     <Navbar  variant="dark" expand="lg" className="px-3 navdesign">
       <Container>
-        <Navbar.Brand as={Link} to="/">Service Hub</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" className="text-danger">Service Hub</Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
        
           <Nav className="ms-auto">
-          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/" className="text-danger">Home</Nav.Link>
          
 
     
           {user ? (
               <>
-                <span className="nav-text">Welcome, {user.name}!</span>
-                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                <span className="nav-text text-danger">Welcome, {user.name}!</span>
+                <Nav.Link onClick={handleLogout} className="text-danger">Logout</Nav.Link>
+                {/* Conditional rendering for Dashboard based on role */}
+                {user.role === "client" ? (
+                  <Nav.Link as={Link} to="/clientdashboard" className="text-danger">Dashboard</Nav.Link>
+                ) : user.role === "provider" ? (
+                  <Nav.Link as={Link} to="/providerdashboard" className="text-danger">Dashboard</Nav.Link>
+                ) : null}
+
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/login">Login</Nav.Link>
-                <Nav.Link as={Link} to="/register">Register</Nav.Link>
+                 <Nav.Link as={Link} to="/login" className="text-danger">About</Nav.Link>
+                 <Nav.Link as={Link} to="/login" className="text-danger">Contact</Nav.Link>
+                <Nav.Link as={Link} to="/login" className="text-danger">Login</Nav.Link>
+                <Nav.Link as={Link} to="/register" className="text-danger">Register</Nav.Link>
               </>
             )}
         </Nav>

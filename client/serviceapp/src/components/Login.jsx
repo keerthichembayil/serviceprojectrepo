@@ -1,9 +1,8 @@
 import { useState } from "react";
-import axios from "../axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../redux/slices/authSlice";
-import { Form, Button, Container, Alert, Card } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +21,7 @@ const Login = () => {
         // Redirect based on role
        
          if(result.user.role==="client") {
-          navigate("/");
+          navigate("/clientdashboard");
           
         }
         else if(result.user.role==="provider") {
@@ -40,31 +39,42 @@ const Login = () => {
     };
   
     return (
-      <div className="loginpage">
-       {/* <Container className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <Card style={{ width: "25rem", padding: "20px" }}> */}
-          <h2 className="text-center">Login</h2>
-          <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-       <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
-      </form>
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+      <Card style={{ width: "25rem" }} className="p-4 shadow-lg">
+        <Card.Body>
+          <h2 className="text-center mb-4">Login</h2>
+          {error && <Alert variant="danger">{error.message || "Login failed"}</Alert>}
           {error && <p className="error">{error.message || "Login failed"}</p>}
-        {/* </Card>
-      </Container> */}
-      </div>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+              {loading ? <Spinner animation="border" size="sm" /> : "Login"}
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
     );
   };
   

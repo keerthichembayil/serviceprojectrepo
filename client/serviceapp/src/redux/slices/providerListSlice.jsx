@@ -4,9 +4,10 @@ import axios from "../../axios";
 // Async thunk to fetch all service providers
 export const fetchProviders = createAsyncThunk(
   "admin/listproviders",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue ,getState}) => {
     try {
-      const token = localStorage.getItem("admintoken");
+      const token = getState().adminAuth.admintoken; 
+      console.log("token present of admin",token);
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
@@ -52,5 +53,5 @@ const providerListSlice = createSlice({
   },
 });
 
-export const { clearMessage } = providerListSlice.actions;
+// export const { clearMessage } = providerListSlice.actions;
 export default providerListSlice.reducer;

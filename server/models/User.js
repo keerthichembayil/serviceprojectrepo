@@ -8,12 +8,7 @@ const userSchema = new mongoose.Schema({
   address: {
     street: { type: String, required: false, default: "" },
     city: { type: String, required: false, default: "" },
-    state: { type: String, required: false, default: "" },
-    zip: { 
-      type: String, 
-      required: false, 
-      match: [/^\d{5}$/, "Invalid ZIP code format"] // Ensures 5-digit ZIP code
-    }
+    state: { type: String, required: false, default: "" }
   },
   isVerified: { type: Boolean, default: false }, // For service providers
   createdAt: { type: Date, default: Date.now }

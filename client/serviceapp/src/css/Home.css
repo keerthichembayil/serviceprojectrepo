@@ -1,0 +1,41 @@
+.herohome{
+    background-image:url("images/home3.jpg");
+    background-size: cover;
+
+    background-repeat: no-repeat;
+    /* height:90vh;
+    width: 100%; */
+    background-position: top center; 
+    /*to make image to centrer withou affecting all div*/
+  
+    
+    display: flex;
+    flex-direction:column;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+.homecontainer{
+    width:100%;
+}
+.herohome::before{
+    content: "";
+    position: relative;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    height: 90vh;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
+}
+
+.herotext{
+    background-color: white; /* Change to any color */
+    color: red; /* Ensure contrast */
+    padding: 5px 10px;
+    display: inline-block; /* To wrap around text */
+    border-radius: 50px; /* Optional rounded corners */
+}
+
+.homecard{
+    width:50px;
+    height:60vh;
+}
