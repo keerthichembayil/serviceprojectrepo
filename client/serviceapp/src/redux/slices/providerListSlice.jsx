@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-// Async thunk to fetch all service providers
+// Async thunk to fetch all service providers by admin
 export const fetchProviders = createAsyncThunk(
   "admin/listproviders",
   async (_, { rejectWithValue ,getState}) => {

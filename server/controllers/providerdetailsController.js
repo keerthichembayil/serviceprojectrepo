@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const ServiceProvider = require("../models/ServiceProvider");
 
-
+//this is for the client to see the peculiar provider and send request
 
 const getProviderById = async (req, res) => {
   try {
@@ -15,7 +15,7 @@ const getProviderById = async (req, res) => {
     const provider = await ServiceProvider.findById(id)
       .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
       .select("name service image experience userId");
-      console.log(provider);
+      
 
     if (!provider) {
       return res.status(404).json({ message: "Service Provider not found" });

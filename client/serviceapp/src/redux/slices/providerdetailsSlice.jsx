@@ -13,7 +13,7 @@ export const fetchProviderDetails = createAsyncThunk(
             },
           };
       const response = await axios.get(`client/listproviderdetails/${id}`,config);
-      console.log(response.data);
+     
     
       return response.data;
       

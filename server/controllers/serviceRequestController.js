@@ -8,8 +8,16 @@ const Serviceprovider = require("../models/ServiceProvider");
 const requestService = async (req, res) => {
     try {
         console.log("inside request service");
-        const { providerId, additionalNotes } = req.body;
+        const { providerId, additionalNotes } = req.body;//only need this details from front end remaining
+        //will be fetched from backend
         const clientId = req.user.id; // authentication middleware adds user to req
+         // Check if the same request already exists to prevent duplicate request sending
+    const existingRequest = await ServiceRequest.findOne({ providerId, clientId });
+    console.log("reqexist",existingRequest);
+
+    if (existingRequest) {
+      return res.status(400).json({ message: "You have already requested this service." });
+    }
 
        
         // extracting the clientId from the authenticated user (req.user.id), you do not need to pass it explicitly from the frontend.
@@ -35,12 +43,17 @@ const requestService = async (req, res) => {
         });
 
         const savedRequest = await newRequest.save();
+        console.log("Service Request Saved:", savedRequest);
         return res.status(201).json({ message: "Service request submitted", savedRequest });
 
-    } catch (error) {
-        console.error("Error:", error);
-        return res.status(500).json({ error: "Internal server error" });
-    }
+    }  catch (error) {
+        if (error.code === 11000) {
+          return res.status(400).json({ error: "You have already requested this service." });
+          //here return error not message slice is expecting error field ie stored to error 
+        }
+        res.status(500).json({ error: "Server error, please try again later." });
+      }
+    
 };
 
 // Get all requests for a client

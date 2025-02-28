@@ -1,5 +1,6 @@
 const User = require("../models/User");
  const Serviceprovider=require("../models/ServiceProvider");
+ //this is to list full providers for client
  const listfullProviders = async (req, res,next) => {
     try {
        const user = await User.findById(req.user.id);

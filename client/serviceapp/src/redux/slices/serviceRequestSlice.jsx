@@ -18,18 +18,25 @@ export const requestService = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || "Something went wrong");
+      //ie when it is error it is returning error in our controller
     }
   }
 );
 
 const clientRequestSlice = createSlice({
   name: "clientRequest",
-  initialState: { loading: false, error: null, successMessage: null },
-  reducers: { clearMessage: (state) => { state.successMessage = null; state.error = null; } },
+  initialState: { loading: false,successMessage:null,error: null},
+  reducers: {
+    clearMessage: (state) => {
+      state.loading = false;
+      state.successMessage = null;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(requestService.pending, (state) => { state.loading = true; state.error = null; })
-      .addCase(requestService.fulfilled, (state, action) => { state.loading = false; state.successMessage = action.payload.message; })
+      .addCase(requestService.pending, (state) => { state.loading = true;state.successMessage=null; state.error = null; })
+      .addCase(requestService.fulfilled, (state,action) => { state.loading = false;state.successMessage=action.payload.message;state.error=null })
       .addCase(requestService.rejected, (state, action) => { state.loading = false; state.error = action.payload; });
   },
 });

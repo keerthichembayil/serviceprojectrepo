@@ -8,9 +8,11 @@ import '../css/Providerdetails.css'
 
 const ProviderDetails = () => {
   const { id } = useParams(); // Extract provider ID from URL
-  console.log("id got", id);
+ 
   const dispatch = useDispatch();
   const { provider, loading, error } = useSelector((state) => state.providerDetails);
+  console.log("Provider State:", provider);
+
   const { loading: requestLoading, successMessage, error: requestError } = useSelector((state) => state.clientRequest);
   //renamed to requestloading ,requesterror
   const [notes, setNotes] = useState(""); // State to store additional notes
@@ -20,27 +22,19 @@ const ProviderDetails = () => {
     dispatch(fetchProviderDetails(id)); // Fetch provider details when component loads
   }, [dispatch, id]);
 
+ // Handle Service Request
+ const handleServiceRequest = () => {
+  dispatch(requestService({ providerId: id, additionalNotes: notes }));
+};
 
-  // Handle Service Request
-  const handleServiceRequest = () => {
-    dispatch(requestService({ providerId: id, additionalNotes: notes }));
-  };
-
-  // Clear messages after a few seconds
-  useEffect(() => {
+  
+   // Clear messages after 3 seconds
+   useEffect(() => {
     if (successMessage || requestError) {
-      setTimeout(() => dispatch(clearMessage()), 3000);
+      const timer = setTimeout(() => dispatch(clearMessage()), 3000);
+      return () => clearTimeout(timer); // Cleanup on unmount
     }
   }, [successMessage, requestError, dispatch]);
-
-  useEffect(() => {
-    if (successMessage) {
-      alert(successMessage);
-    }
-    if (requestError) {
-      alert(requestError);
-    }
-  }, [successMessage, requestError]);
 
 
 
@@ -48,7 +42,7 @@ const ProviderDetails = () => {
     return (
       <Container className="text-center mt-5">
         <Spinner animation="border" variant="primary" />
-        <p>Loading provider details...</p>
+        <div>Loading provider details...</div>
       </Container>
     );
   }
@@ -77,32 +71,32 @@ const ProviderDetails = () => {
                 </Col>
                 <Col md={8} className="providerdetails">
                   <Card.Title className="text-danger">{provider.name}</Card.Title>
-                  <Card.Text className="text-start">
+                  <div className="text-start">
                     <div className="d-flex">
                       <strong className="text-danger w-25">Service:</strong>
-                      <span className="w-75 text-white">{provider.service}</span>
+                      <span className="w-75">{provider.service}</span>
                     </div>
                     <div className="d-flex">
                       <strong className="text-danger w-25">Experience:</strong>
-                      <span className="w-75 text-white">{provider.experience} years</span>
+                      <span className="w-75">{provider.experience} years</span>
                     </div>
                     <div className="d-flex">
                       <strong className="text-danger w-25">Email:</strong>
-                      <span className="w-75 text-white">{provider.userId?.email}</span>
+                      <span className="w-75">{provider.userId?.email}</span>
                     </div>
                     <div className="d-flex">
                       <strong className="text-danger w-25">Phone:</strong>
-                      <span className="w-75 text-white">{provider.userId?.phone}</span>
+                      <span className="w-75">{provider.userId?.phone}</span>
                     </div>
                     <div className="d-flex">
                       <strong className="text-danger w-25">Address:</strong>
-                      <span className="w-75 text-white">
+                      <span className="w-75">
                         {provider.userId?.address
                           ? Object.values(provider.userId.address).filter(Boolean).join(", ")
                           : "Not provided"}
                       </span>
                     </div>
-                  </Card.Text>
+                  </div>
                 </Col>
               </Row>
 
@@ -118,6 +112,7 @@ const ProviderDetails = () => {
                 />
               </Form.Group>
 
+              {/* Success & Error Messages */}
               {successMessage && <Alert variant="success" className="mt-3">{successMessage}</Alert>}
               {requestError && <Alert variant="danger" className="mt-3">{requestError}</Alert>}
 

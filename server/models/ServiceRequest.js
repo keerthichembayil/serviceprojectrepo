@@ -12,5 +12,6 @@ const serviceRequestSchema = new mongoose.Schema({
   }
   // completedAt: { type: Date }
 });
+serviceRequestSchema.index({ clientId: 1, providerId: 1 }, { unique: true });//to prevent duplicate entry
 
 module.exports = mongoose.model('ServiceRequest', serviceRequestSchema);

@@ -1,0 +1,15 @@
+.logindesign{
+    background-image:url('/images/loginimage2.jpg');
+    
+        width: 100vw;  /* Ensures full viewport width */
+        height: 100vh; /* Ensures full viewport height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+
+}
+
+
+
+

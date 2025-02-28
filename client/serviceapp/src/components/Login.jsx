@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../redux/slices/authSlice";
 import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
+import '../css/Login.css'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +40,7 @@ const Login = () => {
     };
   
     return (
-      <Container className="d-flex justify-content-center align-items-center vh-100">
+      <div className="d-flex justify-content-center align-items-center vh-100 logindesign">
       <Card style={{ width: "25rem" }} className="p-4 shadow-lg">
         <Card.Body>
           <h2 className="text-center mb-4">Login</h2>
@@ -74,7 +75,7 @@ const Login = () => {
           </Form>
         </Card.Body>
       </Card>
-    </Container>
+    </div>
     );
   };
   

@@ -83,7 +83,7 @@ const  registerAdmin=async (req, res) => {
   };
 
 
-  
+//this to list providers for admin
 
   const listProviders = async (req, res) => {
     try {
