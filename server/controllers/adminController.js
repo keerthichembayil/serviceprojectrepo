@@ -1,4 +1,6 @@
 const Admin = require("../models/Admin");
+const User = require("../models/User");
+const mongoose = require("mongoose");
 
 const Serviceprovider=require("../models/ServiceProvider");
 const jwt = require("jsonwebtoken");
@@ -107,6 +109,45 @@ const  registerAdmin=async (req, res) => {
   
 
 
+  // Fetch all users for admin
+const listUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: "client" }).select("name email role createdAt");
+    if (!users.length) {
+      return res.status(404).json({ message: "No users found" });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+const getProviderById = async (req, res) => {
+  try {
+    const { id } = req.params; // Get provider ID from request params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ message: "Invalid Provider ID" });
+      }
+
+    // Find provider by ID and populate user details (email, phone, address)
+    const provider = await Serviceprovider.findById(id)
+      .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
+      .select("name service image document experience userId");
+      
+
+    if (!provider) {
+      return res.status(404).json({ message: "Service Provider not found" });
+    }
+
+    res.status(200).json(provider);
+  } catch (error) {
+    console.error("Error fetching provider:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
 
 
 
@@ -117,4 +158,8 @@ const  registerAdmin=async (req, res) => {
 
 
 
-  module.exports={registerAdmin,adminLogin,listProviders};
+
+
+
+
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById};

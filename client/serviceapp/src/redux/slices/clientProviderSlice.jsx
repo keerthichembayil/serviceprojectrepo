@@ -15,7 +15,7 @@ export const fetchClientProviders = createAsyncThunk(
           Authorization: `Bearer ${token}`, // Send token in headers
         },
       };
-      const response = await axios.get("client/listproviders",config);
+      const response = await axios.get("/client/listproviders",config);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || "Something went wrong");

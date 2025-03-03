@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../axios";
 
 // Async thunk to fetch client requests
 export const fetchClientRequests = createAsyncThunk(
   "client/fetchClientRequests",
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue ,getState}) => {
     try {
-      const token = localStorage.getItem("token");
-      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const token = getState().auth.token; 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`, // Send token in headers
+        },
+      };
 
-      const response = await axios.get("/api/requests", config);
+      const response = await axios.get("/service/clientrequests", config);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || "Unable to fetch requests");

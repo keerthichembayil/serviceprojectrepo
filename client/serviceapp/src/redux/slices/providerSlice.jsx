@@ -4,7 +4,7 @@ import axios from "../../axios";
 // Async thunk to add servicer details by provider
 export const addProvider = createAsyncThunk(
   "provider/addingProvider",
-  async (formData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue ,getState}) => {
     try {
       const token = getState().auth.token; // Get token from Redux store
       //when we implement here using token actually when we go to home and try to returned to prvider dashbaord
@@ -20,11 +20,12 @@ export const addProvider = createAsyncThunk(
         },
       };
       
-      const response = await axios.post("provider/addProvider", formData, config);
+      const response = await axios.post("/provider/addProvider", formData, config);
       console.log("response is",response);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "An unexpected error occurred");
+      console.log("Error response:", error.response?.data); // Debugging
+      return rejectWithValue(error.response?.data || { error: "Something went wrong" });
     }
   }
 );
@@ -50,17 +51,20 @@ const providerSlice = createSlice({
       .addCase(addProvider.pending, (state) => {
         state.loading = true;
         state.success = false;
+        state.message = "";
         state.error = null;
       })
       .addCase(addProvider.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.message = action.payload.message;
+        state.error = null;
       })
       .addCase(addProvider.rejected, (state, action) => {
         state.loading = false;
         state.success = false;
-        state.error = action.payload;
+        state.error = action.payload?.error || "An unexpected error occurred";
+        
       });
   },
 });

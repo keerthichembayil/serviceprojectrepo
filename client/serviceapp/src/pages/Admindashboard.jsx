@@ -1,12 +1,13 @@
 import React from 'react'
+import '../css/Admindash.css'
 
-import Addprovider from './Addprovider'
+
 import Serviceproviderlist from './Serviceproviderlist'
-import { Link } from 'react-router-dom';
+
 
 const Admindashboard = () => {
   return (
-    <div>
+    <div className='admindashboard'>
   
       <Serviceproviderlist/>
 

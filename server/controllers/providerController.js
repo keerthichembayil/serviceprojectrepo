@@ -1,5 +1,5 @@
 const User= require("../models/User");
-const uploadtoCloudinary = require("../utilities/imageupload");
+const uploadToCloudinary = require("../utilities/imageupload");
 const Serviceprovider=require("../models/ServiceProvider");
 
 
@@ -9,6 +9,7 @@ const addProvider=async(req,res)=>{
       
    
       const{userId,service,experience}=req.body;
+      console.log("idinsidecontroller",userId);
       
       
       const userExists = await User.findById(userId);
@@ -23,31 +24,46 @@ const addProvider=async(req,res)=>{
       }
       const existingProvider = await Serviceprovider.findOne({userId});
       if (existingProvider) {
-        return res.status(400).json({ message: 'provider already added.' });
+        console.log("entred if");
+        return res.status(400).json({ error: 'provider already added.' });
       }
-      //multer attach image to req.file
-      if(!req.file){
-        return res.status(400).json({error:'image not found'})
+      // //multer attach image to req.file
+      // if(!req.file){
+      //   return res.status(400).json({error:'image not found'})
 
-      }
+      // }
+        // Check if both image and document are provided
+    if (!req.files || !req.files.image || !req.files.document) {
+      return res.status(400).json({ error: "Image and document are required" });
+    }
+    let imageUrl, documentUrl;
+    
       //i used inner try here bcoz image was geting uploaded to cloudinary but it was not waiting so used anothertry
     try{
-     const result=await uploadtoCloudinary(req.file.path);
-  
-     
-     
-      if (!result) {
-        return res.status(500).json({ error: "Image upload failed" });
+      // Upload image
+      console.log("Uploading image to Cloudinary...");
+      imageUrl = await uploadToCloudinary(req.files.image[0].path, "provider", "image");
+      
+      console.log("Uploading document to Cloudinary...");
+      documentUrl = await uploadToCloudinary(req.files.document[0].path, "documents", "pdf") ;
+      
+      if (!imageUrl || !documentUrl) {
+        return res.status(500).json({ error: "File upload failed" });
       }
+     
+     
+    
       
       const newserviceprovider=new Serviceprovider({
         userId,
-       name,service,experience,image:result
+       name,service,experience, image: imageUrl,
+       document: documentUrl, // Store document URL
       })
       let savedprovider=await newserviceprovider.save();
       if(savedprovider){
         return res.status(200).json({message:"provider added",savedprovider});
-      }}
+      }
+     }
       catch(cloudinaryError){
         console.error("Cloudinary error:", cloudinaryError);
             return res.status(500).json({ error: "Image upload to Cloudinary failed" });
@@ -55,15 +71,13 @@ const addProvider=async(req,res)=>{
 
     }
  
-   catch(error)
-    {
-      console.log(error);
-      res.status(error.status||500).json({error:error.message||"internal server error"});
+    catch (error) {
+      if (error.code === 11000) {
+        return res.status(400).json({ error: "Provider already added." });
+      }
+      console.error(error);
+      res.status(500).json({ error: "Internal server error" });
     }
-
-
-
-    
 
   }
   

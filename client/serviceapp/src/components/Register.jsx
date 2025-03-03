@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Alert, Card } from "react-bootstrap";
+import { Form, Button, Container, Alert, Card ,Row,Col} from "react-bootstrap";
+import '../css/Register.css'
 
 
 const Register = () => {
@@ -50,15 +51,27 @@ const Register = () => {
   };
 
   return (
-    <div className="register">
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Card style={{ width: "400px", padding: "20px" }}>
+
+    <div fluid className="min-vh-100 d-flex align-items-center">
+      <Row className="w-100">
+        {/* Left Side */}
+        <Col md={4} className="d-flex flex-column justify-content-center align-items-center text-white" style={{ backgroundColor: "#FFB6C1", padding: "30px" }}>
+          {/* <img src={logo} alt="Logo" style={{ width: "150px", marginBottom: "20px" }} /> */}
+          <h2>Welcome to Our Service</h2>
+          <p>Your one-stop solution for professional services</p>
+        </Col>
+
+
+
+    {/* Right Side - Registration Form */}
+    <Col md={8} className="d-flex justify-content-start align-items-center regform">
+          <Card style={{ width: "400px", padding: "20px" }}>
         <Card.Body>
           <h2 className="text-center mb-4">Register</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit} autoComplete="off">
             <Form.Group className="mb-3">
-              <Form.Label>name</Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
                 name="name"
@@ -143,15 +156,17 @@ const Register = () => {
               </Form.Group>
             
 
-            <Button variant="primary" type="submit" className="w-100">
+            <Button type="submit" className="w-100 btnregister">
               Register
             </Button>
           </Form>
         </Card.Body>
       </Card>
-    </Container>
-  </div>
-  );
+    
+    </Col>
+  </Row>
+
+</div>  );
 };
 
 export default Register;

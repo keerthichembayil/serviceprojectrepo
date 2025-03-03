@@ -1,7 +1,7 @@
 import React from "react";
 import { Link ,useNavigate} from "react-router-dom";
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
-import '../css/Navbar.css'
+import '../css/Adminnav.css'
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogout } from "../redux/slices/adminauthSlice"; // Import logout action
 
@@ -33,7 +33,9 @@ const AdminNavbar = () => {
        {admin ? (
                   <>
                     <span className="nav-text">Welcome, {admin.name}!</span>
+                    <Nav.Link as={Link} to="/admindashboard">Dashboard</Nav.Link>
                     <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+
                   </>
                 ) : (
                   <>

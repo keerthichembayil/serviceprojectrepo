@@ -14,32 +14,29 @@ const storage = multer.diskStorage({
   
 });
 
+// File filter for image and document validation
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-  if (allowedTypes.includes(file.mimetype)) {
+  const allowedImageTypes = ["image/jpeg", "image/jpg", "image/png"];
+  const allowedDocumentTypes = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+
+  if (allowedImageTypes.includes(file.mimetype) || allowedDocumentTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Only JPEG and PNG images are allowed'), false);
+    cb(new Error("Only JPEG, PNG images, and PDF/DOC files are allowed"), false);
   }
 };
 
-const upload = multer({ storage, fileFilter });
+// Multer upload middleware for handling both image and document uploads
+const upload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+});
 
 module.exports = upload;
-// const multer = require('multer');
 
-// const storage = multer.memoryStorage(); // Store files in memory instead of disk
-
-// const fileFilter = (req, file, cb) => {
-//   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-//   if (allowedTypes.includes(file.mimetype)) {
-//     cb(null, true);
-//   } else {
-//     cb(new Error('Only JPEG and PNG images are allowed'), false);
-//   }
-// };
-
-// const upload = multer({ storage, fileFilter });
-
-// module.exports = upload;
 

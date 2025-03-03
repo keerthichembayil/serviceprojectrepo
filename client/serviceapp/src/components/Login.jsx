@@ -43,7 +43,7 @@ const Login = () => {
       <div className="d-flex justify-content-center align-items-center vh-100 logindesign">
       <Card style={{ width: "25rem" }} className="p-4 shadow-lg">
         <Card.Body>
-          <h2 className="text-center mb-4">Login</h2>
+          <h2 className="text-center mb-4 text-success">Login</h2>
           {error && <Alert variant="danger">{error.message || "Login failed"}</Alert>}
           {error && <p className="error">{error.message || "Login failed"}</p>}
           <Form onSubmit={handleSubmit}>
@@ -54,6 +54,7 @@ const Login = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="emailbox"
                 required
               />
             </Form.Group>
@@ -65,11 +66,13 @@ const Login = () => {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="passbox"
+              
                 required
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="w-100" disabled={loading}>
+            <Button type="submit" className="w-100 loginbtn" disabled={loading}>
               {loading ? <Spinner animation="border" size="sm" /> : "Login"}
             </Button>
           </Form>

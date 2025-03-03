@@ -8,6 +8,7 @@ import AdminNavbar from "./components/AdminNavbar";
 import Home from "./pages/Home";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Adminprotectedroute from "./components/AdminProtectedRoute"
 import Admindashboard from "./pages/Admindashboard"
 import Providerdashboard from "./pages/Providerdashboard";
 import Clientdashboard  from "./pages/Clientdashboard";
@@ -16,6 +17,8 @@ import ClientProfile from "./pages/ClientProfile";
 import AdminLogin from "./components/Adminlogin";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navigate } from "react-router-dom";
+import Viewclientrequests from "./pages/Viewclientrequests";
+import Viewprovider from "./pages/Viewprovider";
 
 
 function App() {
@@ -62,7 +65,8 @@ function App() {
   <Route path="/providerdashboard" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerdashboard/></>}</ProtectedRoute>} />
   <Route path="/clientprofile" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ClientProfile/></>}</ProtectedRoute>} />
   <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
-
+  <Route path="/viewclientreqdet" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Viewclientrequests/></>}</ProtectedRoute>} />
+  <Route path="/viewprovider/:id" element={<Adminprotectedroute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</Adminprotectedroute>} />
 
 
 

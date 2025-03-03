@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   fetchUserProfile,
   updateUserProfile,
@@ -7,6 +8,7 @@ import {
 } from "../redux/slices/userProfileSlice";
 
 const ClientProfile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.userProfile);
   
@@ -76,7 +78,7 @@ const ClientProfile = () => {
 
   return (
     <div className="p-6 max-w-lg mx-auto bg-white shadow-md rounded-md">
-      <h2 className="text-xl font-bold mb-4">Client Dashboard</h2>
+      <h2 className="text-xl font-bold mb-4">Client Profilepage</h2>
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -111,6 +113,16 @@ const ClientProfile = () => {
               >
                 Delete Profile
               </button>
+
+              <button
+  className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+  onClick={() => navigate("/viewclientreqdet")}
+>
+  View Requests
+</button>
+
+
+
             </div>
           ) : (
             <form onSubmit={handleUpdate} className="mt-4">

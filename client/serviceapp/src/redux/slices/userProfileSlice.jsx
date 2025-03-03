@@ -15,7 +15,7 @@ export const fetchUserProfile = createAsyncThunk(
           Authorization: `Bearer ${token}`, // Send token in headers
         },
       };
-      const response = await axios.get("client/getmyprofile", config);
+      const response = await axios.get("/client/getmyprofile", config);
       console.log(response);
       return response.data; // User details from backend
     } catch (error) {

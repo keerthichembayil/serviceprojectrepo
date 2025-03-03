@@ -8,6 +8,7 @@ import userProfileReducer  from "./slices/userProfileSlice";
 import clientRequestReducer from "./slices/serviceRequestSlice";
 import clientRequestDetailsReducer from "./slices/clientRequestDetailsSlice";
 import providerDetailsReducer from "./slices/providerdetailsSlice"; // Import provider details slice
+import userListReducer from "./slices/userListSlice"
 
 
 
@@ -22,7 +23,8 @@ const store = configureStore({
     userProfile: userProfileReducer,// Add new reducer
     clientRequestDetails:clientRequestDetailsReducer,
     clientRequest:clientRequestReducer,
-    providerDetails: providerDetailsReducer
+    providerDetails: providerDetailsReducer,
+    userList:userListReducer
   },
 });
 

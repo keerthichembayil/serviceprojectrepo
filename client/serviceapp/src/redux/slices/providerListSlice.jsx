@@ -12,7 +12,7 @@ export const fetchProviders = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      const response = await axios.get("admin/listproviders", config);
+      const response = await axios.get("/admin/listproviders", config);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || "Something went wrong");

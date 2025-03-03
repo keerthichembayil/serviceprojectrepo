@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const serviceProviderSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true,unique:true },
   name: {
     type: String,
     required: true
@@ -12,6 +12,10 @@ service: {
 image: {
     type: String,
     required: true
+},
+document: { 
+  type: String, // Stores only one document URL
+  required: true 
 },
 availability: {
     type: Boolean,
