@@ -8,7 +8,7 @@ import AdminNavbar from "./components/AdminNavbar";
 import Home from "./pages/Home";
 import Register from "./components/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Adminprotectedroute from "./components/AdminProtectedRoute"
+import AdminProtectedRoute from "./components/AdminProtectedRoute"
 import Admindashboard from "./pages/Admindashboard"
 import Providerdashboard from "./pages/Providerdashboard";
 import Clientdashboard  from "./pages/Clientdashboard";
@@ -66,7 +66,7 @@ function App() {
   <Route path="/clientprofile" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ClientProfile/></>}</ProtectedRoute>} />
   <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
   <Route path="/viewclientreqdet" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Viewclientrequests/></>}</ProtectedRoute>} />
-  <Route path="/viewprovider/:id" element={<Adminprotectedroute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</Adminprotectedroute>} />
+  <Route path="/viewprovider/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</AdminProtectedRoute>} />
 
 
 

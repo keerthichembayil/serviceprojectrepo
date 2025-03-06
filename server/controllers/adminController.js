@@ -93,7 +93,7 @@ const  registerAdmin=async (req, res) => {
       // Mongoose replaces userId in the serviceprovidertable
       //  with the actual User document, but only includes the email field:
         .populate('userId', 'email') // Populate email from User model
-        .select('name service image userId'); // Select required fields
+        .select('name services image userId'); // Select required fields
         
   
       if (!providers.length) {
@@ -135,7 +135,7 @@ const getProviderById = async (req, res) => {
     // Find provider by ID and populate user details (email, phone, address)
     const provider = await Serviceprovider.findById(id)
       .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
-      .select("name service image document experience userId");
+      .select("name services image document experience userId");
       
 
     if (!provider) {
@@ -145,6 +145,28 @@ const getProviderById = async (req, res) => {
     res.status(200).json(provider);
   } catch (error) {
     console.error("Error fetching provider:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
+const approveProvider = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const provider = await Serviceprovider.findById(id);
+    if (!provider) return res.status(404).json({ message: "Provider not found" });
+
+    if (provider.isVerified) {
+      return res.status(400).json({ message: "Provider is already approved" });
+    }
+
+    provider.isVerified = true;
+    await provider.save();
+
+    res.json({ success: true, message: "Provider approved successfully", provider });
+  } catch (error) {
+    console.error("Error approving provider:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -162,4 +184,4 @@ const getProviderById = async (req, res) => {
 
 
 
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById};
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider};

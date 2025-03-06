@@ -36,7 +36,15 @@ const ClientRequests = () => {
               <tr key={request._id}>
                 <td>{index + 1}</td>
                 <td>{request.providerId?.name || "N/A"}</td>
-                <td>{request.providerId?.service || "N/A"}</td>
+                <td>
+  {request.services?.length > 0
+    ? request.services.map((service, i) => (
+        <Badge key={i} bg="info" className="me-1">
+          {service}
+        </Badge>
+      ))
+    : "N/A"}
+</td>
                 <td>
                   {request.providerId?.image ? (
                     <Image src={request.providerId.image} alt="Service Provider" width={50} height={50} rounded />

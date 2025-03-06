@@ -14,7 +14,7 @@ const getProviderById = async (req, res) => {
     // Find provider by ID and populate user details (email, phone, address)
     const provider = await ServiceProvider.findById(id)
       .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
-      .select("name service image experience userId");
+      .select("name services image experience userId");
       
 
     if (!provider) {

@@ -4,7 +4,7 @@ import axios from "../../axios";
 // Async thunk to request a service
 export const requestService = createAsyncThunk(
   "client/requestService",
-  async ({ providerId, additionalNotes }, { rejectWithValue,getState }) => {
+  async ({ providerId,services, additionalNotes }, { rejectWithValue,getState }) => {
     try {
       const token = getState().auth.token; 
       const config = {
@@ -13,7 +13,7 @@ export const requestService = createAsyncThunk(
         },
       };
 
-      const response = await axios.post("/service/request", { providerId, additionalNotes }, config);
+      const response = await axios.post("/service/request", { providerId, services,additionalNotes }, config);
       console.log("response inside servicerequestslice",response.data);
       return response.data;
     } catch (error) {

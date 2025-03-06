@@ -26,6 +26,8 @@ const Navbar2 = () => {
        
           <Nav className="ms-auto">
           <Nav.Link as={Link} to="/" className="text-danger">Home</Nav.Link>
+          <Nav.Link as={Link} to="/login" className="text-danger">About</Nav.Link>
+          <Nav.Link as={Link} to="/login" className="text-danger">Contact</Nav.Link>
          
 
     
@@ -43,8 +45,7 @@ const Navbar2 = () => {
               </>
             ) : (
               <>
-                 <Nav.Link as={Link} to="/login" className="text-danger">About</Nav.Link>
-                 <Nav.Link as={Link} to="/login" className="text-danger">Contact</Nav.Link>
+                
                 <Nav.Link as={Link} to="/login" className="text-danger">Login</Nav.Link>
                 <Nav.Link as={Link} to="/register" className="text-danger">Register</Nav.Link>
               </>

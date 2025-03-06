@@ -8,12 +8,12 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(" ")[1];
        
       try {
-        console.log("entered adminmiddleware");
+        
         
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
      
         req.admin = await Admin.findById(decoded.adminId).select("-password");
-        console.log("req.admin",req.admin);
+        
 
        //attching user object with userid decoded from token ie (userId set while logging)
       

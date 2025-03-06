@@ -15,7 +15,7 @@ const User = require("../models/User");
       // Mongoose replaces userId in the serviceprovidertable
       //  with the actual User document, but only includes the email field:
         .populate('userId', 'email phone address') // Populate email from User model
-        .select('name service image userId'); // Select required fields where this userid is replaced by email
+        .select('name services image userId'); // Select required fields where this userid is replaced by email
     
   
       if (!providers.length) {

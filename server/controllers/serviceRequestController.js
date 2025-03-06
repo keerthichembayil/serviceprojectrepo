@@ -8,7 +8,7 @@ const Serviceprovider = require("../models/ServiceProvider");
 const requestService = async (req, res) => {
     try {
         console.log("inside request service");
-        const { providerId, additionalNotes } = req.body;//only need this details from front end remaining
+        const { providerId, services,additionalNotes } = req.body;//only need this details from front end remaining
         //will be fetched from backend
         const clientId = req.user.id; // authentication middleware adds user to req
         console.log("clientid",clientId);
@@ -29,16 +29,16 @@ const requestService = async (req, res) => {
         }
 
         // Validate required fields
-        if (!additionalNotes ) {
-            return res.status(400).json({ error: "additional note are needed" });
+        if (!additionalNotes||!services ) {
+            return res.status(400).json({ error: "additional notes and services needed" });
         }
-        const { service } = providerExists;
+       
 
         // Create a new service request
         const newRequest = new ServiceRequest({
             clientId,
             providerId,
-            service,
+            services,
             
             additionalNotes
         });
@@ -63,7 +63,7 @@ const getClientRequests = async (req, res) => {
         const clientId = req.user.id;
         // The code fetches the name, service, and image from the Provider collection, as give ref in model
         //we could populate only because we gave refernce in model
-        const requests = await ServiceRequest.find({ clientId }).populate("providerId", "name service image") .select("additionalNotes status"); // Include additionalNotes and status;
+        const requests = await ServiceRequest.find({ clientId }).populate("providerId", "name image") .select("services additionalNotes status"); // Include additionalNotes and status;
         //will fetch full details from  servicerequest model and in that insteead of providerid will replace
         // with name,service,image from Serviceprovider model
         return res.status(200).json(requests);

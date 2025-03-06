@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const AdminProtectedRoute = ({ children }) => {
+const AdminProtectedRoute = ({ children,requiredRole }) => {
     const { admin, admintoken } = useSelector((state) => state.adminAuth);
 
     // Fallback to localStorage if Redux state is empty
@@ -15,6 +15,13 @@ const AdminProtectedRoute = ({ children }) => {
         console.log("Admin not logged in, redirecting...");
         return <Navigate to="/adminlogin" />;
     }
+    
+    // Role-based access control
+    if (requiredRole && currentAdmin.role !== requiredRole) {
+        console.log(`Access denied to ${requiredRole} route, redirecting to home...`);
+        return <Navigate to="/" />;
+    }
+    console.log(currentAdmin.role);
 
     return children;
 };

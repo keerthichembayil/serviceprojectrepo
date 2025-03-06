@@ -16,15 +16,30 @@ const ProviderDetails = () => {
   const { loading: requestLoading, successMessage, error: requestError } = useSelector((state) => state.clientRequest);
   //renamed to requestloading ,requesterror
   const [notes, setNotes] = useState(""); // State to store additional notes
+  const [selectedServices, setSelectedServices] = useState([]); // Store selected services
+
 
 
   useEffect(() => {
     dispatch(fetchProviderDetails(id)); // Fetch provider details when component loads
   }, [dispatch, id]);
 
+   // Handle checkbox selection
+   const handleServiceSelection = (service) => {
+    setSelectedServices((prevSelected) =>
+      prevSelected.includes(service)
+        ? prevSelected.filter((s) => s !== service) // Remove if already selected
+        : [...prevSelected, service] // Add if not selected
+    );
+  };
+
  // Handle Service Request
  const handleServiceRequest = () => {
-  dispatch(requestService({ providerId: id, additionalNotes: notes }));
+  if (selectedServices.length === 0) {
+    alert("Please select at least one service.");
+    return;
+  }
+  dispatch(requestService({ providerId: id, services: selectedServices,additionalNotes: notes }));
 };
 
   
@@ -72,10 +87,7 @@ const ProviderDetails = () => {
                 <Col md={8} className="providerdetails">
                   <Card.Title className="text-danger">{provider.name}</Card.Title>
                   <div className="text-start">
-                    <div className="d-flex">
-                      <strong className="text-danger w-25">Service:</strong>
-                      <span className="w-75">{provider.service}</span>
-                    </div>
+                    
                     <div className="d-flex">
                       <strong className="text-danger w-25">Experience:</strong>
                       <span className="w-75">{provider.experience} years</span>
@@ -99,6 +111,24 @@ const ProviderDetails = () => {
                   </div>
                 </Col>
               </Row>
+                {/* Service Selection */}
+                <Form.Group className="mt-3">
+                <Form.Label className="text-danger">Select Services</Form.Label>
+                {provider.services?.length > 0 ? (
+                  provider.services.map((service, index) => (
+                    <Form.Check
+                      key={index}
+                      type="checkbox"
+                      label={service}
+                      value={service}
+                      checked={selectedServices.includes(service)}
+                      onChange={() => handleServiceSelection(service)}
+                    />
+                  ))
+                ) : (
+                  <Alert variant="warning">No services available</Alert>
+                )}
+              </Form.Group>
 
               <Form.Group className="mt-3 providerdetails">
                 <Form.Label className="text-danger">Additional Notes</Form.Label>

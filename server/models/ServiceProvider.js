@@ -5,10 +5,10 @@ const serviceProviderSchema = new mongoose.Schema({
     type: String,
     required: true
 },
-service: {
-    type: String,
-    required: true
-},
+services: [{
+  type: String,
+  required: true
+}],
 image: {
     type: String,
     required: true
@@ -22,6 +22,7 @@ availability: {
     default: true
 },
   experience: { type: Number, required: true }, // Years of experience
+  isVerified: { type: Boolean, default: false }, // Admin must approve manually
   // ratings: [{ type: Number }],
   // averageRating: { type: Number, default: 0 }
 });

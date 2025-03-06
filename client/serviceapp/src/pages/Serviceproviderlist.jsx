@@ -42,7 +42,7 @@ const ProviderList = () => {
                       <Image src={provider.image} alt={provider.name} roundedCircle width="50" height="50" />
                     </td>
                     <td>{provider.name}</td>
-                    <td>{provider.service}</td>
+                    <td>{provider.services.join(",")}</td>
                     <td>{provider.userId?.email}</td>
                     <td>
                       <Link to={`/viewprovider/${provider._id}`}>

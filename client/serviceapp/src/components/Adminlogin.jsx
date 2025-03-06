@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogin } from "../redux/slices/adminauthSlice";
+import { Container, Form, Button, Alert, Spinner } from "react-bootstrap";
+import '../css/Adminlogin.css'
 
 
 const AdminLogin = () => {
@@ -26,27 +28,46 @@ const AdminLogin = () => {
   };
 
   return (
+    <div className="d-flex justify-content-center align-items-center adminlogindesign vh-100">
+    <div className="shadow-lg p-4 bg-white rounded" style={{ width: "400px" }}>
+      <h2 className="text-center mb-4">Admin Login</h2>
     <div className="login-container">
-      <h2>Admin Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-       <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
-      </form>
+    
+      <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="emailboxad"
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="passboxad"
+              required
+            />
+          </Form.Group>
+
+          <Button type="submit"
+            className="w-100 adminloginbtn"
+            disabled={loading}
+          >
+            {loading ? <Spinner animation="border" size="sm" /> : "Login"}
+          </Button>
+        </Form>
       {error && <p className="error">{error.message || "Login failed"}</p>}
-    </div>
+      </div>
+      </div>
+      </div>
   );
 };
 

@@ -12,6 +12,7 @@ const Register = () => {
     password: "", 
     phone: "", 
     role: "client", // Default role is client
+    gender: "male", 
     address: {
       street: "",
       city: "",
@@ -121,6 +122,14 @@ const Register = () => {
                   <option value="provider">ServiceProvider</option>
                 </Form.Control>
               </Form.Group>
+
+              <Form.Group className="mb-3">
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control as="select" name="gender" value={formData.gender} onChange={handleChange}>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </Form.Control>
+                </Form.Group>
               {/* Address Fields */}
               <h5 className="mt-3">Address</h5>
               <Form.Group className="mb-3">

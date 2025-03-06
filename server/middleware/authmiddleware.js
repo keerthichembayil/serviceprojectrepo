@@ -13,7 +13,7 @@ const protect = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
      
         req.user = await User.findById(decoded.userId).select("-password");
-        console.log(req.user);
+       
 
        //attching user object with userid decoded from token ie (userId set while logging)
       
@@ -35,7 +35,7 @@ const protect = async (req, res, next) => {
         if(req.user&&req.user.role!==role){
             return res.status(403).json({message:"acess denied role is not correct"});
         }
-        console.log("role and req.user.role",role,req.user.role);
+        
         next();
     }
 }

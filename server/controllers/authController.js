@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const registerUser = async (req, res) => {
   try {
     
-    const { name, email, password, phone, role, address } = req.body;
+    const { name, email, password, phone, role,gender, address } = req.body;
     
      // Check if role is valid (only client or provider can be registered via frontend)
      if (role !== 'client' && role !== 'provider') {
@@ -36,6 +36,7 @@ const registerUser = async (req, res) => {
         password: hashedPassword,
         phone,
         role,
+        gender,
         address:addressToSave
       });
 
@@ -78,7 +79,8 @@ const loginUser = async (req, res) => {
           id: user._id,
           name: user.name,
           email: user.email,
-          role: user.role
+          role: user.role,
+          gender: user.gender,
         }
       });
   } catch (error) {
@@ -87,19 +89,7 @@ const loginUser = async (req, res) => {
 };
 
 
-const getProfile = async (req, res) => {
-  try {
-    
-    
-    const user = await User.findById(req.user._id).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
-    }
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error' });
-  }
-};
 
 
-  module.exports={loginUser,registerUser,getProfile};
+
+  module.exports={loginUser,registerUser};

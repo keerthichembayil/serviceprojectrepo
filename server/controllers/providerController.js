@@ -8,7 +8,7 @@ const addProvider=async(req,res)=>{
      
       
    
-      const{userId,service,experience}=req.body;
+      const{userId,services,experience}=req.body;
       console.log("idinsidecontroller",userId);
       
       
@@ -19,7 +19,7 @@ const addProvider=async(req,res)=>{
         return res.status(400).json({ message: "User not found" });
       }
       const name = userExists.name; // Populate name from User
-      if(!service||!experience){
+      if(!services||!experience){
         return res.status(400).json({error:"all fields are required"})
       }
       const existingProvider = await Serviceprovider.findOne({userId});
@@ -27,12 +27,7 @@ const addProvider=async(req,res)=>{
         console.log("entred if");
         return res.status(400).json({ error: 'provider already added.' });
       }
-      // //multer attach image to req.file
-      // if(!req.file){
-      //   return res.status(400).json({error:'image not found'})
-
-      // }
-        // Check if both image and document are provided
+      
     if (!req.files || !req.files.image || !req.files.document) {
       return res.status(400).json({ error: "Image and document are required" });
     }
@@ -56,7 +51,7 @@ const addProvider=async(req,res)=>{
       
       const newserviceprovider=new Serviceprovider({
         userId,
-       name,service,experience, image: imageUrl,
+       name,services,experience, image: imageUrl,
        document: documentUrl, // Store document URL
       })
       let savedprovider=await newserviceprovider.save();

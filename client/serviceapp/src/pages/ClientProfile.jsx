@@ -6,6 +6,7 @@ import {
   updateUserProfile,
   deleteUserProfile,
 } from "../redux/slices/userProfileSlice";
+import { Container, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 
 const ClientProfile = () => {
   const navigate = useNavigate();
@@ -77,23 +78,33 @@ const ClientProfile = () => {
   };
 
   return (
-    <div className="p-6 max-w-lg mx-auto bg-white shadow-md rounded-md">
-      <h2 className="text-xl font-bold mb-4">Client Profilepage</h2>
+    <div>
+      <Container className="mt-5">
+      <Card className="p-4 shadow">
+        <h2 className="text-center mb-4">Client Profile</h2>
 
-      {loading && <p>Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+        {loading && <Spinner animation="border" className="d-block mx-auto" />}
+        {error && <Alert variant="danger">{error}</Alert>}
 
       {user ? (
         <>
           {!editMode ? (
             <div>
+         {/* Determine the avatar image based on gender */}
+<img 
+  src={`/images/${user.gender === "male" ? "maleprofile.png" : "femaleprofile.png"}`} 
+  alt="Client Avatar" 
+  style={{ width: "100px", height: "100px", borderRadius: "50%" }} 
+
+/>
+
               <p><strong>Name:</strong> {user.name}</p>
               <p><strong>Email:</strong> {user.email}</p>
               <p><strong>Phone:</strong> {user.phone}</p>
 
               {user.address && (
-                <div className="mt-2">
-                  <p><strong>Address:</strong></p>
+                <div className="mt-3">
+                  
                   <p><strong>Street:</strong> {user.address.street}</p>
                   <p><strong>City:</strong> {user.address.city}</p>
                   <p><strong>State:</strong> {user.address.state}</p>
@@ -101,102 +112,65 @@ const ClientProfile = () => {
                 </div>
               )}
 
-              <button
-                className="bg-blue-500 text-danger px-4 py-2 rounded mt-4"
-                onClick={() => setEditMode(true)}
-              >
-                Edit Profile
-              </button>
-              <button
-                className="bg-red-500 text-danger px-4 py-2 rounded mt-4 ml-2"
-                onClick={handleDelete}
-              >
-                Delete Profile
-              </button>
-
-              <button
-  className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-  onClick={() => navigate("/viewclientreqdet")}
->
-  View Requests
-</button>
+<Button variant="success" onClick={() => setEditMode(true)} className="me-2">
+                  Edit Profile
+                </Button>
+                <Button variant="danger" onClick={handleDelete}>
+                  Delete Profile
+                </Button>
+             
 
 
 
             </div>
           ) : (
             <form onSubmit={handleUpdate} className="mt-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                value={updatedData.name}
-                onChange={handleChange}
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={updatedData.email}
-                onChange={handleChange}
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone"
-                value={updatedData.phone}
-                onChange={handleChange}
-                className="border p-2 w-full mb-2"
-              />
+              <Form.Group className="mb-3">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" name="name" value={updatedData.name} onChange={handleChange} />
+                </Form.Group>
 
-              <h3 className="font-bold mt-4">Edit Address:</h3>
-              <input
-                type="text"
-                name="street"
-                placeholder="Street"
-                value={updatedData.address.street}
-                onChange={handleAddressChange}
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                value={updatedData.address.city}
-                onChange={handleAddressChange}
-                className="border p-2 w-full mb-2"
-              />
-              <input
-                type="text"
-                name="state"
-                placeholder="State"
-                value={updatedData.address.state}
-                onChange={handleAddressChange}
-                className="border p-2 w-full mb-2"
-              />
+            <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" name="email" value={updatedData.email} onChange={handleChange} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control type="text" name="phone" value={updatedData.phone} onChange={handleChange} />
+                </Form.Group>
+
+                <h5 className="mt-3">Edit Address</h5>
+                <Form.Group className="mb-3">
+                  <Form.Label>Street</Form.Label>
+                  <Form.Control type="text" name="street" value={updatedData.address.street} onChange={handleAddressChange} />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control type="text" name="city" value={updatedData.address.city} onChange={handleAddressChange} />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                  <Form.Label>State</Form.Label>
+                  <Form.Control type="text" name="state" value={updatedData.address.state} onChange={handleAddressChange} />
+                </Form.Group>
+
+
              
-
-              <button
-                type="submit"
-                className="bg-green-500 text-danger px-4 py-2 rounded"
-              >
-                Save Changes
-              </button>
-              <button
-                type="button"
-                className="bg-gray-500 text-danger px-4 py-2 rounded ml-2"
-                onClick={() => setEditMode(false)}
-              >
-                Cancel
-              </button>
+                <Button type="submit" variant="success" className="me-2">
+                  Save Changes
+                </Button>
+                <Button variant="secondary" onClick={() => setEditMode(false)}>
+                  Cancel
+                </Button>
             </form>
           )}
         </>
       ) : (
         <p>No profile found.</p>
       )}
+      </Card>
+      </Container>
     </div>
   );
 };
