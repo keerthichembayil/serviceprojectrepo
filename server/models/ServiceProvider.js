@@ -23,8 +23,16 @@ availability: {
 },
   experience: { type: Number, required: true }, // Years of experience
   isVerified: { type: Boolean, default: false }, // Admin must approve manually
-  // ratings: [{ type: Number }],
-  // averageRating: { type: Number, default: 0 }
-});
+
+   // New fields for email verification
+   isRejected: {
+    type: Boolean,
+    default: false, // Default to not rejected
+  },
+   
+   verificationToken: { type: String }, // Stores verification token
+   tokenExpiry: { type: Date }, // Stores token expiry time
+ 
+},{versionKey:false});
 
 module.exports = mongoose.model('ServiceProvider', serviceProviderSchema);

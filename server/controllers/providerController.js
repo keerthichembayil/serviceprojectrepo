@@ -75,5 +75,71 @@ const addProvider=async(req,res)=>{
     }
 
   }
+
+
+
+  const verifyProvider=async (req, res) => {
+    try {
+        const { token } = req.params;
+        const provider = await Serviceprovider.findOne({ verificationToken: token });
+
+        if (!provider || Date.now() > provider.tokenExpiry) {
+            return res.status(400).json({ message: "Invalid or Expired Token" });
+        }
+
+        provider.isVerified = true;
+        provider.verificationToken = undefined;
+        provider.tokenExpiry = undefined;
+        await provider.save();
+
+        res.status(200).json({ message: "Provider Verified Successfully!" });
+
+    } catch (error) {
+        console.error("Error verifying provider:", error);
+        res.status(500).json({ message: "Verification failed", error });
+    }
+};
+
+
+
+
+
+const fetchfreshprovider=async(req,res)=>{
+  try{
+
+    // Fetch provider details using user ID from authentication middleware
+    const provider = await Serviceprovider.findOne({ userId: req.user.id });
+    if (!provider) {
+      return res.status(404).json({ message: "complete your profile" });
+    }
+
+    // Check if all required details are present
+    const hasDetails = provider.name && provider.services.length > 0 && provider.image && provider.document && provider.experience !== undefined;
+
+    res.json({
+      details: hasDetails, // Check if mandatory details exist
+      isVerified: provider.isVerified, // Check verification status
+      isPending: !provider.isVerified && !provider.isRejected, // If not verified & not rejected, it's pending
+      isRejected: provider.isRejected, // Check rejection status
+   
+
+    });
+
+
+
+  }
+  catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+
+
+
+
+
+
+
+
   
-  module.exports={addProvider};
+  module.exports={addProvider,verifyProvider,fetchfreshprovider};

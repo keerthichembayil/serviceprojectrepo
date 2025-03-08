@@ -17,25 +17,4 @@ router.post("/adminlogin", adminLogin);
 
 
 
-
-// router.get('/providers', protect, authorize("admin"), getAllproviders);
-
-
-
-
-// router.get('/transaction', protect, authorize("admin"), getalltransaction);
-
-// router.get('/reports/trends', protect, authorize("admin"), getservicetrendreport);
-// router.get('/reports/performance', protect, authorize("admin"), getperformancereport);
-
-
-
-
-
-
-
-
-
-
-
 module.exports = router;

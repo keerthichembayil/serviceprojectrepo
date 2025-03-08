@@ -1,6 +1,8 @@
 const Admin = require("../models/Admin");
 const User = require("../models/User");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const Serviceprovider=require("../models/ServiceProvider");
 const jwt = require("jsonwebtoken");
@@ -154,20 +156,50 @@ const approveProvider = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const provider = await Serviceprovider.findById(id);
+    const provider = await Serviceprovider.findById(id).populate("userId");;
     if (!provider) return res.status(404).json({ message: "Provider not found" });
 
     if (provider.isVerified) {
       return res.status(400).json({ message: "Provider is already approved" });
     }
 
-    provider.isVerified = true;
-    await provider.save();
+     // Generate verification token
+     const token = crypto.randomBytes(32).toString("hex");
+     provider.verificationToken = token;
+     provider.tokenExpiry = Date.now() + 24 * 60 * 60 * 1000; // Valid for 24 hours
+     await provider.save();
 
-    res.json({ success: true, message: "Provider approved successfully", provider });
+       // Send verification email
+       const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+            user: process.env.EMAIL, // Your email
+            pass: process.env.EMAIL_PASSWORD, // Your email password or app password
+        },
+    });
+    const verificationLink = `${process.env.FRONTEND_URL}/verify/${token}`;
+  
+  const mailOptions = {
+    from: `"Service Management Team" <${process.env.EMAIL}>`,
+    to: provider.userId.email,
+    subject: "Provider Account Verification",
+    html: `
+      <p>Hello <strong>${provider.name}</strong>,</p>
+      <p>Click the link below to verify your account:</p>
+      <p><a href="${verificationLink}" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Account</a></p>
+      <p>This link will expire in <strong>24 hours</strong>.</p>
+      <p>Best Regards,<br>Service Management Team</p>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+
+
+  console.log("Verification email sent successfully to:", provider.userId.email);
+res.status(200).json({ message: "Verification email sent to provider" });
   } catch (error) {
     console.error("Error approving provider:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Approval failed", error });
   }
 };
 

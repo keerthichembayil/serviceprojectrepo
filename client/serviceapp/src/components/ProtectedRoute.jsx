@@ -7,6 +7,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     // Fallback to localStorage if Redux state is empty
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const storedToken = localStorage.getItem("token");
+    console.log("stored user",storedUser);
 
     const currentUser = user || storedUser;
     const currentToken = token || storedToken;

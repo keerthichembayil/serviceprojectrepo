@@ -17,11 +17,12 @@ const Viewprovider = () => {
 
   const handleApprove = async () => {
     try {
-      await dispatch(approveProvider(id));
-      alert("Provider Approved Successfully!");
+      const response=await dispatch(approveProvider(id)).unwrap();
+      alert(response.message);
       // navigate("/admin/dashboard"); // Redirect after approval
     } catch (error) {
       console.error("Approval Error:", error);
+      alert(error.message || "Approval failed");
     }
   };
   const handleDownload = () => {
@@ -61,7 +62,7 @@ const Viewprovider = () => {
           {provider.document ? (
             <div className="text-center mt-3">
               <a href={`${provider.document}?fl_attachment=true`} download>
-                <Button variant="primary" className="me-2">Download Document</Button>
+                <Button variant="success" className="me-2">Download Document</Button>
               </a>
               <Button variant="secondary" onClick={handleDownload}>
                 Open in New Tab

@@ -10,6 +10,9 @@ import clientRequestDetailsReducer from "./slices/clientRequestDetailsSlice";
 import providerDetailsReducer from "./slices/providerdetailsSlice"; // Import provider details slice
 import providerdetailsad from "./slices/providerdetailadmSlice";
 import userListReducer from "./slices/userListSlice";
+import providerverifyreducer from "./slices/verifyproviderSlice"; // Import provider slice
+import freshproviderreducer from "./slices/setfreshproviderSlice";
+import fetchrequestdetabyprovidereducer from "./slices/viewrequestbyproviderSlice";
 
 
 
@@ -27,6 +30,9 @@ const store = configureStore({
     providerDetails: providerDetailsReducer,
     userList:userListReducer,
     providerDetailsad:providerdetailsad,
+    providerverify:providerverifyreducer,
+    providerfresh:freshproviderreducer,
+    requests:fetchrequestdetabyprovidereducer,
     
   },
 });

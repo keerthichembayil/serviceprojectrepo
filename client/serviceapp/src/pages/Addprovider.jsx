@@ -82,15 +82,9 @@ const AddProvider = () => {
     <div>
       <Container fluid>
       <Row>
-      <Col md={3} className="bg-dark text-white p-4">
-          <h4>Provider Dashboard</h4>
-          <Button variant="light" className="w-100 mb-3">
-            View & Manage Details
-          </Button>
-          <Button variant="light" className="w-100">
-            View Client Requests
-          </Button>
-        </Col>
+      {/* <Col md={3} className="bg-dark text-white p-4">
+          
+        </Col> */}
         <Col md={9} className="p-4">
           <h2 className="mb-4">Add Service Details</h2>
           {message && <Alert variant="success">{message}</Alert>}

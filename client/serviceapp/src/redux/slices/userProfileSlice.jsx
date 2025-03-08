@@ -9,7 +9,7 @@ export const fetchUserProfile = createAsyncThunk(
       const token = getState().auth.token; // Get token from Redux store
       //No need to import authSlice – Redux slices are already part of the global store.
 //Keeps your thunk function modular – It can access Redux state without needing external imports.
-        console.log("entered uerprofileslice");
+        
       const config = {
         headers: {
           Authorization: `Bearer ${token}`, // Send token in headers

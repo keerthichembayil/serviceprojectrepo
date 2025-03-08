@@ -8,12 +8,13 @@ const serviceRequestSchema = new mongoose.Schema({
   }],
   additionalNotes: { type: String,required:true },
   requestDate: { type: Date, default: Date.now },
+  serviceDate: { type: Date, required: true }, // User-selected date
   status: {
     type: String,
     enum: ['pending', 'accepted', 'completed', 'cancelled'],
     default: 'pending'
   }
-  // completedAt: { type: Date }
+  
 });
 serviceRequestSchema.index({ clientId: 1, providerId: 1 }, { unique: true });//to prevent duplicate entry
 

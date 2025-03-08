@@ -10,8 +10,7 @@ router.post("/login", loginUser);
 
 
 
-// router.get("/getProfileclient", protect,authorize("client"),getProfile);
-// router.get("/getProfileprovider", protect,authorize("provider"),getProfile);
+
 
 
 

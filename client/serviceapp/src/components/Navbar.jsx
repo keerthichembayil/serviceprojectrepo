@@ -3,6 +3,7 @@ import { Link,useNavigate } from "react-router-dom";
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice"; // Import logout action
+import { resetState } from "../redux/slices/setfreshproviderSlice"; // Import resetState action
 import '../css/Navbar.css'
 
 
@@ -12,6 +13,7 @@ const Navbar2 = () => {
   const { user} = useSelector((state) => state.auth); // Get user state from Redux
 
   const handleLogout = () => {
+    dispatch(resetState());//the provierstate previous provider value persist cheyathirikkan when logout it also get clear
     dispatch(logout());
     navigate("/login"); // Redirect to login after logout
   };

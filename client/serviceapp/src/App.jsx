@@ -19,6 +19,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navigate } from "react-router-dom";
 import Viewclientrequests from "./pages/Viewclientrequests";
 import Viewprovider from "./pages/Viewprovider";
+import VerifyProvider from "./pages/VerifyProvider";
+import Providerafterverify from "./pages/Providerafterverify";
 
 
 function App() {
@@ -42,6 +44,9 @@ function App() {
   <Route path="/login" element={<><Navbar2/><Login/></>} />
   <Route path="/register" element={<><Navbar2/><Register/></>} />
   <Route path="/adminlogin" element={<AdminLogin/>} />
+  <Route path="/verify/:token" element={<VerifyProvider/>} />
+  <Route path="/afterverifyprovider" element={<Providerafterverify/>} />
+  
  
         {/* Admin Dashboard Route */}
         <Route
@@ -67,6 +72,7 @@ function App() {
   <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
   <Route path="/viewclientreqdet" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Viewclientrequests/></>}</ProtectedRoute>} />
   <Route path="/viewprovider/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</AdminProtectedRoute>} />
+  {/* <Route path="/viewrequestsbyprovider" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerafterverify/></>}</ProtectedRoute>} /> */}
 
 
 

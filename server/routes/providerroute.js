@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const {protect,authorize}=require("../middleware/authmiddleware");
 const upload=require("../middleware/multer");
-const  { addProvider} = require("../controllers/providerController");
+const  { addProvider,verifyProvider,fetchfreshprovider} = require("../controllers/providerController");
 //provider 
 
 
@@ -17,6 +17,10 @@ router.post(
   addProvider
 );
 
+router.get("/verify/:token",verifyProvider);
+
+
+ router.get("/meprovider",protect,authorize("provider"),fetchfreshprovider);
 
 
 // router.post("/setavailability",protect,authorize("provider"),updateavailability);

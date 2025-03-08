@@ -36,8 +36,8 @@ export const approveProvider = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      await axios.put(`/admin/approveprovider/${id}`, {}, config); // Pass empty body and headers
-      return id;
+      const { data } = await axios.put(`/admin/approveprovider/${id}`, {}, config);
+      return data; // Return the response data
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Failed to approve provider");
     }

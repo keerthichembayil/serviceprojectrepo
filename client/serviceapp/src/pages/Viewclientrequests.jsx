@@ -27,6 +27,7 @@ const ClientRequests = () => {
               <th>Provider Name</th>
               <th>Service</th>
               <th>Image</th>
+              <th>Service Date</th>
               <th>Additional Notes</th>
               <th>Status</th>
             </tr>
@@ -51,6 +52,9 @@ const ClientRequests = () => {
                   ) : (
                     "No Image"
                   )}
+                </td>
+                <td>
+                  {request.serviceDate ? new Date(request.serviceDate).toDateString() : "N/A"}
                 </td>
                 <td>{request.additionalNotes || "No notes"}</td>
                 <td>

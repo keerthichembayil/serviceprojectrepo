@@ -4,6 +4,8 @@ import { fetchProviderDetails } from "../redux/slices/providerdetailsSlice"; // 
 import { requestService, clearMessage } from "../redux/slices/serviceRequestSlice";
 import { useParams } from "react-router-dom"; // Get provider ID from URL
 import { Container, Row, Col, Card, Button, Form, Alert, Spinner } from "react-bootstrap";
+import Calendar from "react-calendar"; // Import Calendar
+import "react-calendar/dist/Calendar.css"; // Import Calendar Styles
 import '../css/Providerdetails.css'
 
 const ProviderDetails = () => {
@@ -17,6 +19,8 @@ const ProviderDetails = () => {
   //renamed to requestloading ,requesterror
   const [notes, setNotes] = useState(""); // State to store additional notes
   const [selectedServices, setSelectedServices] = useState([]); // Store selected services
+  const [serviceDate, setServiceDate] = useState(new Date()); // State for selected date
+
 
 
 
@@ -39,8 +43,19 @@ const ProviderDetails = () => {
     alert("Please select at least one service.");
     return;
   }
-  dispatch(requestService({ providerId: id, services: selectedServices,additionalNotes: notes }));
+  dispatch(requestService({ providerId: id, services: selectedServices,additionalNotes: notes,
+    serviceDate: serviceDate.toISOString(), // Ensure it's sent as a proper date format
+   }));
 };
+
+
+
+console.log("Dispatching Request:", {
+  providerId: id,
+  services: selectedServices,
+  additionalNotes: notes,
+  serviceDate: serviceDate.toISOString(), // This should not be undefined
+});
 
   
    // Clear messages after 3 seconds
@@ -128,6 +143,16 @@ const ProviderDetails = () => {
                 ) : (
                   <Alert variant="warning">No services available</Alert>
                 )}
+              </Form.Group>
+              {/* Date Picker */}
+              <Form.Group className="mt-3">
+                <Form.Label className="text-danger">Select Service Date</Form.Label>
+                <Calendar
+                  onChange={setServiceDate}
+                  value={serviceDate}
+                  minDate={new Date()} // Disable past dates
+                />
+                <p className="mt-2">Selected Date: <strong>{serviceDate.toDateString()}</strong></p>
               </Form.Group>
 
               <Form.Group className="mt-3 providerdetails">

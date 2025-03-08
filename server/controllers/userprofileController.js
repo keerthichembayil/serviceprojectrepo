@@ -2,8 +2,7 @@ const User = require("../models/User");
  const getUserProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
-    console.log("enteed userprofilecontrolelr");
-    console.log("user from back",user);
+  
 
     if (!user) {
       res.status(404);

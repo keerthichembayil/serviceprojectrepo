@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     city: { type: String, required: false, default: "" },
     state: { type: String, required: false, default: "" }
   },
-  isVerified: { type: Boolean, default: false }, // For service providers
+  
   createdAt: { type: Date, default: Date.now }
 });
 
