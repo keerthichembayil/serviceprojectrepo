@@ -11,7 +11,7 @@ const serviceRequestSchema = new mongoose.Schema({
   serviceDate: { type: Date, required: true }, // User-selected date
   status: {
     type: String,
-    enum: ['pending', 'accepted', 'completed', 'cancelled'],
+    enum: ['pending', 'accepted', 'completed', 'rejected'],
     default: 'pending'
   }
   

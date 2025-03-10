@@ -21,6 +21,8 @@ import Viewclientrequests from "./pages/Viewclientrequests";
 import Viewprovider from "./pages/Viewprovider";
 import VerifyProvider from "./pages/VerifyProvider";
 import Providerafterverify from "./pages/Providerafterverify";
+import PaymentSucess from "./pages/PaymentSucess";
+import Paymentfailed from "./pages/Paymentfailed";
 
 
 function App() {
@@ -72,8 +74,8 @@ function App() {
   <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
   <Route path="/viewclientreqdet" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Viewclientrequests/></>}</ProtectedRoute>} />
   <Route path="/viewprovider/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</AdminProtectedRoute>} />
-  {/* <Route path="/viewrequestsbyprovider" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerafterverify/></>}</ProtectedRoute>} /> */}
-
+  <Route path="/payment-success" element={<PaymentSucess />} />
+        <Route path="/payment-failed" element={<Paymentfailed />} />
 
 
 

@@ -1,15 +1,58 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClientRequests } from "../redux/slices/clientRequestDetailsSlice";
-import { Container, Table, Spinner, Alert, Image,Badge } from "react-bootstrap";
+import { Container, Table, Spinner, Alert, Image,Badge,Button,Form } from "react-bootstrap";
+import { createPaymentSession, clearPaymentState } from "../redux/slices/paymentSlice";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Replace with your actual key
+
 
 const ClientRequests = () => {
   const dispatch = useDispatch();
+  const userEmail = useSelector((state) => state.auth.user?.email); // Get user email
   const { requests, loading, error } = useSelector((state) => state.clientRequestDetails);
+  const { sessionId, paymentLoading } = useSelector((state) => state.payment);
+
+  // State to store user-entered price for each request
+  const [customAmounts, setCustomAmounts] = useState({});
 
   useEffect(() => {
     dispatch(fetchClientRequests());
   }, [dispatch]);
+
+
+  useEffect(() => {
+    if (sessionId) {
+      handleStripeRedirect();
+    }
+  }, [sessionId]);
+
+  const handlePayment = async (request) => {
+    const amount = customAmounts[request._id]; // Get entered price
+
+    if (!userEmail) {
+      alert("User email not found. Please log in.");
+      return;
+    }
+
+    try {
+      dispatch(createPaymentSession({
+        requestId: request._id,
+        amount,
+        clientEmail: userEmail,
+      }));
+    } catch (error) {
+      console.error("Payment error:", error);
+    }
+  };
+
+  const handleStripeRedirect = async () => {
+    const stripe = await stripePromise;
+    if (sessionId) {
+      await stripe.redirectToCheckout({ sessionId });
+      dispatch(clearPaymentState()); // Clear payment state after redirection
+    }
+  };
 
   return (
     <Container className="mt-4">
@@ -30,6 +73,7 @@ const ClientRequests = () => {
               <th>Service Date</th>
               <th>Additional Notes</th>
               <th>Status</th>
+              <th>Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -69,9 +113,33 @@ const ClientRequests = () => {
                   >
                     {request.status}
                   </Badge>
+
+
+                  {request.status === "complete" && (
+                   <>
+                   <Form.Control
+                     type="number"
+                     min="1"
+                     placeholder="Enter Amount"
+                     value={customAmounts[request._id] || ""}
+                     onChange={(e) =>
+                       setCustomAmounts({ ...customAmounts, [request._id]: e.target.value })
+                     }
+                     className="mb-2"
+                   />
+                   <Button
+                     variant="success"
+                     size="sm"
+                     onClick={() => handlePayment(request)}
+                     disabled={paymentLoading || !customAmounts[request._id]}
+                   >
+                     {paymentLoading ? "Processing..." : "Pay Now"}
+                   </Button>
+                 </>
+                  )}
+               
                 </td>
-                
-              </tr>
+                 </tr>
             ))}
           </tbody>
         </Table>

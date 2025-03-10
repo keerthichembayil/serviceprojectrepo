@@ -13,6 +13,8 @@ import userListReducer from "./slices/userListSlice";
 import providerverifyreducer from "./slices/verifyproviderSlice"; // Import provider slice
 import freshproviderreducer from "./slices/setfreshproviderSlice";
 import fetchrequestdetabyprovidereducer from "./slices/viewrequestbyproviderSlice";
+import paymentReducer from "./slices/paymentSlice"; // Import payment slice
+
 
 
 
@@ -33,6 +35,7 @@ const store = configureStore({
     providerverify:providerverifyreducer,
     providerfresh:freshproviderreducer,
     requests:fetchrequestdetabyprovidereducer,
+    payment: paymentReducer,
     
   },
 });

@@ -8,7 +8,7 @@ router.post("/request",protect, authorize("client"), requestService);
 router.get("/clientrequests",protect, authorize("client"), getClientRequests);
 //provider
 router.get("/providerrequests", protect,authorize("provider"), getProviderRequests);
-router.put("/updatestatus", protect,authorize("provider"), updateRequestStatus);
+router.put("/updatestatus/:requestId", protect,authorize("provider"), updateRequestStatus);
 
  
 

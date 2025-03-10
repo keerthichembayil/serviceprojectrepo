@@ -103,7 +103,7 @@ const getProviderRequests = async (req, res) => {
         //means provider when enter we get providerid using that provider id fetch client id from
         // ServiceRequest collection then go to user collection to fetch the client details and display it
         // means finding the client of that specific provider then find that client details using that client id
-        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone").select("services additionalNotes");
+        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone").select("services additionalNotes serviceDate status");
         return res.status(200).json(requests);
     } catch (error) {
         console.error("Error:", error);
@@ -114,20 +114,28 @@ const getProviderRequests = async (req, res) => {
 // Update request status (Accept, Complete, Cancel)
 const updateRequestStatus = async (req, res) => {
     try {
-        const { requestId, status } = req.body;
-        if (!["pending", "accepted", "completed", "cancelled"].includes(status)) {
-            return res.status(400).json({ error: "Invalid status" });
-        }
+        const { requestId } = req.params;
+        const { status } = req.body;
+        // Validate status
+    const validStatuses = ["pending","accepted", "rejected", "completed"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+ // Find the request and update status
+ const updatedRequest = await ServiceRequest.findByIdAndUpdate(
+    requestId,
+    { status },
+    { new: true }
+  );
 
-        const request = await ServiceRequest.findById(requestId);
-        if (!request) {
-            return res.status(404).json({ error: "Service request not found" });
-        }
+  if (!updatedRequest) {
+    return res.status(404).json({ message: "Service request not found" });
+  }
 
-        request.status = status;
-        await request.save();
-
-        return res.status(200).json({ message: "Request status updated", request });
+  res.status(200).json({
+    message: `Request marked as ${status}`,
+    updatedRequest,
+  });
 
     } catch (error) {
         console.error("Error:", error);
