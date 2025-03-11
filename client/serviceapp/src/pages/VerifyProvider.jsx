@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyProvider } from "../redux/slices/verifyproviderSlice";
+import { fetchProviderDetails } from "../redux/slices/setfreshproviderSlice";
 import { Spinner, Alert, Container } from "react-bootstrap";
 
 const VerifyProvider = () => {
@@ -13,7 +14,9 @@ const VerifyProvider = () => {
 
     useEffect(() => {
         if (token) {
-            dispatch(verifyProvider(token));
+            dispatch(verifyProvider(token)).then(() => {
+                dispatch(fetchProviderDetails()); // Fetch updated provider details
+            });
         }
     }, [token, dispatch]);
 

@@ -23,6 +23,9 @@ import VerifyProvider from "./pages/VerifyProvider";
 import Providerafterverify from "./pages/Providerafterverify";
 import PaymentSucess from "./pages/PaymentSucess";
 import Paymentfailed from "./pages/Paymentfailed";
+import Viewuser from "./pages/Viewuser";
+import About from "./components/About";
+import Contact from "./components/Contact"
 
 
 function App() {
@@ -31,7 +34,7 @@ function App() {
 
   // Get admin authentication state separately
   const isAdmin = useSelector((state) => state.adminAuth.role === "admin"); // Check admin role
-  console.log(isAdmin);
+  
 
 
  
@@ -44,6 +47,8 @@ function App() {
   <Routes>
   <Route path="/" element={<><Navbar2/><Home/></>} />
   <Route path="/login" element={<><Navbar2/><Login/></>} />
+  <Route path="/about" element={<><Navbar2/><About/></>} />
+  <Route path="/contact" element={<><Navbar2/><Contact/></>} />
   <Route path="/register" element={<><Navbar2/><Register/></>} />
   <Route path="/adminlogin" element={<AdminLogin/>} />
   <Route path="/verify/:token" element={<VerifyProvider/>} />
@@ -74,8 +79,10 @@ function App() {
   <Route path="/provider/:id" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ProviderDetails/></>}</ProtectedRoute>} />
   <Route path="/viewclientreqdet" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Viewclientrequests/></>}</ProtectedRoute>} />
   <Route path="/viewprovider/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewprovider/></>}</AdminProtectedRoute>} />
-  <Route path="/payment-success" element={<PaymentSucess />} />
-        <Route path="/payment-failed" element={<Paymentfailed />} />
+  <Route path="/user/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewuser/></>}</AdminProtectedRoute>} />
+  <Route path="/payment-success" element={<><Navbar2/><PaymentSucess /></>} />
+        <Route path="/payment-failed" element={<><Navbar2/><Paymentfailed /></>} />
+        
 
 
 

@@ -69,7 +69,7 @@ const ProviderDashboard = () => {
         </Col>
 
         {/* Main Content */}
-        <Col md={9} className="p-4">
+        <Col md={9} className="p-4 mainsectionprovider">
         {error && <Alert variant="danger" className="text-center">{error}</Alert>}
           {!providerDetails ? (
             <AddProvider /> // Show form to add provider details

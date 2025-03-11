@@ -3,15 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProviderDetails, approveProvider } from "../redux/slices/providerdetailadmSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Spinner, Alert, Image, Container, Row, Col, Card, Stack } from "react-bootstrap";
+import '../css/viewprovider.css'
 const Viewprovider = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const { provider, loading, error } = useSelector((state) => state.providerDetailsad);
+  console.log("provider",provider);
+ 
 
   useEffect(() => {
-    console.log("Provider ID:", id);
+  
     dispatch(fetchProviderDetails(id));
   }, [dispatch, id]);
 
@@ -19,6 +22,8 @@ const Viewprovider = () => {
     try {
       const response=await dispatch(approveProvider(id)).unwrap();
       alert(response.message);
+      dispatch(fetchProviderDetails(id));
+      forceRender((prev) => prev + 1); // Force UI re-render
       // navigate("/admin/dashboard"); // Redirect after approval
     } catch (error) {
       console.error("Approval Error:", error);
@@ -33,18 +38,18 @@ const Viewprovider = () => {
   if (error) return <Alert variant="danger">{error}</Alert>;
 
   return (
-    <div>
+    <div className="viewproviderbyadmin">
         
-        <Container className="mt-4">
+        <Container>
       <h2 className="text-center mb-4">Provider Details</h2>
 
       {provider && (
-        <Card className="shadow-lg p-4">
+        <Card className="shadow-lg p-4 cardproviderdet">
           <Row className="align-items-center">
-            <Col md={3} className="text-center">
-              <Image src={provider.image} alt={provider.name} roundedCircle width="150" height="150" />
+            <Col md={6} className="text-center">
+              <Image src={provider.image} alt={provider.name} roundedCircle width="300" height="150"className="border border-secondary" />
             </Col>
-            <Col md={9}>
+            <Col md={6}>
               <Stack gap={2}>
                 <h4 className="fw-bold">{provider.name}</h4>
                 <p><strong>Services:</strong> {provider.services?.join(", ")}</p>
@@ -58,7 +63,7 @@ const Viewprovider = () => {
 
           <hr />
 
-          <h4 className="text-center">Provider Document</h4>
+          <h4 className="text-center">Provider Uploaded  Document</h4>
           {provider.document ? (
             <div className="text-center mt-3">
               <a href={`${provider.document}?fl_attachment=true`} download>
@@ -72,7 +77,7 @@ const Viewprovider = () => {
             <Alert variant="warning" className="text-center mt-3">No document uploaded</Alert>
           )}
 
-          {!provider.isVerified && (
+          {!provider?.isVerified && (
             <div className="text-center mt-4">
               <Button onClick={handleApprove} variant="success">
                 Approve Provider

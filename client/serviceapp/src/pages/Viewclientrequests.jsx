@@ -4,14 +4,18 @@ import { fetchClientRequests } from "../redux/slices/clientRequestDetailsSlice";
 import { Container, Table, Spinner, Alert, Image,Badge,Button,Form } from "react-bootstrap";
 import { createPaymentSession, clearPaymentState } from "../redux/slices/paymentSlice";
 import { loadStripe } from "@stripe/stripe-js";
+import '../css/clientreq.css'
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Replace with your actual key
+
 
 
 const ClientRequests = () => {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.auth.user?.email); // Get user email
   const { requests, loading, error } = useSelector((state) => state.clientRequestDetails);
-  const { sessionId, paymentLoading } = useSelector((state) => state.payment);
+
+  
+  const { sessionId, loading: paymentLoading} = useSelector((state) => state.payment);
 
   // State to store user-entered price for each request
   const [customAmounts, setCustomAmounts] = useState({});
@@ -55,7 +59,8 @@ const ClientRequests = () => {
   };
 
   return (
-    <Container className="mt-4">
+    <div className="clientrqdet">
+    <Container>
       <h2 className="mb-3">Your Service Requests</h2>
       {loading && <Spinner animation="border" />}
       {error && <Alert variant="danger">{error}</Alert>}
@@ -114,8 +119,9 @@ const ClientRequests = () => {
                     {request.status}
                   </Badge>
 
-
-                  {request.status === "complete" && (
+</td>
+<td>
+                  {request.status === "completed" && (
                    <>
                    <Form.Control
                      type="number"
@@ -145,6 +151,7 @@ const ClientRequests = () => {
         </Table>
       )}
     </Container>
+    </div>
   );
 };
 

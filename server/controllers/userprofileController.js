@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
  const getUserProfile = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select("-password");

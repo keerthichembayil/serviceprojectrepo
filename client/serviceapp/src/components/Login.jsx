@@ -42,7 +42,7 @@ const Login = () => {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 logindesign">
       <Card style={{ width: "25rem" }} className="p-4 shadow-lg">
-        <Card.Body>
+        <Card.Body style={{ backgroundColor: "#CCCCFF" }}>
           <h2 className="text-center mb-4 text-success">Login</h2>
           {error && <Alert variant="danger">{error.message || "Login failed"}</Alert>}
           {error && <p className="error">{error.message || "Login failed"}</p>}

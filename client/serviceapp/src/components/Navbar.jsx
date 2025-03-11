@@ -28,8 +28,8 @@ const Navbar2 = () => {
        
           <Nav className="ms-auto">
           <Nav.Link as={Link} to="/" className="text-danger">Home</Nav.Link>
-          <Nav.Link as={Link} to="/login" className="text-danger">About</Nav.Link>
-          <Nav.Link as={Link} to="/login" className="text-danger">Contact</Nav.Link>
+          <Nav.Link as={Link} to="/about" className="text-danger">About</Nav.Link>
+          <Nav.Link as={Link} to="/contact" className="text-danger">Contact</Nav.Link>
          
 
     

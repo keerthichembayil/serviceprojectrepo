@@ -9,10 +9,11 @@ const protect = async (req, res, next) => {
        
       try {
         
-        
+     
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
      
         req.admin = await Admin.findById(decoded.adminId).select("-password");
+      
         
 
        //attching user object with userid decoded from token ie (userId set while logging)

@@ -9,6 +9,7 @@ const ProviderList = () => {
   const dispatch = useDispatch();
   const { providers, loading: providerLoading, error: providerError } = useSelector((state) => state.providerList);
   const { users, loading: userLoading, error: userError } = useSelector((state) => state.userList);
+  console.log("users",users);
 
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const ProviderList = () => {
   
 
   return (
-    <div className="mt-4">
+    <div>
       <h2 className="text-center mb-4">Dashboard</h2>
       
       <Row>
@@ -74,7 +75,7 @@ const ProviderList = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                      <Link to={`/admin/user/${user._id}`}>
+                      <Link to={`/user/${user._id}`}>
                         <Button variant="danger" size="sm">View</Button>
                       </Link>
                     </td>

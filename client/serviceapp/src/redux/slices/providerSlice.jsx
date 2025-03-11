@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../axios";
 
+
 // Async thunk to add servicer details by provider
 export const addProvider = createAsyncThunk(
   "provider/addingProvider",

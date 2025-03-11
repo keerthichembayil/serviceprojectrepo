@@ -5,6 +5,9 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 const Serviceprovider=require("../models/ServiceProvider");
+const ServiceRequest=require("../models/ServiceRequest");
+
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -137,7 +140,7 @@ const getProviderById = async (req, res) => {
     // Find provider by ID and populate user details (email, phone, address)
     const provider = await Serviceprovider.findById(id)
       .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
-      .select("name services image document experience userId");
+      .select("name services image document experience userId isVerified");
       
 
     if (!provider) {
@@ -206,6 +209,39 @@ res.status(200).json({ message: "Verification email sent to provider" });
 
 
 
+const listspecificuser=async(req,res)=>{
+  try{
+    console.log("Requested ID:", req.params.id);
+
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid clientid" });
+    }
+
+    const requests = await ServiceRequest.find({ clientId: req.params.id })
+
+      .populate({
+        path: "clientId",
+        select: "name email", // Fetch client name and email
+      })
+      .populate({
+        path: "providerId",
+        select: "name", // Fetch provider name
+      })
+      .select("additionalNotes services serviceDate status"); // Fetch additional fields
+
+      if (!requests.length) {
+        return res.status(404).json({ message: "No service requests found for this client" });
+      }
+  
+    res.status(200).json(requests);
+
+  }
+  catch(error){
+    console.error("Error fetching service request:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
+    
+  }
+}
 
 
 
@@ -215,5 +251,4 @@ res.status(200).json({ message: "Verification email sent to provider" });
 
 
 
-
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider};
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser};

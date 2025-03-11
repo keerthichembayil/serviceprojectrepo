@@ -1,7 +1,28 @@
 import React from 'react'
-import { Container, Row, Col, Navbar, Nav, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Navbar, Nav, Button, Card ,Carousel} from "react-bootstrap";
 
 import '../css/Home.css'
+
+const testimonials = [
+  {
+    name: "John Doe",
+    text: "Excellent service, highly recommended!",
+    image: "images/testimonial1.jpg", // Replace with real image
+    designation: "Business Owner",
+  },
+  {
+    name: "Jane Smith",
+    text: "Very professional and timely service. Will use again!",
+    image: "images/testimonial2.avif",
+    designation: "Project Manager",
+  },
+  {
+    name: "David Wilson",
+    text: "Reliable and efficient. Great customer support!",
+    image: "images/testimonial3.jpg",
+    designation: "Entrepreneur",
+  },
+];
 
 const Home = () => {
   return (
@@ -47,7 +68,7 @@ const Home = () => {
                 <Card.Img variant="top" src={service.image} className='homecard' />
                 <Card.Body className='homecardbody'>
                   <Card.Title>{service.title}</Card.Title>
-                  <Button variant="primary">Book Now</Button>
+                 
                 </Card.Body>
               </Card>
             </Col>
@@ -56,15 +77,55 @@ const Home = () => {
       </Container>
 
       {/* Testimonials */}
-      <Container fluid className="py-5 bg-light text-center" id="testimonials">
-        <h2>What Our Clients Say</h2>
-        <p>"Excellent service, highly recommended!" - John Doe</p>
-      </Container>
+      <Container fluid className="py-5 testimoni text-center" id="testimonials">
+      <h2 className="mb-4">What Our Clients Say</h2>
+      
+      <Carousel indicators={false} controls={true} className="mx-auto" style={{ maxWidth: "600px" }}  nextIcon={<span className="carousel-control-next-icon bg-dark p-3 rounded-circle" />}
+        prevIcon={<span className="carousel-control-prev-icon bg-dark p-3 rounded-circle" />}>
+        {testimonials.map((testimonial, index) => (
+          <Carousel.Item key={index} style={{ backgroundColor: "#e3f2fd", borderRadius: "10px", padding: "20px" }}>
+              <div className="p-4" style={{ backgroundColor: "#f8f9fa", borderRadius: "10px" }}> 
+            <Card className="p-4 border-0 shadow-sm">
+              <Card.Img
+                variant="top"
+                src={testimonial.image}
+                className="rounded-circle mx-auto d-block"
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              />
+              <Card.Body>
+                <Card.Text className="fst-italic">"{testimonial.text}"</Card.Text>
+                <h5 className="mt-3">{testimonial.name}</h5>
+                <p className="text-muted">{testimonial.designation}</p>
+              </Card.Body>
+            </Card>
+            </div>
+          </Carousel.Item>
+
+        ))}
+      </Carousel>
+    
+    </Container>
 
       {/* Footer */}
       <footer className="bg-dark text-white text-center py-3" id="contact">
-        <p>Contact us at servicehub@example.com | Follow us on social media</p>
-      </footer>
+      <Container>
+        <p>Contact us at servicehub@gmail.com | Follow us on social media</p>
+        <div>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+            <i className="bi bi-facebook fs-4"></i>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+            <i className="bi bi-twitter fs-4"></i>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+            <i className="bi bi-instagram fs-4"></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-white mx-2">
+            <i className="bi bi-linkedin fs-4"></i>
+          </a>
+        </div>
+      </Container>
+    </footer>
     
     </div>
   )

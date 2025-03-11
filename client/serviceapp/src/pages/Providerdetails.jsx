@@ -85,7 +85,8 @@ console.log("Dispatching Request:", {
   }
 
   return (
-    <Container className="mt-5">
+    <div className="provier-det">
+    <Container>
       <Row className="justify-content-center">
         <Col md={8}>
           <Card className="shadow-lg">
@@ -184,6 +185,7 @@ console.log("Dispatching Request:", {
         </Col>
       </Row>
     </Container>
+    </div>
   );
 };
 

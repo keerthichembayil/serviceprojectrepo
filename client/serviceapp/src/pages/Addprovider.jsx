@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProvider,clearMessage} from "../redux/slices/providerSlice";
+import { fetchProviderDetails } from "../redux/slices/setfreshproviderSlice";
 import { Alert } from "react-bootstrap";
 import { Container, Row, Col, Button, Form,Badge} from "react-bootstrap";
 const predefinedServices = ["Electrician", "Plumbing", "Carpentry", "Painting", "Cleaning"];
@@ -51,7 +52,7 @@ const AddProvider = () => {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     if (!services.length || !experience || !image || !document) {
@@ -75,7 +76,22 @@ const AddProvider = () => {
   console.log("FormData before dispatch:", Object.fromEntries(formData.entries()));
   // The image won't appear in this log because it's a file.
     
-  dispatch(addProvider(formData));
+  // dispatch(addProvider(formData));
+
+
+  try {
+    await dispatch(addProvider(formData)).unwrap(); // Wait for the API call to complete
+    console.log("Provider added successfully!");
+    //this was used after completing profile also we need to anually refresh to fecth the update state
+    //so called the fetchproviderdetails from here to solve that issue
+    // Introduce a slight delay before fetching provider details to ensure backend updates
+    setTimeout(() => {
+      dispatch(fetchProviderDetails());
+    }, 500);  // Delay by 500ms to ensure backend processes the new data
+
+  } catch (error) {
+    console.error("Error adding provider:", error);
+  }
   };
 
   return (

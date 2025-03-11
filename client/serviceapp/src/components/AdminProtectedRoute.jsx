@@ -21,7 +21,7 @@ const AdminProtectedRoute = ({ children,requiredRole }) => {
         console.log(`Access denied to ${requiredRole} route, redirecting to home...`);
         return <Navigate to="/" />;
     }
-    console.log(currentAdmin.role);
+   
 
     return children;
 };

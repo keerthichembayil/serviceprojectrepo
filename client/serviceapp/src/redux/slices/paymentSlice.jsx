@@ -13,7 +13,7 @@ export const createPaymentSession = createAsyncThunk(
           Authorization: `Bearer ${token}`, // Send token in headers
         },
       };
-      const response = await axios.post(`payment/create-checkout-session`, {
+      const response = await axios.post(`client/create-checkout-session`, {
         requestId,
         amount, // Pass actual service price dynamically
         clientEmail},config);

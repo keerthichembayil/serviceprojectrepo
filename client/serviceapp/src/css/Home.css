@@ -52,4 +52,11 @@
     width: 100%; /* Make button full width */
     border-radius: 8px; /* Rounded button corners */
   }
+  .testimoni{
+    background-color: #CCCCFF;
+  }
+  .testiitem{
+    background-color:#0D2B49;
+  }
+
   

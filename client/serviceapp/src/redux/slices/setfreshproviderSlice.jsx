@@ -16,10 +16,12 @@ export const fetchProviderDetails = createAsyncThunk(
       };
 
       const response = await axios.get("/provider/meprovider", config);
-      console.log("responseata",response.data);
+      
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || "Failed to fetch provider details");
+      const errorMessage =
+        error.response?.data?.message || error.message || "Failed to fetch provider details";
+    return rejectWithValue(errorMessage);
     }
   }
 );

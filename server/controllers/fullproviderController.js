@@ -11,7 +11,8 @@ const User = require("../models/User");
           }
 
           
-      const providers = await Serviceprovider.find()
+   // Fetch only service providers where isVerified is true
+   const providers = await Serviceprovider.find({ isVerified: true })
       // Mongoose replaces userId in the serviceprovidertable
       //  with the actual User document, but only includes the email field:
         .populate('userId', 'email phone address') // Populate email from User model
