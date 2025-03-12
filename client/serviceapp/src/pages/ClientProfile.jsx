@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import '../css/clientprofile.css'
 import {
   fetchUserProfile,
   updateUserProfile,
@@ -78,9 +79,9 @@ const ClientProfile = () => {
   };
 
   return (
-    <div>
-      <Container className="mt-5">
-      <Card className="p-4 shadow">
+    <div className="clientpage">
+      <Container>
+      <Card className="p-4 shadow" style={{ backgroundColor: '#CCCCFF' }}>
         <h2 className="text-center mb-4">Client Profile</h2>
 
         {loading && <Spinner animation="border" className="d-block mx-auto" />}

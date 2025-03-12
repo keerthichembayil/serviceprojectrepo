@@ -54,7 +54,7 @@ const Home = () => {
 
       {/* Services Section */}
       <Container className="py-5" id="services">
-        <h2 className="text-center mb-4">Our Services</h2>
+        <h2 className="text-center mb-4 text-white">Our Services</h2>
         <Row>
           {[
             { title: "Cleaning", image: "/images/cleaning.jpg" },

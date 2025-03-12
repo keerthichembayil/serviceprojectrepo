@@ -5,6 +5,7 @@ import { Container, Table, Spinner, Alert, Image,Badge,Button,Form } from "react
 import { createPaymentSession, clearPaymentState } from "../redux/slices/paymentSlice";
 import { loadStripe } from "@stripe/stripe-js";
 import '../css/clientreq.css'
+
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Replace with your actual key
 
 
@@ -13,6 +14,7 @@ const ClientRequests = () => {
   const dispatch = useDispatch();
   const userEmail = useSelector((state) => state.auth.user?.email); // Get user email
   const { requests, loading, error } = useSelector((state) => state.clientRequestDetails);
+  console.log("requests",requests);
 
   
   const { sessionId, loading: paymentLoading} = useSelector((state) => state.payment);
@@ -40,6 +42,8 @@ const ClientRequests = () => {
     }
 
     try {
+      // Store requestId for later use
+    sessionStorage.setItem("paidRequestId", request._id);
       dispatch(createPaymentSession({
         requestId: request._id,
         amount,
@@ -54,7 +58,11 @@ const ClientRequests = () => {
     const stripe = await stripePromise;
     if (sessionId) {
       await stripe.redirectToCheckout({ sessionId });
+     
       dispatch(clearPaymentState()); // Clear payment state after redirection
+
+
+
     }
   };
 
@@ -121,7 +129,7 @@ const ClientRequests = () => {
 
 </td>
 <td>
-                  {request.status === "completed" && (
+                  {request.status === "completed" && request.paymentStatus !== "paid" ? (
                    <>
                    <Form.Control
                      type="number"
@@ -142,6 +150,14 @@ const ClientRequests = () => {
                      {paymentLoading ? "Processing..." : "Pay Now"}
                    </Button>
                  </>
+                  ):
+                  request.status === "rejected" ? (
+                    <Badge bg="danger">Not needed</Badge>
+                  ) :
+                   request.paymentStatus === "paid" ? (
+                    <Badge bg="success">Paid</Badge> 
+                  ) :(
+                    <Badge bg="success">Pending Payment</Badge> // Show "Paid" badge if payment is done
                   )}
                
                 </td>

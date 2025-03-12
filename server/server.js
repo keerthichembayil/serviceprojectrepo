@@ -15,6 +15,8 @@ const clientRoutes=require('./routes/clientroutes');
 
 const providerRoutes=require('./routes/providerroute');
 
+const paymentRoutes=require('./routes/paymentroute');
+
 
 
 const app = express();
@@ -45,6 +47,7 @@ app.use("/api/admin",adminRoutes);
 app.use("/api/service",serviceRoutes);
 app.use("/api/provider",providerRoutes);
 app.use("/api/client",clientRoutes);
+app.use("/api/payment",paymentRoutes);
 
 
 const PORT = process.env.PORT || 5000;

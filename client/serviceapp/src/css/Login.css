@@ -7,10 +7,15 @@
         justify-content: center;
         align-items: center;
         background-size:cover;
-    
+   
+     
+        
+
     
 
 }
+
+
 .emailbox{
     background-color:green !important;
     color: white !important;

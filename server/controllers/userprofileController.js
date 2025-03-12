@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Payment=require("../models/Payment");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
  const getUserProfile = async (req, res, next) => {
@@ -67,10 +68,21 @@ const createCheckoutSession=async(req,res,next)=>{
     }
 
 
+    // Create a pending payment entry before redirecting to Stripe
+    const pendingPayment = await Payment.create({
+      requestId,
+      clientEmail,
+      amount,
+      transactionId: "Pending",
+      paymentStatus: "pending",
+    });
+
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
       customer_email: clientEmail,
+      metadata: { requestId },
       line_items: [
         {
           price_data: {
@@ -100,16 +112,30 @@ const createCheckoutSession=async(req,res,next)=>{
 
 const verifyPayment = async (req, res) => {
   const { sessionId } = req.body;
+  if (!sessionId) {
+    return res.status(400).json({ message: "Missing session ID" });
+  }
+
   
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
     
     if (session.payment_status === "paid") {
-      return res.status(200).json({ message: "Payment verified" });
+      const updatedPayment = await Payment.findOneAndUpdate(
+        { requestId: session.metadata.requestId, paymentStatus: "pending" },
+  { paymentStatus: "paid", transactionId: sessionId },
+  { new: true }
+      );
+      if (!updatedPayment) {
+        return res.status(404).json({ message: "No pending payment found" });
+      }
+
+      return res.json({ message: "Payment successful", status: "paid" });
     } else {
-      return res.status(400).json({ message: "Payment not completed" });
+      return res.status(400).json({ message: "Payment not completed", status: session.payment_status });
     }
   } catch (error) {
+    console.error("Error verifying payment:", error);
     return res.status(500).json({ message: "Payment verification error" });
   }
 };

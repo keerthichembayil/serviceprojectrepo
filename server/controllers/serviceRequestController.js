@@ -14,11 +14,11 @@ const requestService = async (req, res) => {
         const clientId = req.user.id; // authentication middleware adds user to req
         console.log("clientid",clientId);
          // Check if the same request already exists to prevent duplicate request sending
-    const existingRequest = await ServiceRequest.findOne({ providerId, clientId });
+    const existingRequest = await ServiceRequest.findOne({ providerId, clientId ,status:{$in:["pending","accepted"]}});
     console.log("reqexist",existingRequest);
 
     if (existingRequest) {
-      return res.status(400).json({ error: "You have already requested this service." });
+      return res.status(400).json({ error: "You have already have an active request with  this provider." });
     }
 
        
@@ -77,7 +77,7 @@ const getClientRequests = async (req, res) => {
         const clientId = req.user.id;
         // The code fetches the name, service, and image from the Provider collection, as give ref in model
         //we could populate only because we gave refernce in model
-        const requests = await ServiceRequest.find({ clientId }).populate("providerId", "name image") .select("services additionalNotes serviceDate status"); // Include additionalNotes and status;
+        const requests = await ServiceRequest.find({ clientId }).populate("providerId", "name image") .select("services additionalNotes serviceDate status paymentStatus"); // Include additionalNotes and status;
         //will fetch full details from  servicerequest model and in that insteead of providerid will replace
         // with name,service,image from Serviceprovider model
         return res.status(200).json(requests);
@@ -103,7 +103,7 @@ const getProviderRequests = async (req, res) => {
         //means provider when enter we get providerid using that provider id fetch client id from
         // ServiceRequest collection then go to user collection to fetch the client details and display it
         // means finding the client of that specific provider then find that client details using that client id
-        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone").select("services additionalNotes serviceDate status");
+        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone").select("services additionalNotes serviceDate status paymentStatus");
         return res.status(200).json(requests);
     } catch (error) {
         console.error("Error:", error);
