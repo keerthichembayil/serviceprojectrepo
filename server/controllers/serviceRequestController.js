@@ -14,7 +14,7 @@ const requestService = async (req, res) => {
         const clientId = req.user.id; // authentication middleware adds user to req
         console.log("clientid",clientId);
          // Check if the same request already exists to prevent duplicate request sending
-    const existingRequest = await ServiceRequest.findOne({ providerId, clientId ,status:{$in:["pending","accepted"]}});
+    const existingRequest = await ServiceRequest.findOne({ providerId, clientId ,status:{$nin:["completed","rejected"]}});
     console.log("reqexist",existingRequest);
 
     if (existingRequest) {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/authSlice"; // Import logout action
+import { resetState } from "../redux/slices/setfreshproviderSlice"; // Import resetState action
 import '../css/clientprofile.css'
 import {
   fetchUserProfile,
@@ -74,7 +76,11 @@ const ClientProfile = () => {
   // Handle profile deletion
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete your profile?")) {
-      dispatch(deleteUserProfile());
+      dispatch(deleteUserProfile()).then(() => {
+        dispatch(resetState()); // Clear provider state or any other necessary state
+        dispatch(logout()); // Logout the user
+        navigate("/login"); // Redirect to login page
+      });
     }
   };
 
@@ -113,13 +119,13 @@ const ClientProfile = () => {
                 </div>
               )}
 
-<Button variant="success" onClick={() => setEditMode(true)} className="me-2">
+<Button variant="danger" onClick={() => setEditMode(true)} className="me-2">
                   Edit Profile
                 </Button>
-                <Button variant="danger" onClick={handleDelete}>
+                {/* <Button variant="danger" onClick={handleDelete}>
                   Delete Profile
                 </Button>
-             
+              */}
 
 
 

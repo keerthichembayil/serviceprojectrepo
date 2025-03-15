@@ -32,7 +32,7 @@ const Providerafterverify = () => {
     <div>
       <Container className="mt-4">
       <Card className="shadow p-3">
-        <h3 className="text-center mb-3">Service Requests</h3>
+        <h3 className="text-center p-3 bg-primary">Service Requests Received</h3>
         {loading && <Spinner animation="border" />}
         {error && <Alert variant="danger">{error}</Alert>}
         {requests.length === 0 && !loading && <Alert variant="info">No service requests found.</Alert>}

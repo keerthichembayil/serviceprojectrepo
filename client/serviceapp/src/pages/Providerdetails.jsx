@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProviderDetails } from "../redux/slices/providerdetailsSlice"; // New slice
 import { requestService, clearMessage } from "../redux/slices/serviceRequestSlice";
+import { fetchProviderRequests } from "../redux/slices/viewrequestbyproviderSlice";//to stop manual refesh
 import { useParams } from "react-router-dom"; // Get provider ID from URL
 import { Container, Row, Col, Card, Button, Form, Alert, Spinner } from "react-bootstrap";
 import Calendar from "react-calendar"; // Import Calendar
@@ -38,14 +39,29 @@ const ProviderDetails = () => {
   };
 
  // Handle Service Request
- const handleServiceRequest = () => {
+ const handleServiceRequest = async() => {
   if (selectedServices.length === 0) {
     alert("Please select at least one service.");
     return;
   }
-  dispatch(requestService({ providerId: id, services: selectedServices,additionalNotes: notes,
-    serviceDate: serviceDate.toISOString(), // Ensure it's sent as a proper date format
-   }));
+  try {
+    const response = await dispatch(
+      requestService({
+        providerId: id,
+        services: selectedServices,
+        additionalNotes: notes,
+        serviceDate: serviceDate.toISOString(),
+      })
+    ).unwrap();
+
+    console.log("Service request successful:", response);
+
+    // Fetch the latest provider requests to update the provider dashboard
+    await dispatch(fetchProviderRequests()).unwrap();
+
+  } catch (error) {
+    console.error("Service request failed:", error);
+  }
 };
 
 

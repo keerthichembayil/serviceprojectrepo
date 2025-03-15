@@ -23,7 +23,7 @@ const Viewprovider = () => {
       const response=await dispatch(approveProvider(id)).unwrap();
       alert(response.message);
       dispatch(fetchProviderDetails(id));
-      forceRender((prev) => prev + 1); // Force UI re-render
+     
       // navigate("/admin/dashboard"); // Redirect after approval
     } catch (error) {
       console.error("Approval Error:", error);

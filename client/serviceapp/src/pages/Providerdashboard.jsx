@@ -5,11 +5,13 @@ import AddProvider from './Addprovider';
 import Providerafterverify from './Providerafterverify';
 import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { FaUserEdit, FaMoneyCheckAlt, FaEnvelope } from 'react-icons/fa'; // Import icons
 import '../css/Providerdash.css'
 
 const ProviderDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigate
+    
 
   // Fetch provider details from Redux state
   const { details: providerDetails, isVerified, isPending, isRejected,error } = useSelector(state => state.providerfresh);
@@ -51,18 +53,18 @@ const ProviderDashboard = () => {
                   className="mt-3 w-100"
                   onClick={() => alert("Check your email for verification")}
                 >
-                  Visit Email to Verify
+                   <FaEnvelope className="me-2" />  Visit Email to Verify
                 </Button>
               )}
             </>
           ) : (
             <div className="text-center">
               <h4>Provider Dashboard</h4>
-              <Button variant="success" className="w-100 mb-3">
-                View & Manage Details
+              <Button variant="success" className="w-100 mb-3" onClick={() => navigate(`/providerdet`)}>
+              <FaUserEdit className="me-2" /> View & Update Profile
               </Button>
-              <Button variant="success" className="w-100" onClick={()=>navigate('/providerdashboard')}>
-                View Client Requests
+              <Button variant="success" className="w-100" onClick={()=>navigate('/providerpayment')}>
+              <FaMoneyCheckAlt className="me-2" /> View Payment Details
               </Button>
             </div>
           )}

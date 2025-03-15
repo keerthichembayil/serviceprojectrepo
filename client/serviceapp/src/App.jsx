@@ -23,9 +23,14 @@ import VerifyProvider from "./pages/VerifyProvider";
 import Providerafterverify from "./pages/Providerafterverify";
 import PaymentSucess from "./pages/PaymentSucess";
 import Paymentfailed from "./pages/Paymentfailed";
+import ProviderProfile from "./pages/ProviderProfile";
+
 import Viewuser from "./pages/Viewuser";
 import About from "./components/About";
 import Contact from "./components/Contact"
+import Clientpaymentdetails from "./pages/Clientpaymentdetails"
+import Providerpaymentdetails from "./pages/Providerpaymentdetails"
+import Serviceproviderlist from "./pages/Serviceproviderlist"
 
 
 function App() {
@@ -82,7 +87,13 @@ function App() {
   <Route path="/user/:id" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewuser/></>}</AdminProtectedRoute>} />
   <Route path="/payment-success" element={<><Navbar2/><PaymentSucess /></>} />
         <Route path="/payment-failed" element={<><Navbar2/><Paymentfailed /></>} />
-        
+        <Route path="/providerdet" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><ProviderProfile/></>}</ProtectedRoute>} />
+        {/* no need to pass id as already get form authstate */}
+        <Route path="/viewclientpayment" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><Clientpaymentdetails/></>}</ProtectedRoute>} />
+        {/* no need to pass id as already get form authstate */}
+        <Route path="/providerpayment" element={<ProtectedRoute requiredRole="provider">{<><Navbar2/><Providerpaymentdetails/></>}</ProtectedRoute>} />
+        <Route path="/serviceprovidersadm" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Serviceproviderlist/></>}</AdminProtectedRoute>} />
+
 
 
 

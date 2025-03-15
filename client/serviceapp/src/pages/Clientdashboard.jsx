@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClientProviders } from "../redux/slices/clientProviderSlice"; // New slice
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Container, Row, Col, Button, Card, Spinner, Alert ,Badge} from "react-bootstrap";
+import { FaUser, FaClipboardList, FaDollarSign } from "react-icons/fa"; // Import icons
 import '../css/clientdash.css'
 
 
@@ -37,18 +38,22 @@ const Clientdashboard = () => {
       <Row>
         {/* Sidebar */}
         <Col md={3} className="p-4 sidebar userprofilesection">
-          <Button onClick={handleViewProfile} variant="success" className="w-100 mb-3">
-            View Profile
+          <Button onClick={handleViewProfile} variant="success" className="w-100 mb-2">
+          <FaUser className="me-2" />  View Profile
           </Button>
           <Button
   className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success" onClick={() => navigate("/viewclientreqdet")}>
-  View Requested Services
+ <FaClipboardList className="me-2" /> View Requested Services
+</Button>
+<Button
+  className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success" onClick={() => navigate("/viewclientpayment")}>
+  <FaDollarSign className="me-2" />View Paymentdetails
 </Button>
         </Col>
     
        {/* Main Content */}
        <Col md={9} className="p-4">
-          <h2 className="mb-4">Service Providers</h2>
+          <h2 className="mb-4 text-center bg-primary p-2 text-white">Our Services</h2>
           {loading && <Spinner animation="border" role="status" />}
           {error && <Alert variant="danger">{error}</Alert>}
           <Row>

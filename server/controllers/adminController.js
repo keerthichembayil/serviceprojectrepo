@@ -159,7 +159,7 @@ const approveProvider = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const provider = await Serviceprovider.findById(id).populate("userId");;
+    const provider = await Serviceprovider.findById(id).populate("userId");
     if (!provider) return res.status(404).json({ message: "Provider not found" });
 
     if (provider.isVerified) {
@@ -243,12 +243,52 @@ const listspecificuser=async(req,res)=>{
   }
 }
 
+const gettotalusers=async(req,res)=>{
+  try {
+    const totalUsers = await User.countDocuments({ role: "client" }); // Count only clients
+    res.json({ totalUsers });
+  } catch (error) {
+    console.error("Error fetching total users:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+}
+const gettotalproviders=async(req,res)=>{
+  try{
+    const totalProviders=await Serviceprovider.countDocuments();
+    res.json({totalProviders});
+
+  }
+  catch(error){
+    console.error("Error fetching total providers:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+
+}
+
+const getTotalRequestsPending=async(req,res)=>{
+  try{
+    const totalRequestsPending = await ServiceRequest.countDocuments({ status: "pending" });
+        res.status(200).json({ totalRequestsPending });
+
+  }
+  catch(error){
+    res.status(500).json({ message: "Error fetching pending requests", error });
+
+  }
+}
+
+
+// Get Total Requests Completed
+const getTotalRequestsCompleted = async (req, res) => {
+  try {
+      const totalRequestsCompleted = await ServiceRequest.countDocuments({ status: "completed" });
+      res.status(200).json({ totalRequestsCompleted });
+  } catch (error) {
+      res.status(500).json({ message: "Error fetching completed requests", error });
+  }
+};
 
 
 
 
-
-
-
-
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser};
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted};

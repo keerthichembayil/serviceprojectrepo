@@ -6,7 +6,11 @@ const bcrypt = require("bcryptjs");
 const registerUser = async (req, res) => {
   try {
     
-    const { name, email, password, phone, role,gender, address } = req.body;
+    const { name, email, password,confirmPassword, phone, role,gender, address } = req.body;
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
     
      // Check if role is valid (only client or provider can be registered via frontend)
      if (role !== 'client' && role !== 'provider') {

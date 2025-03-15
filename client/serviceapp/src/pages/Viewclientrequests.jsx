@@ -69,7 +69,7 @@ const ClientRequests = () => {
   return (
     <div className="clientrqdet">
     <Container>
-      <h2 className="mb-3">Your Service Requests</h2>
+      <h2 className="mb-3 text-center p-2 bg-primary">Your Service Requests</h2>
       {loading && <Spinner animation="border" />}
       {error && <Alert variant="danger">{error}</Alert>}
       {!loading && !error && requests.length === 0 && (
@@ -79,14 +79,14 @@ const ClientRequests = () => {
         <Table striped bordered hover responsive>
           <thead>
             <tr>
-              <th>#</th>
-              <th>Provider Name</th>
-              <th>Service</th>
-              <th>Image</th>
-              <th>Service Date</th>
-              <th>Additional Notes</th>
-              <th>Status</th>
-              <th>Payment</th>
+              <th className="bg-dark text-white">#</th>
+              <th className="bg-primary text-white">Provider Name</th>
+              <th className="bg-success text-white">Service</th>
+              <th className="bg-warning text-white">Image</th>
+              <th className="bg-info text-white">Service Date</th>
+              <th className="bg-danger text-white">Additional Notes</th>
+              <th className="bg-secondary text-white">Status</th>
+              <th className="bg-primary text-white">Payment</th>
             </tr>
           </thead>
           <tbody>

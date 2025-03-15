@@ -2,3 +2,12 @@
 background-color:#A0A0A0;
 height:100vh;
 }
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  .adminleft{
+    background-color:#606060;
+  }

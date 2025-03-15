@@ -41,4 +41,31 @@ const uploadToCloudinary = async (filepath,folderName = "provider",fileType = "i
   }
 };
 
-module.exports = uploadToCloudinary;
+
+
+const deleteFromCloudinary = async (fileUrl) => {
+  try {
+    if (!fileUrl) throw new Error("File URL is required");
+
+    // Extract public_id correctly
+    const urlParts = fileUrl.split("/");
+    const filenameWithExt = urlParts.pop(); // Extract filename.ext
+    const folderName = urlParts.length > 5 ? urlParts.pop() : ""; // Extract folder name if exists
+    const publicId = folderName ? `${folderName}/${filenameWithExt.split(".")[0]}` : filenameWithExt.split(".")[0];
+
+    console.log("Extracted publicId for deletion:", publicId); // Debugging log
+
+    // Delete file from Cloudinary
+    const result = await cloudinary.uploader.destroy(publicId);
+    console.log(`Deleted ${publicId} from Cloudinary`, result);
+    return result.result === "ok";
+  } catch (error) {
+    console.error("Error deleting file from Cloudinary:", error);
+    return false;
+  }
+};
+
+module.exports = {
+  uploadToCloudinary,
+  deleteFromCloudinary
+};
