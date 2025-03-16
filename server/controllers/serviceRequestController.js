@@ -64,7 +64,7 @@ if (selectedDate < today) {
     }  catch (error) {
         if (error.code === 11000) {
           return res.status(400).json({ error: "You have already requested this service." });
-          //here return error not message slice is expecting error field ie stored to error 
+          //here return error not message slice is expecting error field ie stored to 
         }
         res.status(500).json({ error: "Server error, please try again later." });
       }
