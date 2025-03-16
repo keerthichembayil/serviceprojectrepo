@@ -24,7 +24,8 @@ const app = express();
 
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL?.replace(/\/$/, '') || "http://localhost:5173", // Change this to your frontend URL
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  // origin: process.env.FRONTEND_URL?.replace(/\/$/, '') || "http://localhost:5173", // Change this to your frontend URL
   credentials: true
 }));
 app.use(bodyParser.json());
