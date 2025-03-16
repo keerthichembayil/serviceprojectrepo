@@ -1,8 +1,11 @@
 {
-    "rewrites":[
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
+    "builds": [
+      {
+        "src": "client/serviceapp/build/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/index.html" }
     ]
-}
+  }
