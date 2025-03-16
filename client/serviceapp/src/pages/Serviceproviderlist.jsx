@@ -4,7 +4,7 @@ import { fetchProviders} from "../redux/slices/providerListSlice";
 import { fetchUsers } from "../redux/slices/userListSlice"; // Assume a user slice exists
 import { Container, Row, Col, Table, Button, Spinner, Alert, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import '../css/serviceproviderlist.css'
+import '../css/Serviceproviderlist.css'
 const ProviderList = () => {
   const dispatch = useDispatch();
   const { providers, loading: providerLoading, error: providerError } = useSelector((state) => state.providerList);

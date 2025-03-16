@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchuserspecific} from "../redux/slices/userspecificdetailsSlice";
 import { Container, Table, Spinner, Alert } from "react-bootstrap";
-import '../css/viewuser.css';
+import '../css/Viewuser.css';
 
 const ServiceRequestDetails = () => {
   const { id } = useParams(); // Get the service request ID from the URL

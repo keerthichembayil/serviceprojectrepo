@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../axios";
 import { Table, Container, Spinner, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import "../css/providerpayment.css"
+import "../css/Providerpayment.css"
 
 const ProviderPaymentHistory = () => {
   const [payments, setPayments] = useState([]);
