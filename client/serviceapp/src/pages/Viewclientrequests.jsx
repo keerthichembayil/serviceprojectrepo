@@ -4,7 +4,7 @@ import { fetchClientRequests } from "../redux/slices/clientRequestDetailsSlice";
 import { Container, Table, Spinner, Alert, Image,Badge,Button,Form } from "react-bootstrap";
 import { createPaymentSession, clearPaymentState } from "../redux/slices/paymentSlice";
 import { loadStripe } from "@stripe/stripe-js";
-import '../css/clientreq.css'
+import '../css/Clientreq.css'
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY); // Replace with your actual key
 
