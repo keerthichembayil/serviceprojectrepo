@@ -16,6 +16,7 @@ const clientRoutes=require('./routes/clientroutes');
 const providerRoutes=require('./routes/providerroute');
 
 const paymentRoutes=require('./routes/paymentroute');
+const reviewRoutes=require('./routes/reviewroute');
 
 
 
@@ -48,6 +49,7 @@ app.use("/api/service",serviceRoutes);
 app.use("/api/provider",providerRoutes);
 app.use("/api/client",clientRoutes);
 app.use("/api/payment",paymentRoutes);
+app.use("/api/review",reviewRoutes);
 
 
 const PORT = process.env.PORT || 5000;

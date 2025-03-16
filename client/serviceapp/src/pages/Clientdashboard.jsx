@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClientProviders } from "../redux/slices/clientProviderSlice"; // New slice
+
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Container, Row, Col, Button, Card, Spinner, Alert ,Badge} from "react-bootstrap";
-import { FaUser, FaClipboardList, FaDollarSign } from "react-icons/fa"; // Import icons
+import { FaUser, FaClipboardList, FaDollarSign,FaStar } from "react-icons/fa"; // Import icons
+import ReactStars from "react-stars";
 import '../css/clientdash.css'
 
 
@@ -11,6 +13,7 @@ const Clientdashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize navigation
   const { providers, loading, error } = useSelector((state) => state.clientProviderList);
+ 
   console.log("providers",providers);
   //this is holding the providers fethced from backend
   
@@ -49,6 +52,14 @@ const Clientdashboard = () => {
   className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success" onClick={() => navigate("/viewclientpayment")}>
   <FaDollarSign className="me-2" />View Paymentdetails
 </Button>
+
+
+<Button
+  className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success"
+  onClick={() => navigate("/clientreview")}
+>
+  ⭐ Add Review
+</Button>
         </Col>
     
        {/* Main Content */}
@@ -75,6 +86,17 @@ const Clientdashboard = () => {
     <span className="text-muted">No services listed</span>
   )}
 </Card.Text>
+
+<Card.Text>
+                        Highest Rating:{" "}
+                        <ReactStars
+                          count={5}
+                          value={provider.highestRating || 0}
+                          size={24}
+                          edit={false}
+                          activeColor="#ffd700"
+                        />
+                      </Card.Text>
                       <Button onClick={() => handleRequestService(provider._id)} variant="primary" className="w-100">
                         Request Service
                       </Button>

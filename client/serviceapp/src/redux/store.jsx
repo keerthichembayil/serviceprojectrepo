@@ -16,6 +16,8 @@ import fetchrequestdetabyprovidereducer from "./slices/viewrequestbyproviderSlic
 import paymentReducer from "./slices/paymentSlice"; // Import payment slice
 import specificuseradReducer from "./slices/userspecificdetailsSlice";
 import providerprofilereducer from  "./slices/providerProfileSlice";
+import completedServicesReducer from "./slices/completedServicesSlice"; 
+import reviewReducer from "./slices/reviewSlice";
 
 
 
@@ -40,7 +42,10 @@ const store = configureStore({
     requests:fetchrequestdetabyprovidereducer,
     payment: paymentReducer,
     serviceRequest:specificuseradReducer,
-    providerdt:providerprofilereducer
+    providerdt:providerprofilereducer,
+    completedServices: completedServicesReducer,
+    reviews:reviewReducer,
+
     
   },
 });
