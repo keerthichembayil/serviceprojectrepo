@@ -8,7 +8,5 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
-  server: {
-    middlewareMode: true, // Helps handle routing better
-  },
+ 
 })
