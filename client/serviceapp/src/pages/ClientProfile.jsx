@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/authSlice"; // Import logout action
 import { resetState } from "../redux/slices/setfreshproviderSlice"; // Import resetState action
-import '../css/clientprofile.css'
+import '../css/Clientprofile.css'
 import {
   fetchUserProfile,
   updateUserProfile,
