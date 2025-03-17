@@ -1,8 +1,17 @@
 {
-    "rewrites":[
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
+    "version": 2,
+    "public": true,
+    "builds": [
+      {
+        "src": "dist/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.html"
+      }
     ]
-}
+  }
+  
