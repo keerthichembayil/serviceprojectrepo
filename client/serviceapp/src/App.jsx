@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-<Router basename="/">
+<Router>
   
 
   <Routes>
