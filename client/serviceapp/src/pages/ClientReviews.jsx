@@ -59,7 +59,7 @@ const ClientReviews = () => {
 
   return (
     <div className="reviewpage">
-    <Container>
+    <Container className="reviewpage">
     <h2 className="text-center p-3">Add a Review</h2>
     {loading && <Spinner animation="border" />}
     {error && <Alert variant="danger">{error}</Alert>}
