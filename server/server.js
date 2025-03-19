@@ -25,8 +25,8 @@ const app = express();
 app.use('/favicon.png', express.static(path.join(__dirname, 'public', 'favicon.png')));
 
 app.use(cors({
-  // origin: process.env.FRONTEND_URL || "http://localhost:5173",
-  origin: process.env.FRONTEND_URL?.replace(/\/$/, '') || "http://localhost:5173", // Change this to your frontend URL
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  // origin: process.env.FRONTEND_URL?.replace(/\/$/, '') || "http://localhost:5173", // Change this to your frontend URL
   credentials: true
 }));
 app.use(bodyParser.json());
@@ -60,4 +60,3 @@ app.use("/api/review",reviewRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port http://localhost: ${PORT}`));
-// module.exports = app; 
