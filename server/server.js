@@ -40,6 +40,10 @@ mongoose
   app.get("/",(req,res)=>{
     res.json("hello world");
   })
+  // Example API route
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Test API working!" });
+});
 
 
   // Routes
