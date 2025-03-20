@@ -59,8 +59,8 @@ const ClientReviews = () => {
 
   return (
     <div className="reviewpage">
-    <Container className="reviewpage">
-    <h2 className="text-center p-3">Add a Review</h2>
+    <Container fluid className="reviewpage">
+    <h2 className="text-center pt-3">Add a Review</h2>
     {loading && <Spinner animation="border" />}
     {error && <Alert variant="danger">{error}</Alert>}
 
@@ -91,7 +91,7 @@ const ClientReviews = () => {
     </Row>
    
     {selectedProvider && (
-      <div className="mt-4">
+      <div className="mt-4 ratesection">
         <h4>Rate Your Experience</h4>
         <ReactStars
             count={5}
