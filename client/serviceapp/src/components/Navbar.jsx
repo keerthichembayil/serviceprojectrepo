@@ -21,6 +21,7 @@ const Navbar2 = () => {
   return (
     <Navbar  variant="dark" expand="lg" className="px-3 navdesign">
       <Container>
+      <img src="/images/logo.jpg" alt="logo" width="40" height="40" className="me-2" /> 
         <Navbar.Brand as={Link} to="/" className="text-danger">Service Hub</Navbar.Brand>
         
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

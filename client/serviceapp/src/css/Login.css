@@ -17,21 +17,21 @@
 
 
 .emailbox{
-    background-color:green !important;
+    background-color:grey !important;
     color: white !important;
 
 }
 .loginbtn{
     
-    background-color:green !important;
+    background-color:blue !important;
     
 }
 .passbox{
     color:white !important;
-    background-color:green !important;
+    background-color:grey !important;
     
 }
 
 
-
-
+  
+ 

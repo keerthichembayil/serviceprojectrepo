@@ -32,11 +32,11 @@ const Home = () => {
       <Row className="align-items-center">
         {/* Left Side - Text */}
         <Col md={6} className="text-center text-md-start px-5">
-          <h2>Find Trusted Service Providers Easily</h2>
-          <p className="lead">
+          <h2><span className='text-primary'>Find Trusted </span>Service Providers Easily</h2>
+          <p className="lead text-danger textli">
             Connect with professionals like plumbers, electricians, cleaners, and more.
           </p>
-          <Button variant="light">Explore Services</Button>
+          <Button variant="light" className='btnexpol'>Explore Services</Button>
         </Col>
 
         {/* Right Side - Image */}
@@ -53,7 +53,7 @@ const Home = () => {
     </Container>
 
       {/* Services Section */}
-      <Container className="py-5" id="services">
+      <Container className="py-5 mt-5" id="services" style={{ background: "linear-gradient(to right, #419297, #203a43, #419297)", borderRadius: "15px" }}>
         <h2 className="text-center mb-4 text-white">Our Services</h2>
         <Row>
           {[
@@ -64,9 +64,9 @@ const Home = () => {
 
           ].map((service, index) => (
             <Col md={3} key={index} className="mb-4">
-              <Card className='homecardcomp'>
+              <Card className='service-card text-center'>
                 <Card.Img variant="top" src={service.image} className='homecard' />
-                <Card.Body className='homecardbody'>
+                <Card.Body className='homecardbody bg-secondary text-white'>
                   <Card.Title>{service.title}</Card.Title>
                  
                 </Card.Body>
@@ -77,33 +77,37 @@ const Home = () => {
       </Container>
 
       {/* Testimonials */}
-      <Container fluid className="py-5 testimoni text-center" id="testimonials">
-      <h2 className="mb-4">What Our Clients Say</h2>
-      
-      <Carousel indicators={false} controls={true} className="mx-auto" style={{ maxWidth: "600px" }}  nextIcon={<span className="carousel-control-next-icon bg-dark p-3 rounded-circle" />}
-        prevIcon={<span className="carousel-control-prev-icon bg-dark p-3 rounded-circle" />}>
+      <Container className="py-5 d-flex justify-content-center">
+      <Carousel
+        indicators={false}
+        controls={true}
+        fade
+        className="testimonial-carousel"
+        style={{ maxWidth: "600px" }}
+        nextIcon={
+          <span className="carousel-control-next-icon bg-dark p-3 rounded-circle" />
+        }
+        prevIcon={
+          <span className="carousel-control-prev-icon bg-dark p-3 rounded-circle" />
+        }
+      >
         {testimonials.map((testimonial, index) => (
-          <Carousel.Item key={index} style={{ backgroundColor: "#e3f2fd", borderRadius: "10px", padding: "20px" }}>
-              <div className="p-4" style={{ backgroundColor: "#f8f9fa", borderRadius: "10px" }}> 
-            <Card className="p-4 border-0 shadow-sm">
+          <Carousel.Item key={index} className="testimonial-item custom-carousel">
+            <Card className="testimonial-card text-center p-4">
               <Card.Img
                 variant="top"
                 src={testimonial.image}
-                className="rounded-circle mx-auto d-block"
-                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                className="rounded-circle mx-auto"
               />
               <Card.Body>
-                <Card.Text className="fst-italic">"{testimonial.text}"</Card.Text>
-                <h5 className="mt-3">{testimonial.name}</h5>
-                <p className="text-muted">{testimonial.designation}</p>
+                <Card.Text className="testimonial-text">"{testimonial.text}"</Card.Text>
+                <h5 className="testimonial-name">{testimonial.name}</h5>
+                <p className="testimonial-designation">{testimonial.designation}</p>
               </Card.Body>
             </Card>
-            </div>
           </Carousel.Item>
-
         ))}
       </Carousel>
-    
     </Container>
 
       {/* Footer */}

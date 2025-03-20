@@ -28,8 +28,8 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center adminlogindesign vh-100">
-    <div className="shadow-lg p-4 bg-white rounded" style={{ width: "400px" }}>
+    <div className="d-flex admin-login-page justify-content-center align-items-center vh-100">
+    <div className="login-box" style={{ width: "400px" }}>
       <h2 className="text-center mb-4">Admin Login</h2>
     <div className="login-container">
     
@@ -41,7 +41,7 @@ const AdminLogin = () => {
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="emailboxad"
+              className="input-field"
               required
             />
           </Form.Group>
@@ -52,13 +52,13 @@ const AdminLogin = () => {
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="passboxad"
+              className="input-field"
               required
             />
           </Form.Group>
 
           <Button type="submit"
-            className="w-100 adminloginbtn"
+            className="login-btn w-100 mt-3"
             disabled={loading}
           >
             {loading ? <Spinner animation="border" size="sm" /> : "Login"}

@@ -1,12 +1,76 @@
 .adminloginbtn{
     background-color:#FF9999;
 }
-.adminlogindesign{
-    background-image:url("/images/adminlogin.jpg")
-}
+
 .emailboxad{
     background-color:#FF9999;
 }
 .passboxad{
     background-color:#FF9999;
 }
+/* Background Styling */
+.admin-login-page {
+    background-image:url('/images/adminlogin.jpg')
+  }
+  
+  /* Login Box */
+  .login-box {
+    background: #2b2b3d;
+    padding: 40px;
+    width: 380px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .login-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Form Labels */
+  .login-box h2 {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #ffcc00;
+  }
+  
+  /* Input Fields */
+  .input-field {
+    background: #34344e;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .input-field:focus {
+    background: #414165;
+    color: white;
+    box-shadow: none;
+  }
+  
+  /* Login Button */
+  .login-btn {
+    background: #ffcc00;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .login-btn:hover {
+    background: #ffaa00;
+  }
+  
+  /* Error Message */
+  .error-message {
+    color: #ff4444;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

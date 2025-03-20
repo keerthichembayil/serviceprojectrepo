@@ -2,7 +2,9 @@ import { useState } from "react";
 import Joi from "joi";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Container, Alert, Card ,Row,Col} from "react-bootstrap";
+import { Form, Button, Container, Alert, Card ,Row,Col,InputGroup} from "react-bootstrap";
+import { FaUser, FaEnvelope, FaLock, FaPhone, FaMapMarkerAlt, FaCity, FaBuilding, FaVenusMars,FaUserTie } from "react-icons/fa";
+
 import '../css/Register.css'
 
 
@@ -110,135 +112,173 @@ const Register = () => {
 
   return (
 
-    <div fluid className="min-vh-100 d-flex align-items-center">
+    <div className="min-vh-100 d-flex align-items-center">
       <Row className="w-100">
         {/* Left Side */}
         <Col md={4} className="d-flex flex-column justify-content-center align-items-center text-white" style={{ backgroundColor: "#FFB6C1", padding: "30px" }}>
-          {/* <img src={logo} alt="Logo" style={{ width: "150px", marginBottom: "20px" }} /> */}
-          <h2>Welcome to Our Service</h2>
-          <p>Your one-stop solution for professional services</p>
+         
+          <h2><span className="text-primary">Welcome to </span>Our Service</h2>
+          <p><span className="text-danger">Your one-stop solution</span><span className="text-primary">for professional services</span></p>
         </Col>
 
 
 
     {/* Right Side - Registration Form */}
-    <Col md={8} className="d-flex justify-content-start align-items-center regform">
-          <Card style={{ width: "400px", padding: "20px" }}>
+    <Col md={8} className="d-flex justify-content-start align-items-center regform pt-5">
+          <Card style={{ width: "400px", padding: "20px", backgroundColor:"#1e81b0"}}>
         <Card.Body>
           <h2 className="text-center mb-4">Register</h2>
           {serverError && <Alert variant="danger">{serverError}</Alert>}
           <Form onSubmit={handleSubmit} autoComplete="off">
             <Form.Group className="mb-3">
               <Form.Label>Name</Form.Label>
+              <InputGroup>
+              <InputGroup.Text><FaUser className="iconst"/></InputGroup.Text>
               <Form.Control
                 type="text"
                 name="name"
                 placeholder="Enter name"
+                className="bg-secondary text-white"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
+               </InputGroup>
                {errors.name && <small className="text-danger">{errors.name}</small>}
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Email</Form.Label>
+              <InputGroup>
+              <InputGroup.Text><FaEnvelope className="iconst"/></InputGroup.Text>
               <Form.Control
                 type="email"
                 name="email"
                 placeholder="Enter email"
+                className="bg-secondary text-white"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
+               </InputGroup>
               {errors.email && <small className="text-danger">{errors.email}</small>}
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Password</Form.Label>
+              <InputGroup>
+              <InputGroup.Text><FaLock className="iconst"/></InputGroup.Text>
               <Form.Control
                 type="password"
                 name="password"
                 placeholder="Enter password"
+                className="bg-secondary text-white"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
+               </InputGroup>
                {errors.password && <small className="text-danger">{errors.password}</small>}
             </Form.Group>
             <Form.Group className="mb-3">
   <Form.Label>Confirm Password</Form.Label>
+  <InputGroup>
+  <InputGroup.Text><FaLock className="iconst"/></InputGroup.Text>
   <Form.Control
     type="password"
     name="confirmPassword"
     placeholder="Confirm password"
+    className="bg-secondary text-white"
     value={formData.confirmPassword}
     onChange={handleChange}
     required
   />
+   </InputGroup>
   {errors.confirmPassword && <small className="text-danger">{errors.confirmPassword}</small>}
 </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>phone</Form.Label>
+              <InputGroup>
+              <InputGroup.Text><FaPhone className="iconst"/></InputGroup.Text>
               <Form.Control
                 type="tel"
                 name="phone"
                 placeholder="Enter Phone Number"
+                className="bg-secondary text-white"
                 value={formData.phone}
                 onChange={handleChange}
                 required
               />
+              </InputGroup>
               {errors.phone && <small className="text-danger">{errors.phone}</small>}
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Label>Role</Form.Label>
-                <Form.Control as="select" name="role" value={formData.role} onChange={handleChange}>
+                <InputGroup>
+    <InputGroup.Text><FaUserTie className="iconst"/></InputGroup.Text>
+                <Form.Control as="select" name="role" value={formData.role} onChange={handleChange} className="bg-secondary text-white">
                   <option value="client">Client</option>
                   <option value="provider">ServiceProvider</option>
                 </Form.Control>
+                </InputGroup>
                 {errors.role && <small className="text-danger">{errors.role}</small>}
               </Form.Group>
 
               <Form.Group className="mb-3">
                   <Form.Label>Gender</Form.Label>
-                  <Form.Control as="select" name="gender" value={formData.gender} onChange={handleChange}>
+                  <InputGroup>
+                  <InputGroup.Text><FaVenusMars className="iconst"/></InputGroup.Text>
+                  <Form.Control as="select" name="gender" value={formData.gender} onChange={handleChange} className="bg-secondary text-white">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </Form.Control>
+                  </InputGroup>
                   {errors.gender && <small className="text-danger">{errors.gender}</small>}
                 </Form.Group>
               {/* Address Fields */}
               <h5 className="mt-3">Address</h5>
               <Form.Group className="mb-3">
                 <Form.Label>Street</Form.Label>
+                <InputGroup>
+                <InputGroup.Text><FaMapMarkerAlt className="iconst"/></InputGroup.Text>
                 <Form.Control
                   type="text"
                   name="address.street"
                   placeholder="Enter Street"
                   value={formData.address.street}
                   onChange={handleChange}
+                  className="bg-secondary text-white"
                    
                 />
+                 </InputGroup>
                   {errors["address.street"] && <small className="text-danger">{errors["address.street"]}</small>}
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>City</Form.Label>
+                <InputGroup>
+    <InputGroup.Text><FaCity className="iconst"/></InputGroup.Text>
                 <Form.Control
                   type="text"
                   name="address.city"
                   placeholder="Enter City"
                   value={formData.address.city}
                   onChange={handleChange}
+                  className="bg-secondary text-white"
                 />
+                 </InputGroup>
                  {errors["address.city"] && <small className="text-danger">{errors["address.city"]}</small>}
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>State</Form.Label>
+                <InputGroup>
+    <InputGroup.Text><FaBuilding className="iconst"/></InputGroup.Text>
                 <Form.Control
                   type="text"
                   name="address.state"
                   placeholder="Enter State"
                   value={formData.address.state}
                   onChange={handleChange}
+                  className="bg-secondary text-white"
                 />
+                  </InputGroup>
                  {errors["address.state"] && <small className="text-danger">{errors["address.state"]}</small>}
               </Form.Group>
             

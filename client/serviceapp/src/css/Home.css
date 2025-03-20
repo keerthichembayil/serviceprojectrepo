@@ -24,22 +24,15 @@
     border-top-right-radius: 12px;
   }
   
-  .homecardcomp {
-    height: 100%; /* Ensures all cards are of equal height */
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for a modern look */
-    transition: transform 0.3s ease-in-out;
-  }
   
-  .homecardcomp:hover {
-    transform: scale(1.05); /* Slight zoom effect on hover */
-  }
+
   
   .homecardbody {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    
   }
   
   .card-title {
@@ -59,4 +52,77 @@
     background-color:#0D2B49;
   }
 
+  .btnexpol{
+    background-color:#2d8187 !important;
+    border: none;
+  color: white; /* White text */
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  }
+  
+  .service-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(255, 255, 255, 0.2);
+  }
+  .testimonial-carousel {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-item {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .testimonial-card {
+    max-width: 550px;
+    background: white;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .testimonial-text {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  .testimonial-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .testimonial-designation {
+    font-size: 0.9rem;
+    color: gray;
+  }
+  .custom-carousel {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    padding: 20px;
+    border-radius: 15px;
+  }
   
