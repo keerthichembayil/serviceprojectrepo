@@ -103,7 +103,7 @@ const ProviderProfile = () => {
   dispatch(updateProviderDetails(updatedData));
 };
   return (
-<div className="providerprofile">
+<div className="providerprofile pt-3">
     <Container className="d-flex justify-content-center">
       <Card className="shadow-lg p-4" style={{ maxWidth: "600px", width: "100%",backgroundColor: "#FF66B2" }}>
         <Card.Body>
