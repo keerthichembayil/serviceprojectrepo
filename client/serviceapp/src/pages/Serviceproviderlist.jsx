@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProviders} from "../redux/slices/providerListSlice";
 import { fetchUsers } from "../redux/slices/userListSlice"; // Assume a user slice exists
-import { Container, Row, Col, Table, Button, Spinner, Alert, Image } from "react-bootstrap";
+import { Container, Row, Col, Table, Button, Spinner, Alert, Image,Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa"; // Import View Icon
 import '../css/Serviceproviderlist.css'
 const ProviderList = () => {
   const dispatch = useDispatch();
@@ -19,12 +20,15 @@ const ProviderList = () => {
 
   return (
     <div className="serviceproviderlist">
-      <h2 className="text-center mb-4">Dashboard</h2>
+      <h2 className="text-center pt-4 pb-3 fw-bold">Admin Dashboard</h2>
       
-      <Row>
+      <Row className="g-4">
         {/* Service Providers Section */}
         <Col md={6}>
-          <h3 className="mb-3">Service Providers</h3>
+        <Card className="shadow-lg border-0 rounded text-white" style={{ background: "linear-gradient(to right, #007bff, #6610f2)" }}>
+        <Card.Body>
+              <Card.Title className="text-center fw-bold mb-3">Service Providers</Card.Title>
+          
           {providerLoading ? <Spinner animation="border" /> : providerError ? <Alert variant="danger">{providerError}</Alert> : (
             <Table striped bordered hover>
               <thead>
@@ -55,11 +59,15 @@ const ProviderList = () => {
               </tbody>
             </Table>
           )}
+           </Card.Body>
+           </Card>
         </Col>
 
         {/* Users Section */}
         <Col md={6}>
-          <h3 className="mb-3">Clients</h3>
+        <Card className="shadow-lg border-0 rounded text-white" style={{ background: "linear-gradient(to right, #006666,rgb(58, 70, 60))" }}>
+            <Card.Body>
+              <Card.Title className="text-center fw-bold mb-3">Clients</Card.Title>
           {userLoading ? <Spinner animation="border" /> : userError ? <Alert variant="danger">{userError}</Alert> : (
             <Table striped bordered hover>
               <thead>
@@ -84,6 +92,8 @@ const ProviderList = () => {
               </tbody>
             </Table>
           )}
+            </Card.Body>
+            </Card>
         </Col>
       </Row>
     </div>

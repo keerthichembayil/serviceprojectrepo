@@ -165,6 +165,10 @@ const approveProvider = async (req, res) => {
     if (provider.isVerified) {
       return res.status(400).json({ message: "Provider is already approved" });
     }
+     // Prevent sending another email if the token already exists and hasn't expired
+     if (provider.verificationToken && provider.tokenExpiry > Date.now()) {
+      return res.status(400).json({ message: "Verification email already sent. Please wait for it to expire." });
+    }
 
      // Generate verification token
      const token = crypto.randomBytes(32).toString("hex");

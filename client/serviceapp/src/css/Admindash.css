@@ -11,3 +11,44 @@ height:100vh;
   .adminleft{
     background-color:#606060;
   }
+
+
+  .admin-sidebar {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 0 20px 20px 0;
+  }
+  
+  .sidebar-btn {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sidebar-btn:hover {
+    background-color: #1abc9c;
+    color: white;
+  }
+  
+  .chart-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 90%;
+  }
+  
+  .chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  

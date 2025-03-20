@@ -6,7 +6,7 @@ import '../css/Admindash.css'
 import { PieChart, Pie, Cell, Tooltip, Legend,BarChart, Bar, XAxis, YAxis, CartesianGrid} from "recharts";
 import axios from "../axios";
 
-import { BsPeople } from "react-icons/bs"; // Import the icon
+import { BsPeople} from "react-icons/bs"; // Import the icon
 
 
 
@@ -58,7 +58,8 @@ const Admindashboard = () => {
   ];
 
 
-  const COLORS = ["#FF0000", "#000099"];
+  // const COLORS = ["#FF0000", "#000099"];
+  const COLORS = ["#FF5733", "#2980b9"];
   return (
 
 
@@ -66,13 +67,14 @@ const Admindashboard = () => {
 <Container fluid className="vh-100">
       <Row className="h-100">
         {/* Left Grid with Navigation */}
-        <Col md={3} className="text-white d-flex flex-column align-items-center  p-3 pt-5 adminleft">
+        <Col md={3} className="admin-sidebar d-flex flex-column align-items-center p-4">
+        <h4 className="text-white mb-4">Admin Panel</h4>
           <Button 
             variant="success" 
             className="w-100 mt-0" 
             onClick={() => navigate("/serviceprovidersadm")}
           >
-              <BsPeople size={20} /> {/* Icon beside text */}
+               <BsPeople className="me-2" size={18} />
             View Details
           </Button>
         </Col>

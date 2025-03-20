@@ -19,7 +19,7 @@ const ServiceRequestDetails = () => {
   return (
     <div className="viewuser">
     <Container>
-      <h2 className="text-center">Service Request Details</h2>
+      <h2 className="text-center pt-4 pb-3">Service Request Details</h2>
 
       {loading ? (
         <Spinner animation="border" />

@@ -69,7 +69,7 @@ const ClientRequests = () => {
   return (
     <div className="clientrqdet">
     <Container>
-      <h2 className="mb-3 text-center p-2 bg-primary">Your Service Requests</h2>
+      <h2 className="mb-3 text-center p-2 bg-primary pt-2">Your Service Requests</h2>
       {loading && <Spinner animation="border" />}
       {error && <Alert variant="danger">{error}</Alert>}
       {!loading && !error && requests.length === 0 && (
