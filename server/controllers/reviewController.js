@@ -34,6 +34,20 @@ const submitReview=async(req,res)=>{
         if (!clientId) {
           return res.status(401).json({ message: "Unauthorized: No user ID found" });
       }
+      if (!providerId || !requestId || !rating || !reviewText) {
+        return res.status(400).json({ message: "All fields are required, including review text." });
+    }
+
+    
+    if (reviewText.trim().length === 0) {
+      return res.status(400).json({ message: "Review text cannot be empty." });
+  }
+
+  const existingReview = await Review.findOne({ clientId, requestId });
+
+  if (existingReview) {
+      return res.status(400).json({ message: "You have already submitted a review for this service request." });
+  }
 
     
         const newReview = new Review({

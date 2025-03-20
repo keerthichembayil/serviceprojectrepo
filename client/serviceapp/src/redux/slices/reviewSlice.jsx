@@ -14,7 +14,8 @@ export const submitReview = createAsyncThunk("review/submitreview",
     const response = await axios.post("/review/submitreview", reviewData,config);
     return response.data;
   } catch (error) {
-    return rejectWithValue(error.response.data.message);
+    console.error("Submit review error:", error.response?.data?.message);
+    return rejectWithValue(error.response?.data?.message || "Failed to submit review.");
   }
 });
 

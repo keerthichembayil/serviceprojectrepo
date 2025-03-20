@@ -43,6 +43,7 @@ const ClientReviews = () => {
     };
     console.log("Submitting review:", reviewData); // Debugging log
     dispatch(submitReview(reviewData))
+    .unwrap() // Unwrap the Redux action to handle errors properly
       .then(() => {
         alert("Review submitted successfully!");
         setRating(0);
@@ -51,8 +52,14 @@ const ClientReviews = () => {
         setSelectedRequestId(null);
       })
       .catch((error) => {
-        alert("Failed to submit review. Please try again.");
-        console.error(error);
+        console.error("Error submitting review:", error);
+      
+        // Display backend error messages to the user
+        if (error) {
+          alert(error);
+        } else {
+          alert("Failed to submit review. Please try again.");
+        }
       });
   };
   
