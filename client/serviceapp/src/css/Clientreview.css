@@ -4,14 +4,51 @@
     min-height: 100vh;
     width:100%;
     max-width:100%;
+    padding-left: 0 !important;
+  margin-left: 0 !important;
     
     display: flex;
     flex-direction: column;
 }
 .ratesection{
     width: 100%;
+    
     padding: 20px;
     background-color: #f8d7da; /* Match the color */
 }
+
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+  }
+  .service-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .ratesection {
+    background: linear-gradient(135deg,rgb(184, 171, 183),rgb(16, 69, 94));
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(237, 221, 221, 0.1);
+    width:100vw;
+    
+    
+  }
+  .star-rating {
+    transition: transform 0.2s ease-in-out;
+  }
+  .star-rating:hover {
+    transform: scale(1.1);
+  }
+  .review-textarea {
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .review-btn {
+    font-size: 18px;
+    padding: 8px 20px;
+    border-radius: 8px;
+  }
+  
 
 

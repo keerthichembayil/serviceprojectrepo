@@ -77,17 +77,18 @@ const ClientReviews = () => {
           <Col key={service._id} md={3} className="mb-4">
              <Card
                 onClick={() => handleSelectService(service.providerId._id, service._id)}
-                className={selectedRequestId === service._id ? "border border-primary" : ""}
+                className={`service-card ${selectedRequestId === service._id ? "border-primary shadow-lg" : "shadow-sm"}`}
               >
+                 <Card.Img variant="top" src={service.providerId.image} alt={service.providerId.name} style={{ height: "200px", objectFit: "cover",objectPosition:"top"}}/>
               <Card.Body> 
-              <Card.Title>{service.providerId.name}</Card.Title>
+              <Card.Title className="text-primary">{service.providerId.name}</Card.Title>
               {/* <Card.Text><strong>Request ID:</strong> {service._id}</Card.Text> */}
-              <Card.Img variant="top" src={service.providerId.image} alt={service.providerId.name} style={{ height: "200px", objectFit: "cover",objectPosition:"top"}}/>
+             
               <Card.Text><strong>Services:</strong> {service.services.join(", ")}</Card.Text> {/* Join array values */}
                   <Card.Text><strong>Request Date:</strong> {new Date(service.requestDate).toLocaleDateString()}</Card.Text>
                   <Card.Text><strong>Service Date:</strong> {new Date(service.serviceDate).toLocaleDateString()}</Card.Text>
                   <Card.Text><strong>Additional Notes:</strong> {service.additionalNotes || "N/A"}</Card.Text>
-                  <Card.Text><strong>Status:</strong> ✅ Completed & Paid</Card.Text>
+                  <Card.Text><strong>Status:</strong><span className="badge bg-success"> ✅ Completed & Paid</span></Card.Text>
               </Card.Body>
             </Card>
           </Col>
@@ -98,15 +99,17 @@ const ClientReviews = () => {
     </Row>
    
     {selectedProvider && (
-      <div className="mt-4 ratesection">
-        <h4>Rate Your Experience</h4>
+      <div className="mt-4 ratesection text-center p-4">
+        <h4 className="text-primary mb-3">Rate Your Experience</h4>
         <ReactStars
-            count={5}
-            size={30}
-            value={rating}
-            onChange={setRating}
-            color1={"#ccc"} // Inactive star color
-            color2={"#ffd700"} // Active star color
+           count={5}
+           size={40}
+           value={rating}
+           onChange={setRating}
+           color1={"#ccc"}
+           color2={"#ffcc00"}
+           half={true}
+           className="star-rating"
           />
         <Form.Control
           as="textarea"
@@ -114,7 +117,7 @@ const ClientReviews = () => {
           value={reviewText}
           onChange={(e) => setReviewText(e.target.value)}
           placeholder="Write your review..."
-          className="mt-2"
+          className="mt-3 review-textarea"
         />
         <Button className="mt-3" onClick={handleSubmitReview} variant="success">
           Submit Review
