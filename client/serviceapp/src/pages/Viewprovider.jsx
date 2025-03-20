@@ -27,7 +27,12 @@ const Viewprovider = () => {
       // navigate("/admin/dashboard"); // Redirect after approval
     } catch (error) {
       console.error("Approval Error:", error);
+      if (error === "Verification email already sent. Please wait for it to expire.") {
+        alert("Verification email already sent. Please check the provider's inbox.");
+      }
+      else{
       alert(error.message || "Approval failed");
+      }
     }
   };
   const handleDownload = () => {
