@@ -104,6 +104,23 @@ const Register = () => {
       console.log("res",res);
       alert(res.data.message);
       navigate("/login"); // Redirect to login after registration
+      // Reset form state after successful registration
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      phone: "",
+      role: "client",
+      gender: "male",
+      address: {
+        street: "",
+        city: "",
+        state: ""
+      }
+    });
+    setErrors({});
+    setServerError("");
     } catch (err) {
       console.log("entered error");
       setServerError(err.response?.data?.message || "Registration failed");
