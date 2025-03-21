@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClientProviders } from "../redux/slices/clientProviderSlice"; // New slice
 
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { Container, Row, Col, Button, Card, Spinner, Alert ,Badge} from "react-bootstrap";
+import { Container, Row, Col, Button, Card, Spinner, Alert ,Badge,Image} from "react-bootstrap";
 import { FaUser, FaClipboardList, FaDollarSign,FaStar } from "react-icons/fa"; // Import icons
 import ReactStars from "react-stars";
 import '../css/clientdash.css'
@@ -40,22 +40,20 @@ const Clientdashboard = () => {
      <Container fluid className="client-dashboard">
       <Row>
         {/* Sidebar */}
-        <Col md={3} className="p-4 sidebar userprofilesection">
-          <Button onClick={handleViewProfile} variant="success" className="w-100 mb-2">
+        <Col md={3} className="sidebar bg-secondary text-white p-4 d-flex flex-column align-items-center shadow-lg rounded">
+          <Button onClick={handleViewProfile} variant="outline-light" className="rounded-pill py-2 mt-2">
           <FaUser className="me-2" />  View Profile
           </Button>
-          <Button
-  className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success" onClick={() => navigate("/viewclientreqdet")}>
+          <Button  onClick={() => navigate("/viewclientreqdet")} variant="outline-light" className="rounded-pill py-2 mt-2">
  <FaClipboardList className="me-2" /> View Requested Services
 </Button>
-<Button
-  className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success" onClick={() => navigate("/viewclientpayment")}>
+<Button variant="outline-light" className="rounded-pill py-2 mt-2"  onClick={() => navigate("/viewclientpayment")}>
   <FaDollarSign className="me-2" />View Paymentdetails
 </Button>
 
 
 <Button
-  className="w-100 mb-3 text-white px-4 py-2 rounded mt-4" variant="success"
+  variant="outline-light" className="rounded-pill py-2 mt-2"
   onClick={() => navigate("/clientreview")}
 >
   ⭐ Add Review
@@ -64,17 +62,17 @@ const Clientdashboard = () => {
     
        {/* Main Content */}
        <Col md={9} className="p-4">
-          <h2 className="mb-4 text-center bg-primary p-2 text-white">Our Services</h2>
+          <h2 className="mb-4 text-center bg-primary p-2 text-white rounded">Our Services</h2>
           {loading && <Spinner animation="border" role="status" />}
           {error && <Alert variant="danger">{error}</Alert>}
           <Row>
             {providers.length > 0 ? (
               providers.map((provider) => (
                 <Col key={provider._id} md={4} className="mb-4">
-                  <Card className="shadow-lg">
+                  <Card className="shadow-lg border-0 rounded-lg clientdashcard">
                     <Card.Img variant="top" src={provider.image} style={{ height: "200px", objectFit: "cover",objectPosition:"top"}} />
-                    <Card.Body>
-                      <Card.Title>{provider.name}</Card.Title>
+                    <Card.Body style={{ backgroundColor: "#99CCFF" }}>
+                      <Card.Title className="fw-bold text-primary">{provider.name}</Card.Title>
                       <Card.Text>
   {provider.services && provider.services.length > 0 ? (
     provider.services.map((service, index) => (
@@ -88,7 +86,7 @@ const Clientdashboard = () => {
 </Card.Text>
 
 <Card.Text>
-                        Highest Rating:{" "}
+                     <strong>  Highest Rating:{" "}</strong>
                         <ReactStars
                           count={5}
                           value={provider.highestRating || 0}

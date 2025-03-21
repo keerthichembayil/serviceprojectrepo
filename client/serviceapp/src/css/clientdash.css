@@ -1,12 +1,14 @@
 
-.userprofilesection{
-    background-color:#99CCFF;
-    height:100%vh;
-    
-    
 
-}
 .client-dashboard{
-    background-color:#FF99CC;
+    background-color:#154b4e;
     height:100%;
+}
+
+.clientdashcard{
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.clientdashcard:hover{
+    transform: translateY(-5px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
