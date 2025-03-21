@@ -68,17 +68,17 @@ const ClientRequests = () => {
 
   return (
     <div className="clientrqdet">
-    <Container>
-      <h2 className="mb-3 text-center p-2 bg-primary pt-2">Your Service Requests</h2>
+    <Container className="pt-4">
+      <h2 className="mb-3 text-center p-2 bg-primary pt-2 rounded">Your Service Requests</h2>
       {loading && <Spinner animation="border" />}
       {error && <Alert variant="danger">{error}</Alert>}
       {!loading && !error && requests.length === 0 && (
         <Alert variant="info">No service requests found.</Alert>
       )}
       {!loading && !error && requests.length > 0 && (
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive className="text-center">
           <thead>
-            <tr>
+            <tr className="text-white">
               <th className="bg-dark text-white">#</th>
               <th className="bg-primary text-white">Provider Name</th>
               <th className="bg-success text-white">Service</th>
@@ -92,9 +92,9 @@ const ClientRequests = () => {
           <tbody>
             {requests.map((request, index) => (
               <tr key={request._id}>
-                <td>{index + 1}</td>
-                <td>{request.providerId?.name || "N/A"}</td>
-                <td>
+                <td className="stclientreq">{index + 1}</td>
+                <td className="stclientreq">{request.providerId?.name || "N/A"}</td>
+                <td className="stclientreq">
   {request.services?.length > 0
     ? request.services.map((service, i) => (
         <Badge key={i} bg="info" className="me-1">
@@ -103,18 +103,18 @@ const ClientRequests = () => {
       ))
     : "N/A"}
 </td>
-                <td>
+                <td className="stclientreq">
                   {request.providerId?.image ? (
                     <Image src={request.providerId.image} alt="Service Provider" width={50} height={50} rounded />
                   ) : (
                     "No Image"
                   )}
                 </td>
-                <td>
+                <td className="stclientreq">
                   {request.serviceDate ? new Date(request.serviceDate).toDateString() : "N/A"}
                 </td>
-                <td>{request.additionalNotes || "No notes"}</td>
-                <td>
+                <td className="stclientreq">{request.additionalNotes || "No notes"}</td>
+                <td className="stclientreq">
                   <Badge 
                     bg={
                       request.status === "Pending"
@@ -128,7 +128,7 @@ const ClientRequests = () => {
                   </Badge>
 
 </td>
-<td>
+<td className="stclientreq">
                   {request.status === "completed" && request.paymentStatus !== "paid" ? (
                    <>
                    <Form.Control

@@ -121,7 +121,7 @@ const ProviderProfile = () => {
             {/* Name - ReadOnly */}
             <Form.Group controlId="name" className="mb-3">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" name="name" value={formData.name} readOnly />
+              <Form.Control type="text" name="name" value={formData.name} className="formst" readOnly />
             </Form.Group>
 
             {/* Experience - Editable */}
@@ -131,6 +131,7 @@ const ProviderProfile = () => {
                 type="number"
                 name="experience"
                 value={formData.experience}
+                className="formst"
                 onChange={handleChange}
                 required
               />
@@ -139,7 +140,7 @@ const ProviderProfile = () => {
             {/* Image Upload */}
             <Form.Group controlId="image" className="mb-3">
               <Form.Label>Change Profile Image</Form.Label>
-              <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+              <Form.Control type="file" accept="image/*"  className="formst" onChange={handleImageChange} />
             </Form.Group>
 
             {/* Image Preview */}
@@ -160,7 +161,7 @@ const ProviderProfile = () => {
 <Form.Group controlId="services" className="mb-3">
                 <Form.Label>Services Offered</Form.Label>
                 <div className="d-flex">
-                  <Form.Select value={selectedService} onChange={(e) => setSelectedService(e.target.value)}>
+                  <Form.Select value={selectedService} className="formst" onChange={(e) => setSelectedService(e.target.value)}>
                     <option value="">Select a Service</option>
                     {predefinedServices.map((service, index) => (
                       <option key={index} value={service}>
@@ -174,7 +175,7 @@ const ProviderProfile = () => {
                 </div>
                 <ul className="list-group mt-2">
                   {formData.services.map((service, index) => (
-                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    <li key={index} className="list-group-item d-flex justify-content-between align-items-center formst">
                       {service}
                       <Button variant="danger" size="sm" onClick={() => handleRemoveService(service)}>
                         -

@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProviderRequests } from "../redux/slices/viewrequestbyproviderSlice";
 import { updateRequestStatus } from "../redux/slices/updaterequestSlice";
 import { Table, Spinner, Alert, Container, Card,Button} from "react-bootstrap";
+import '../css/providerafterverify.css'
+
+
+
 const Providerafterverify = () => {
   const dispatch = useDispatch();
   const { requests, loading, error } = useSelector((state) => state.requests);
@@ -31,8 +35,8 @@ const Providerafterverify = () => {
   return (
     <div>
       <Container className="mt-4">
-      <Card className="shadow p-3">
-        <h3 className="text-center p-3 bg-primary">Service Requests Received</h3>
+      <Card className="shadow p-3 bg-secondary">
+        <h3 className="text-center p-3 bg-primary rounded">Service Requests Received</h3>
         {loading && <Spinner animation="border" />}
         {error && <Alert variant="danger">{error}</Alert>}
         {requests.length === 0 && !loading && <Alert variant="info">No service requests found.</Alert>}
@@ -54,21 +58,21 @@ const Providerafterverify = () => {
             <tbody>
               {requests.map((request, index) => (
                 <tr key={request._id}>
-                  <td>{index + 1}</td>
-                  <td>{request.clientId.name}</td>
-                  <td>{request.clientId.email}</td>
-                  <td>{request.clientId.phone}</td>
-                  <td>{request.services}</td>
-                  <td>
+                  <td className="listreq">{index + 1}</td>
+                  <td className="listreq">{request.clientId.name}</td>
+                  <td className="listreq">{request.clientId.email}</td>
+                  <td className="listreq">{request.clientId.phone}</td>
+                  <td className="listreq">{request.services}</td>
+                  <td className="listreq">
                   {request.serviceDate ? new Date(request.serviceDate).toDateString() : "N/A"}
                 </td>
 
                   
-                  <td>{request.additionalNotes || "N/A"}</td>
+                  <td className="listreq">{request.additionalNotes || "N/A"}</td>
 
 
 
-                  <td>
+                  <td className="listreq">
                   <span className={`badge bg-${
   request.status === 'accepted' ? 'success' :
   request.status === 'rejected' ? 'danger' :
@@ -78,7 +82,7 @@ const Providerafterverify = () => {
   {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
 </span>
                     </td>
-                    <td>
+                    <td className="listreq">
                       {request.status === "pending" && (
                         <>
                           <Button variant="success" size="sm" onClick={() => handleStatusChange(request._id, "accepted")}>

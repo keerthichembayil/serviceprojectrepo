@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProviderDetails } from "../redux/slices/setfreshproviderSlice";
 import AddProvider from './Addprovider';
 import Providerafterverify from './Providerafterverify';
-import { Container, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Container, Row, Col, Button, Alert,Card} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { FaUserEdit, FaMoneyCheckAlt, FaEnvelope } from 'react-icons/fa'; // Import icons
 import '../css/Providerdash.css'
@@ -27,6 +27,7 @@ const ProviderDashboard = () => {
       <Row>
         {/* Sidebar */}
         <Col md={3} className="sidebarprovider p-4 min-vh-100 d-flex flex-column align-items-center">
+        <Card className="w-100 p-3 bg-secondary">
           {!isVerified ? (
             <>
               {!providerDetails ? (
@@ -68,11 +69,13 @@ const ProviderDashboard = () => {
               </Button>
             </div>
           )}
+          </Card>
         </Col>
 
         {/* Main Content */}
         <Col md={9} className="p-4 mainsectionprovider">
         {error && <Alert variant="danger" className="text-center">{error}</Alert>}
+        
           {!providerDetails ? (
             <AddProvider /> // Show form to add provider details
           ) : isRejected ? (
@@ -86,6 +89,7 @@ const ProviderDashboard = () => {
           ) : (
             <Providerafterverify />
           )}
+             
         </Col>
       </Row>
     </Container>

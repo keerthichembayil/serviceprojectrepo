@@ -29,8 +29,8 @@ const ProviderPaymentHistory = () => {
 
   return (
     <div className="providerpayment">
-    <Container>
-      <h2 className="text-center text-white bg-primary p-3 rounded">
+    <Container className="pt-3">
+      <h2 className="text-center text-white bg-primary p-3 rounded pt-2">
         Provider Payment Details
       </h2>
 
@@ -58,21 +58,21 @@ const ProviderPaymentHistory = () => {
           <tbody>
             {payments.map((payment, index) => (
               <tr key={payment._id}>
-                <td>{index + 1}</td>
-                <td>{payment.clientId?.name || "N/A"}</td>
-                <td>
+                <td className="provpt">{index + 1}</td>
+                <td className="provpt">{payment.clientId?.name || "N/A"}</td>
+                <td className="provpt">
                   {payment.requestId?.services?.length > 0
                     ? payment.requestId.services.join(", ")
                     : "N/A"}
                 </td>
-                <td>
+                <td className="provpt">
                   {payment.requestId?.serviceDate
                     ? new Date(payment.requestId.serviceDate).toLocaleDateString()
                     : "N/A"}
                 </td>
-                <td>${payment.amount?.toFixed(2) || "0.00"}</td>
-                <td>{new Date(payment.createdAt).toLocaleDateString()}</td>
-                <td>
+                <td className="provpt">${payment.amount?.toFixed(2) || "0.00"}</td>
+                <td className="provpt">{new Date(payment.createdAt).toLocaleDateString()}</td>
+                <td className="provpt">
                   <span
                     className={`badge p-2 ${
                       payment.paymentStatus === "paid"

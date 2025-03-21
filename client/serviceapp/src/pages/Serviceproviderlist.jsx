@@ -25,7 +25,7 @@ const ProviderList = () => {
       <Row className="g-4">
         {/* Service Providers Section */}
         <Col md={6}>
-        <Card className="shadow-lg border-0 rounded text-white" style={{ background: "linear-gradient(to right, #007bff, #6610f2)" }}>
+        <Card className="shadow-lg border-0 rounded text-white bg-secondary">
         <Card.Body>
               <Card.Title className="text-center fw-bold mb-3">Service Providers</Card.Title>
           
@@ -33,23 +33,23 @@ const ProviderList = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Image</th>
-                  <th>Name</th>
-                  <th>Service</th>
-                  <th>Email</th>
-                  <th>Action</th>
+                  <th className="bg-primary">Image</th>
+                  <th className="bg-primary">Name</th>
+                  <th className="bg-primary">Service</th>
+                  <th className="bg-primary">Email</th>
+                  <th className="bg-primary">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {providers.map((provider) => (
-                  <tr key={provider._id}>
-                    <td>
+                  <tr key={provider._id} className="text-center">
+                    <td className="admli">
                       <Image src={provider.image} alt={provider.name} roundedCircle width="50" height="50" />
                     </td>
-                    <td>{provider.name}</td>
-                    <td>{provider.services.join(",")}</td>
-                    <td>{provider.userId?.email}</td>
-                    <td>
+                    <td className="admli">{provider.name}</td>
+                    <td className="admli">{provider.services.join(",")}</td>
+                    <td className="admli">{provider.userId?.email}</td>
+                    <td className="admli">
                       <Link to={`/viewprovider/${provider._id}`}>
                         <Button variant="danger" size="sm">View</Button>
                       </Link>
@@ -72,17 +72,17 @@ const ProviderList = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Action</th>
+                  <th className="bg-primary">Name</th>
+                  <th className="bg-primary">Email</th>
+                  <th className="bg-primary">Action</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>
+                  <tr key={user._id} className="text-center">
+                    <td className="admli">{user.name}</td>
+                    <td className="admli">{user.email}</td>
+                    <td className="admli">
                       <Link to={`/user/${user._id}`}>
                         <Button variant="danger" size="sm">View</Button>
                       </Link>

@@ -80,7 +80,7 @@ const ClientReviews = () => {
                 className={`service-card ${selectedRequestId === service._id ? "border-primary shadow-lg" : "shadow-sm"}`}
               >
                  <Card.Img variant="top" src={service.providerId.image} alt={service.providerId.name} style={{ height: "200px", objectFit: "cover",objectPosition:"top"}}/>
-              <Card.Body> 
+              <Card.Body style={{ backgroundColor: "#7ddce2" }}> 
               <Card.Title className="text-primary">{service.providerId.name}</Card.Title>
               {/* <Card.Text><strong>Request ID:</strong> {service._id}</Card.Text> */}
              

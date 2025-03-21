@@ -27,20 +27,20 @@ const PaymentHistory = () => {
   }, [token]);
 
   return (
-    <div className="clientpaymentdesign">
+    <div className="clientpaymentdesign pt-3">
     <Container>
-      <Card className="shadow-lg p-3">
+      <Card className="shadow-lg p-4 border-0 rounded-lg bg-secondary">
         <Card.Body>
-          <h2 className="text-center text-white bg-primary mb-4">Payment History</h2>
+          <h2 className="text-center text-white bg-primary py-2 rounded mb-4">Payment History</h2>
 
           {loading ? (
-            <div className="text-center">
+            <div className="text-center py-4">
               <Spinner animation="border" variant="primary" />
             </div>
           ) : error ? (
-            <Alert variant="danger">{error}</Alert>
+            <Alert variant="danger" className="text-center">{error}</Alert>
           ) : payments.length === 0 ? (
-            <Alert variant="info">No payment history found.</Alert>
+            <Alert variant="info" className="text-center">No payment history found.</Alert>
           ) : (
             <Table striped bordered hover responsive className="text-center">
               <thead className="bg-primary text-white">
@@ -56,22 +56,27 @@ const PaymentHistory = () => {
               </thead>
               <tbody>
                 {payments.map((payment, index) => (
-                  <tr key={payment._id}>
-                    <td>{index + 1}</td>
-                    <td>{payment.providerId?.name || "N/A"}</td>
-                    <td>
+                  <tr key={payment._id} className="align-middle">
+                    <td className="stylcol">{index + 1}</td>
+                    <td className="stylcol">{payment.providerId?.name || "N/A"}</td>
+                    <td className="stylcol">
   {payment.requestId?.services?.length > 0
     ? payment.requestId.services.join(", ")
     : "N/A"}
 </td>
-                    <td>
+                    <td className="stylcol">
                       {payment.requestId?.serviceDate
                         ? new Date(payment.requestId.serviceDate).toLocaleDateString()
                         : "N/A"}
                     </td>
-                    <td>${payment.amount?.toFixed(2) || "0.00"}</td>
-                    <td>{new Date(payment.createdAt).toLocaleDateString()}</td>
-                    <td>
+                    <td className="stylcol">
+                      <span className="fw-bold text-success">
+                      ${payment.amount?.toFixed(2) || "0.00"}
+                      </span>
+                      
+                      </td>
+                    <td className="stylcol">{new Date(payment.createdAt).toLocaleDateString()}</td>
+                    <td className="stylcol">
                       <span
                         className={`badge p-2 ${
                           payment.paymentStatus === "paid"

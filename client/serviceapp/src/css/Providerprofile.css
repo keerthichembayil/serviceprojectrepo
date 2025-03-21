@@ -1,5 +1,8 @@
 .providerprofile{
-    background-image:url("/images/serviceproviderprofile.jpg");
+    background-color:#09282a;
     width:100vw;
     height:100%;
+}
+.formst{
+    background-color:#7ddce2!important;
 }

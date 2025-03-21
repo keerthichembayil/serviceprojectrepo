@@ -1,17 +1,17 @@
 .reviewpage{
-    background-color:#FFCCCC;
+    background-color:#09282a;
     height:100vh;
     min-height: 100vh;
     width:100%;
     max-width:100%;
+   
     padding-left: 0 !important;
-  margin-left: 0 !important;
+    margin-left: 0 !important;
     
-    display: flex;
-    flex-direction: column;
 }
 .ratesection{
     width: 100%;
+   
     
     padding: 20px;
     background-color: #f8d7da; /* Match the color */
