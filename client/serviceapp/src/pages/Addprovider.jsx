@@ -102,13 +102,13 @@ const AddProvider = () => {
           
         </Col> */}
         <Col md={9} className="p-4">
-          <h2 className="mb-4">Add Service Details</h2>
-          {message && <Alert variant="success">{message}</Alert>}
+          <h2 className="mb-4 text-white">Add Service Details</h2>
+          {message && <Alert variant="primary">{message}</Alert>}
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-              <Form.Label>Services</Form.Label>
+              <Form.Label className="text-white">Services</Form.Label>
               <div className="d-flex flex-wrap">
                 {predefinedServices.map((service) => (
                   <Button
@@ -135,7 +135,7 @@ const AddProvider = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Experience (years)</Form.Label>
+              <Form.Label className="text-white">Experience (years)</Form.Label>
               <Form.Control
                 type="number"
                 value={experience}
@@ -145,7 +145,7 @@ const AddProvider = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Profile Image</Form.Label>
+              <Form.Label className="text-white">Profile Image</Form.Label>
               <Form.Control
                 type="file"
                 onChange={(e) => handleFileChange(e, setImage)}
@@ -154,7 +154,7 @@ const AddProvider = () => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Upload Document (PDF/DOC)</Form.Label>
+              <Form.Label className="text-white">Upload Document (PDF/DOC)</Form.Label>
               <Form.Control
                 type="file"
                 accept=".pdf,.doc,.docx"
