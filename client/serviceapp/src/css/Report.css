@@ -1,0 +1,14 @@
+.reportdes{
+    background-color:#cce1e1;
+    width:100vw;
+    height:100vh;
+    margin:0;
+    padding:0;
+    
+    
+}
+html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}

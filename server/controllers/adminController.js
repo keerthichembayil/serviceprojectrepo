@@ -3,6 +3,7 @@ const User = require("../models/User");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const Review = require("../models/Review");
 
 const Serviceprovider=require("../models/ServiceProvider");
 const ServiceRequest=require("../models/ServiceRequest");
@@ -288,11 +289,46 @@ const getTotalRequestsCompleted = async (req, res) => {
       const totalRequestsCompleted = await ServiceRequest.countDocuments({ status: "completed" });
       res.status(200).json({ totalRequestsCompleted });
   } catch (error) {
-      res.status(500).json({ message: "Error fetching completed requests", error });
+    res.status(500).json({ message: "Error fetching max ratings", error: error.message });
   }
 };
 
 
 
 
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted};
+const maxRating=async(req,res)=>{
+  try {
+    const maxRatings = await Review.aggregate([
+      {
+        $group: {
+          _id: "$providerId",
+          maxRating: { $max: "$rating" }, // Find the max rating per provider
+        },
+      },
+      {
+        $lookup: {
+          from: "serviceproviders",
+          localField: "_id",
+          foreignField:"_id",
+          as: "providerDetails",
+        },
+      },
+      { $unwind: "$providerDetails" }, // Unwind provider details for easy access
+      {
+        $project: {
+          _id: 0,
+          providerId: "$_id",
+          providerName: "$providerDetails.name",
+          maxRating: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json(maxRatings);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching max ratings", error });
+  }
+}
+
+
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating};

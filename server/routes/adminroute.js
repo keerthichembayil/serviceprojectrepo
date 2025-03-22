@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const {protect,authorize}=require("../middleware/adminmiddleware");
 
-const {registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted} = require("../controllers/adminController");
+const {registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating} = require("../controllers/adminController");
 
 
 
@@ -18,6 +18,7 @@ router.get("/totalusers",protect,authorize("admin"),gettotalusers);
 router.get("/totalproviders",protect,authorize("admin"),gettotalproviders);
 router.get("/totalreqpending",protect,authorize("admin"),getTotalRequestsPending);
 router.get("/totalreqcompleted",protect,authorize("admin"),getTotalRequestsCompleted);
+router.get("/max-ratings",protect,authorize("admin"),maxRating);
 
 
 

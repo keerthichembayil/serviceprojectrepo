@@ -7,6 +7,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend,BarChart, Bar, XAxis, YAxis, Carte
 import axios from "../axios";
 
 import { BsPeople} from "react-icons/bs"; // Import the icon
+import { BsBarChart } from "react-icons/bs"; // Import Bar Chart icon
 
 
 
@@ -71,11 +72,22 @@ const Admindashboard = () => {
         <h4 className="text-white mb-4">Admin Panel</h4>
           <Button 
             variant="success" 
-            className="w-100 mt-0" 
+            className="w-100 mt-0 mb-4" 
             onClick={() => navigate("/serviceprovidersadm")}
           >
                <BsPeople className="me-2" size={18} />
             View Details
+          </Button>
+
+
+
+          <Button 
+            variant="success" 
+            className="w-100 mt-0" 
+            onClick={() => navigate("/reviewreport")}
+          >
+               <BsBarChart className="me-2" size={18} />
+            View ReviewReport
           </Button>
         </Col>
 

@@ -19,7 +19,7 @@ const ServiceRequestDetails = () => {
   return (
     <div className="viewuser">
     <Container>
-      <h2 className="text-center pt-4 pb-3">Service Request Details</h2>
+      <h2 className="text-center pt-4 pb-3 text-white">Service Request Details</h2>
 
       {loading ? (
         <Spinner animation="border" />
@@ -29,25 +29,25 @@ const ServiceRequestDetails = () => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Client Name</th>
-              <th>Client Email</th>
-              <th>Service Provider</th>
-              <th>Requested Services</th>
-              <th>Service Date</th>
-              <th>Notes Given</th>
-              <th>Status</th>
+              <th className="bg-primary">Client Name</th>
+              <th className="bg-primary">Client Email</th>
+              <th className="bg-primary">Service Provider</th>
+              <th className="bg-primary">Requested Services</th>
+              <th className="bg-primary">Service Date</th>
+              <th className="bg-primary">Notes Given</th>
+              <th className="bg-primary">Status</th>
             </tr>
           </thead>
           <tbody>
             {requests.map((request, index) => (
               <tr key={index}>
-                <td>{request.clientId?.name}</td>
-                <td>{request.clientId?.email}</td>
-                <td>{request.providerId?.name || "N/A"}</td>
-                <td>{request.services || "N/A"}</td>
-                <td>{request.serviceDate ? new Date(request.serviceDate).toLocaleDateString() : "N/A"}</td>
-                <td>{request.additionalNotes || "No notes provided"}</td>
-                <td>
+                <td className="bg-secondary text-white">{request.clientId?.name}</td>
+                <td className="bg-secondary text-white">{request.clientId?.email}</td>
+                <td className="bg-secondary text-white">{request.providerId?.name || "N/A"}</td>
+                <td className="bg-secondary text-white">{request.services || "N/A"}</td>
+                <td className="bg-secondary text-white">{request.serviceDate ? new Date(request.serviceDate).toLocaleDateString() : "N/A"}</td>
+                <td className="bg-secondary text-white">{request.additionalNotes || "No notes provided"}</td>
+                <td className="bg-secondary text-white">
                   <span
                     className={`badge ${
                       request.status === "Completed"

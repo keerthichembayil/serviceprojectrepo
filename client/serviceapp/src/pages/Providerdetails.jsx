@@ -101,11 +101,11 @@ console.log("Dispatching Request:", {
   }
 
   return (
-    <div className="provier-det">
+    <div className="provier-det pt-3">
     <Container>
       <Row className="justify-content-center">
         <Col md={8}>
-          <Card className="shadow-lg">
+          <Card className="shadow-lg formstu text-white">
             <Card.Body>
               <Row>
                 <Col md={4} className="text-center providerdetails">
