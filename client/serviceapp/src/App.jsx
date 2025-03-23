@@ -33,6 +33,7 @@ import Providerpaymentdetails from "./pages/Providerpaymentdetails"
 import Serviceproviderlist from "./pages/Serviceproviderlist"
 import ClientReviews from "./pages/ClientReviews";
 import Viewreviewreport from "./pages/Viewreviewreport";
+import Viewuserforactive from "./pages/Viewuserforactive";
 
 function App() {
   // Get user role for client & provider
@@ -96,6 +97,8 @@ function App() {
         <Route path="/serviceprovidersadm" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Serviceproviderlist/></>}</AdminProtectedRoute>} />
         <Route path="/clientreview" element={<ProtectedRoute requiredRole="client">{<><Navbar2/><ClientReviews/></>}</ProtectedRoute>} />
         <Route path="/reviewreport" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewreviewreport/></>}</AdminProtectedRoute>} />
+        <Route path="/statechangeuser" element={<AdminProtectedRoute requiredRole="admin">{<><AdminNavbar/><Viewuserforactive/></>}</AdminProtectedRoute>} />
+
 
 
 

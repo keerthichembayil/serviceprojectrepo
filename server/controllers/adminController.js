@@ -331,4 +331,62 @@ const maxRating=async(req,res)=>{
 }
 
 
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating};
+const userforActive=async(req,res)=>{
+  try {
+    const users = await User.find({}, "name email phone address isActive");
+    res.json(users);
+} catch (error) {
+    res.status(500).json({ message: "Error fetching users." });
+}
+
+}
+
+
+
+
+
+const toggleUserStatus = async (req, res) => {
+  try {
+      const { userId } = req.params; // Get userId from request parameters
+      const { isActive } = req.body; // Get updated status from request body
+      // If deactivating, check if the user has any pending or accepted service requests
+    if (!isActive) {
+      
+      const activeRequest = await ServiceRequest.findOne({
+        clientId: userId,
+        status: { $in: ["pending", "accepted"] }, // Prevent deactivation if status is "pending" or "accepted"
+      });
+
+      if (activeRequest) {
+        return res.status(400).json({
+          success: false,
+          message: "User cannot be deactivated as they have active service requests.",
+        });
+      }
+    }
+
+      // Find the user and update their isActive status
+      const user = await User.findByIdAndUpdate(userId, { isActive }, { new: true });
+
+      if (!user) {
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      res.json({ success: true, message: `User ${isActive ? 'activated' : 'deactivated'} successfully`, user });
+  } catch (error) {
+      console.error("Error toggling user status:", error);
+      res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating,userforActive,toggleUserStatus};

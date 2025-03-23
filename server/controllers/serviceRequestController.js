@@ -13,6 +13,11 @@ const requestService = async (req, res) => {
         console.log("reqbody",req.body);
         const clientId = req.user.id; // authentication middleware adds user to req
         console.log("clientid",clientId);
+         // Check if the client is active
+         const client = await User.findById(clientId);
+         if (!client || !client.isActive) {
+             return res.status(403).json({ error: "Your account is inactive. You cannot request a service." });
+         }
          // Check if the same request already exists to prevent duplicate request sending
     const existingRequest = await ServiceRequest.findOne({ providerId, clientId ,status:{$nin:["completed","rejected"]}});
     console.log("reqexist",existingRequest);

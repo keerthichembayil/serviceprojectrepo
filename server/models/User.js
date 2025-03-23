@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     city: { type: String, required: false, default: "" },
     state: { type: String, required: false, default: "" }
   },
+  isActive: { type: Boolean, default: true }, // To manage activation status
   
   createdAt: { type: Date, default: Date.now }
 });

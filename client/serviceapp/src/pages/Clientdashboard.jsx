@@ -32,7 +32,7 @@ const Clientdashboard = () => {
     navigate("/clientprofile"); 
   };
   const handleRequestService = (id) => {
-    navigate(`/provider/${id}`); // Redirect to provider details page
+    navigate(`/provider/${id}`); // Redirect to provider details page here id need to pass bcoz logined one is not provider
   };
 
   return (

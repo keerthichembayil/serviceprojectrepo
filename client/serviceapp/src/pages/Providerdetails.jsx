@@ -61,6 +61,9 @@ const ProviderDetails = () => {
 
   } catch (error) {
     console.error("Service request failed:", error);
+     // Extract the error message from the response
+  // Extract the error message properly
+  
   }
 };
 

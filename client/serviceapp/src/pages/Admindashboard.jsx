@@ -83,11 +83,22 @@ const Admindashboard = () => {
 
           <Button 
             variant="success" 
-            className="w-100 mt-0" 
+            className="w-100 mt-0 mb-4" 
             onClick={() => navigate("/reviewreport")}
           >
                <BsBarChart className="me-2" size={18} />
             View ReviewReport
+          </Button>
+
+
+
+          <Button 
+            variant="success" 
+            className="w-100 mt-0" 
+            onClick={() => navigate("/statechangeuser")}
+          >
+               <BsPeople className="me-2" size={18} />
+            View Userdetails
           </Button>
         </Col>
 
