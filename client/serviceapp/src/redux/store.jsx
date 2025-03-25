@@ -18,6 +18,7 @@ import specificuseradReducer from "./slices/userspecificdetailsSlice";
 import providerprofilereducer from  "./slices/providerProfileSlice";
 import completedServicesReducer from "./slices/completedServicesSlice"; 
 import reviewReducer from "./slices/reviewSlice";
+import providerRejectReducer from "./slices/rejectproviderSlice";
 
 
 
@@ -45,6 +46,7 @@ const store = configureStore({
     providerdt:providerprofilereducer,
     completedServices: completedServicesReducer,
     reviews:reviewReducer,
+    providerReject: providerRejectReducer,
 
     
   },

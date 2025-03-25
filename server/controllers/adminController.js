@@ -141,7 +141,7 @@ const getProviderById = async (req, res) => {
     // Find provider by ID and populate user details (email, phone, address)
     const provider = await Serviceprovider.findById(id)
       .populate("userId", "email phone address")//Mongoose handles the relationship internally without requiring you to explicitly import the User model.
-      .select("name services image document experience userId isVerified");
+      .select("name services image document experience userId isVerified isRejected");
       
 
     if (!provider) {
@@ -333,7 +333,7 @@ const maxRating=async(req,res)=>{
 
 const userforActive=async(req,res)=>{
   try {
-    const users = await User.find({}, "name email phone address isActive");
+    const users = await User.find({role:"client"}, "name email phone address isActive");
     res.json(users);
 } catch (error) {
     res.status(500).json({ message: "Error fetching users." });
@@ -379,6 +379,33 @@ const toggleUserStatus = async (req, res) => {
   }
 };
 
+// Reject a provider
+const rejectProvider = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const provider = await Serviceprovider.findById(id);
+
+      if (!provider) {
+          return res.status(404).json({ message: "Provider not found" });
+      }
+
+      if (provider.isVerified) {
+          return res.status(400).json({ message: "Cannot reject an already approved provider" });
+      }
+      
+      if (provider.isRejected) {
+        return res.status(400).json({ message: "Provider is already rejected" });
+    }
+
+      provider.isRejected = true; // Mark as rejected
+      await provider.save();
+
+      return res.status(200).json({ message: "Provider rejected successfully" });
+  } catch (error) {
+      console.error("Rejection Error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 
 
@@ -389,4 +416,4 @@ const toggleUserStatus = async (req, res) => {
 
 
 
-  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating,userforActive,toggleUserStatus};
+  module.exports={registerAdmin,adminLogin,listProviders,listUsers,getProviderById,approveProvider,listspecificuser,gettotalusers,gettotalproviders,getTotalRequestsPending,getTotalRequestsCompleted,maxRating,userforActive,toggleUserStatus,rejectProvider};

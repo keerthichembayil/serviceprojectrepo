@@ -36,7 +36,7 @@ const ProviderDashboard = () => {
                 </Alert>
               ) : isRejected ? (
                 <Alert variant="danger" className="text-center w-100">
-                  Your verification was rejected. Please update your details and try again.
+                   Your verification was rejected. Please contact support for further action.
                 </Alert>
               ) : isPending ? (
                 <Alert variant="info" className="text-center w-100">
@@ -76,13 +76,14 @@ const ProviderDashboard = () => {
         <Col md={9} className="p-4 mainsectionprovider">
         {error && <Alert variant="danger" className="text-center">{error}</Alert>}
         
-          {!providerDetails ? (
+       
+        {!providerDetails ? (
             <AddProvider /> // Show form to add provider details
           ) : isRejected ? (
             <Alert variant="danger" className="text-center">
-              Your verification was rejected. Please update your details and resubmit.
+              Your verification was rejected. Please contact support for further action.
             </Alert>
-          ) : !isVerified ? (
+          )  : !isVerified ? (
             <Alert variant="info" className="text-center">
               Your details are added. Please check your email for verification.
             </Alert>

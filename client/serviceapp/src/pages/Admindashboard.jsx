@@ -98,7 +98,7 @@ const Admindashboard = () => {
             onClick={() => navigate("/statechangeuser")}
           >
                <BsPeople className="me-2" size={18} />
-            View Userdetails
+            Change User Status
           </Button>
         </Col>
 

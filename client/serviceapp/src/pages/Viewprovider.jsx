@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProviderDetails, approveProvider } from "../redux/slices/providerdetailadmSlice";
+import {rejectProvider} from "../redux/slices/rejectproviderSlice"
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Spinner, Alert, Image, Container, Row, Col, Card, Stack } from "react-bootstrap";
 import '../css/viewprovider.css'
@@ -35,6 +36,27 @@ const Viewprovider = () => {
       }
     }
   };
+
+
+
+
+  const handleReject = async () => {
+    try {
+      const confirmReject = window.confirm("Are you sure you want to reject this provider?");
+      if (!confirmReject) return;
+
+      const response = await dispatch(rejectProvider(id)).unwrap();
+      alert(response.message || "Provider rejected successfully");
+      dispatch(fetchProviderDetails(id));
+    } catch (error) {
+      console.error("Rejection Error:", error);
+      alert(error.message || "Rejection failed");
+    }
+  };
+
+
+
+
   const handleDownload = () => {
     const downloadUrl = `${provider.document}?fl_attachment=true`; // Forces download
     window.open(downloadUrl, "_blank"); // Opens in a new tab to bypass CORS issues
@@ -82,10 +104,14 @@ const Viewprovider = () => {
             <Alert variant="warning" className="text-center mt-3">No document uploaded</Alert>
           )}
 
-          {!provider?.isVerified && (
+{provider && !provider.isVerified && !provider.isRejected &&  (
             <div className="text-center mt-4">
               <Button onClick={handleApprove} variant="success">
                 Approve Provider
+              </Button>
+
+              <Button onClick={handleReject} variant="danger" className="ms-2">
+                Reject Provider
               </Button>
             </div>
           )}
