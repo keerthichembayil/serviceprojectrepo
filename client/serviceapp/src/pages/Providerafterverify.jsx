@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProviderRequests } from "../redux/slices/viewrequestbyproviderSlice";
+import { fetchClientRequests } from "../redux/slices/clientRequestDetailsSlice";
 import { updateRequestStatus } from "../redux/slices/updaterequestSlice";
 import { Table, Spinner, Alert, Container, Card,Button} from "react-bootstrap";
 import '../css/providerafterverify.css'
@@ -10,11 +11,13 @@ import '../css/providerafterverify.css'
 const Providerafterverify = () => {
   const dispatch = useDispatch();
   const { requests, loading, error } = useSelector((state) => state.requests);
+  console.log("requests",requests);
   const [alertMessage, setAlertMessage] = useState(null);
-
+  // const [refresh, setRefresh] = useState(false); // 🔹 State to trigger refresh
+  //Fetch requests on component load & whenever requests update
   useEffect(() => {
     dispatch(fetchProviderRequests());
-  }, [dispatch]);
+  }, [dispatch,requests.length]);
  
 
   const handleStatusChange = async(requestId, status) => {
@@ -23,8 +26,10 @@ const Providerafterverify = () => {
       setAlertMessage(`Request successfully marked as ${status}`);
       console.log("Updating status:", requestId, status); // Debugging log
       setTimeout(() => setAlertMessage(null), 3000);
+      // setRefresh(prev => !prev); 
       
-      dispatch(fetchProviderRequests());  // Refresh requests after status change
+       dispatch(fetchProviderRequests());  // Refresh requests after status change
+       dispatch(fetchClientRequests());    //to make clientdashbaord autorefresh
       
     }
     catch(err){
@@ -37,6 +42,17 @@ const Providerafterverify = () => {
       <Container className="mt-4">
       <Card className="shadow p-3 bg-secondary">
         <h3 className="text-center p-3 bg-primary rounded">Service Requests Received</h3>
+         {/* Alert Message Here */}
+         {alertMessage && (
+          <Alert
+            variant={alertMessage.includes("Error") ? "danger" : "success"}
+            className="mt-3"
+            onClose={() => setAlertMessage(null)}
+            dismissible
+          >
+            {alertMessage}
+          </Alert>
+        )}
         {loading && <Spinner animation="border" />}
         {error && <Alert variant="danger">{error}</Alert>}
         {requests.length === 0 && !loading && <Alert variant="info">No service requests found.</Alert>}
@@ -51,6 +67,7 @@ const Providerafterverify = () => {
                 <th>Service Requested</th>
                 <th>Service Date</th>
                 <th>Additional Notes</th>
+                <th>Address</th>
                 <th>Status</th>
                 <th>Mark</th>
               </tr>
@@ -69,6 +86,18 @@ const Providerafterverify = () => {
 
                   
                   <td className="listreq">{request.additionalNotes || "N/A"}</td>
+                   {/*Address Section */}
+                   <td className="listreq">
+  {request.clientId.address ? (  // Check if address exists
+    <ul className="list-unstyled mb-0">
+      <li>{request.clientId.address.street}</li>
+      <li>{request.clientId.address.city}</li>
+      <li>{request.clientId.address.state}</li>
+    </ul>
+  ) : (
+    <span>No Address Available</span>
+  )}
+</td>
 
 
 
@@ -88,13 +117,13 @@ const Providerafterverify = () => {
                           <Button variant="success" size="sm" onClick={() => handleStatusChange(request._id, "accepted")}>
                             Accept
                           </Button>{" "}
-                          <Button variant="danger" size="sm" onClick={() => handleStatusChange(request._id, "rejected")}>
+                          <Button variant="danger" size="sm" className="mt-4" onClick={() => handleStatusChange(request._id, "rejected")}>
                             Reject
                           </Button>
                         </>
                       )}
                       {request.status === "accepted" && (
-                        <Button variant="primary" size="sm" onClick={() => handleStatusChange(request._id, "completed")}>
+                        <Button variant="primary" size="sm"onClick={() => handleStatusChange(request._id, "completed")}>
                           Mark as Completed
                         </Button>
                       )}

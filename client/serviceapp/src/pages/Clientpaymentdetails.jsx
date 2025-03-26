@@ -51,6 +51,7 @@ const PaymentHistory = () => {
                   <th className="bg-dark text-white">Service Date</th>
                   <th className="bg-dark text-white">Amount Paid</th>
                   <th className="bg-dark text-white">Payment Date</th>
+                  <th className="bg-dark text-white">Additional Notes</th>
                   <th className="bg-dark text-white">Status</th>
                 </tr>
               </thead>
@@ -76,6 +77,7 @@ const PaymentHistory = () => {
                       
                       </td>
                     <td className="stylcol">{new Date(payment.createdAt).toLocaleDateString()}</td>
+                    <td className="stylcol">{payment.requestId?.additionalNotes}</td>
                     <td className="stylcol">
                       <span
                         className={`badge p-2 ${

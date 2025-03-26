@@ -171,7 +171,7 @@ const getPaymentdetails=async(req,res)=>{
     const payments = await Payment.find({ clientId })
     .populate({
       path: "requestId", 
-      select: "services serviceDate", // Assuming "servicesRequested" exists in ServiceRequest model
+      select: "services serviceDate additionalNotes", // Assuming "servicesRequested" exists in ServiceRequest model
   })
   .populate({
     path: "providerId",

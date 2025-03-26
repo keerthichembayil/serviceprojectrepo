@@ -28,6 +28,12 @@ const ProviderDetails = () => {
   useEffect(() => {
     dispatch(fetchProviderDetails(id)); // Fetch provider details when component loads
   }, [dispatch, id]);
+  
+  useEffect(() => {
+    if (successMessage) {
+      dispatch(fetchProviderRequests()); // Auto-refresh provider requests on success
+    }
+  }, [dispatch, successMessage]); 
 
    // Handle checkbox selection
    const handleServiceSelection = (service) => {
@@ -57,7 +63,7 @@ const ProviderDetails = () => {
     console.log("Service request successful:", response);
 
     // Fetch the latest provider requests to update the provider dashboard
-    await dispatch(fetchProviderRequests()).unwrap();
+    // await dispatch(fetchProviderRequests()).unwrap();
 
   } catch (error) {
     console.error("Service request failed:", error);
@@ -172,7 +178,7 @@ console.log("Dispatching Request:", {
                   value={serviceDate}
                   minDate={new Date()} // Disable past dates
                 />
-                <p className="mt-2">Selected Date: <strong>{serviceDate.toDateString()}</strong></p>
+                <div className="mt-2">Selected Date: <strong>{serviceDate.toDateString()}</strong></div>
               </Form.Group>
 
               <Form.Group className="mt-3 providerdetails">

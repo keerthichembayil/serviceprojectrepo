@@ -52,6 +52,7 @@ const ProviderPaymentHistory = () => {
               <th className="bg-warning text-dark">Service Date</th>
               <th className="bg-info text-white">Amount Received</th>
               <th className="bg-danger text-white">Payment Date</th>
+              <th className="bg-danger text-white">Additional Notes</th>
               <th className="bg-secondary text-white">Status</th>
             </tr>
           </thead>
@@ -72,6 +73,7 @@ const ProviderPaymentHistory = () => {
                 </td>
                 <td className="provpt">${payment.amount?.toFixed(2) || "0.00"}</td>
                 <td className="provpt">{new Date(payment.createdAt).toLocaleDateString()}</td>
+                <td className="provpt">{payment.requestId.additionalNotes}</td>
                 <td className="provpt">
                   <span
                     className={`badge p-2 ${

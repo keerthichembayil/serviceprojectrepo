@@ -16,9 +16,10 @@ const serviceRequestSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ["pending", "paid"],
+    enum: ["pending", "paid","failed","notneeded"],
     default: "pending",
   },
+  // paymentId: { type: mongoose.Schema.Types.ObjectId, ref: "Payment" },
   
 });
 // serviceRequestSchema.index({ clientId: 1, providerId: 1 }, { unique: true });//to prevent duplicate entry

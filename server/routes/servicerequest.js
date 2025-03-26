@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const { requestService, getClientRequests, getProviderRequests, updateRequestStatus } = require("../controllers/serviceRequestController");
+const { requestService, getClientRequests, getProviderRequests, updateRequestStatus,cancelRequeststatus } = require("../controllers/serviceRequestController");
 const {protect,authorize}=require("../middleware/authmiddleware");
 //client
 
@@ -9,6 +9,7 @@ router.get("/clientrequests",protect, authorize("client"), getClientRequests);
 //provider
 router.get("/providerrequests", protect,authorize("provider"), getProviderRequests);
 router.put("/updatestatus/:requestId", protect,authorize("provider"), updateRequestStatus);
+
 
  
 

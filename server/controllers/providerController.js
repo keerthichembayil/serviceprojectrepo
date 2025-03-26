@@ -219,7 +219,7 @@ const getpaymentdetprovider=async(req,res)=>{
     const payments = await Payment.find({ providerId })
       .populate({
         path: "requestId",
-        select: "services serviceDate",
+        select: "services serviceDate additionalNotes",
       })
       .populate({
         path: "clientId",

@@ -1,8 +1,10 @@
 import React, { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClientRequests } from "../redux/slices/clientRequestDetailsSlice";
+
 import { Container, Table, Spinner, Alert, Image,Badge,Button,Form } from "react-bootstrap";
 import { createPaymentSession, clearPaymentState } from "../redux/slices/paymentSlice";
+
 import { loadStripe } from "@stripe/stripe-js";
 import '../css/Clientreq.css'
 
@@ -66,6 +68,8 @@ const ClientRequests = () => {
     }
   };
 
+
+
   return (
     <div className="clientrqdet">
     <Container className="pt-4">
@@ -117,9 +121,9 @@ const ClientRequests = () => {
                 <td className="stclientreq">
                   <Badge 
                     bg={
-                      request.status === "Pending"
+                      request.status === "pending"
                         ? "warning"
-                        : request.status === "Approved"
+                        : request.status === "accepted"
                         ? "success"
                         : "danger"
                     }
@@ -129,6 +133,9 @@ const ClientRequests = () => {
 
 </td>
 <td className="stclientreq">
+
+
+
                   {request.status === "completed" && request.paymentStatus !== "paid" ? (
                    <>
                    <Form.Control
@@ -151,7 +158,7 @@ const ClientRequests = () => {
                    </Button>
                  </>
                   ):
-                  request.status === "rejected" ? (
+                  request.status === "rejected"? (
                     <Badge bg="danger">Not needed</Badge>
                   ) :
                    request.paymentStatus === "paid" ? (

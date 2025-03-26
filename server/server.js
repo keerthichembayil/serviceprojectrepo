@@ -27,7 +27,7 @@ app.use('/favicon.png', express.static(path.join(__dirname, 'public', 'favicon.p
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
-   methods: 'GET,POST,PUT,DELETE',
+   methods: 'GET,POST,PUT,DELETE,PATCH',
    allowedHeaders: ["Content-Type", "Authorization"],
   // origin: process.env.FRONTEND_URL?.replace(/\/$/, '') || "http://localhost:5173", // Change this to your frontend URL
   credentials: true
@@ -36,7 +36,7 @@ app.use(cors({
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "http://localhost:5173");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Methods", "GET, POST,PATCH, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.header("Access-Control-Allow-Credentials", "true");
 

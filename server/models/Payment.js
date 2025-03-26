@@ -6,7 +6,7 @@ const paymentSchema = new mongoose.Schema({
   providerId: { type: mongoose.Schema.Types.ObjectId, ref: "ServiceProvider", required: true }, // Reference to Service Provider// Reference to Request table
   clientEmail: { type: String, required: true },
   amount: { type: Number, required: true },
-  paymentStatus: { type: String, enum: ["pending","paid", "failed"], default: "pending"},
+  paymentStatus: { type: String, enum: ["pending","paid", "failed","notneeded"], default: "pending"},
   transactionId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });

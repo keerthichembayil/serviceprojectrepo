@@ -1,6 +1,7 @@
 const ServiceRequest = require("../models/ServiceRequest");
 const User = require("../models/User");
 const Serviceprovider = require("../models/ServiceProvider");
+const Payment=require("../models/Payment");
 
 
 
@@ -108,7 +109,7 @@ const getProviderRequests = async (req, res) => {
         //means provider when enter we get providerid using that provider id fetch client id from
         // ServiceRequest collection then go to user collection to fetch the client details and display it
         // means finding the client of that specific provider then find that client details using that client id
-        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone").select("services additionalNotes serviceDate status paymentStatus");
+        const requests = await ServiceRequest.find({ providerId }).populate("clientId", "name email phone address").select("services additionalNotes serviceDate status paymentStatus");
         return res.status(200).json(requests);
     } catch (error) {
         console.error("Error:", error);
@@ -137,6 +138,22 @@ const updateRequestStatus = async (req, res) => {
     return res.status(404).json({ message: "Service request not found" });
   }
 
+
+ // If the request is rejected, update paymentStatus to "notneeded" in both tables
+ if (status === "rejected") {
+    await ServiceRequest.findByIdAndUpdate(requestId, { paymentStatus: "notneeded" });
+
+    await Payment.findOneAndUpdate(
+      { requestId }, // Find the payment by requestId
+      { paymentStatus: "notneeded" }
+    );
+  }
+
+
+
+
+
+
   res.status(200).json({
     message: `Request marked as ${status}`,
     updatedRequest,
@@ -148,4 +165,40 @@ const updateRequestStatus = async (req, res) => {
     }
 };
 
-module.exports = { requestService, getClientRequests, getProviderRequests, updateRequestStatus };
+
+// const cancelRequeststatus=async(req,res)=>{
+//     try {
+//         const requestId = req.params.requestId;
+//         console.log("this is reqid",requestId);
+//         const userId = req.user.id; // Get logged-in user's ID from auth middleware
+    
+//         const request = await ServiceRequest.findById(requestId);
+    
+//         if (!request) {
+//           return res.status(404).json({ message: "Service request not found" });
+//         }
+    
+//         // Ensure only the client who made the request can cancel it
+//         if (request.clientId.toString() !== userId) {
+//           return res.status(403).json({ message: "Not authorized to cancel this request" });
+//         }
+    
+//         // Only allow canceling if the request is still pending
+//         if (request.status !== "pending") {
+//           return res.status(400).json({ message: "Request cannot be canceled at this stage" });
+//         }
+    
+//         // Update status to 'Canceled'
+//         request.status = "cancelled";
+       
+//         request.paymentStatus = "notneeded"; 
+//         await request.save();
+    
+//         res.status(200).json({ message: "Request canceled successfully", requestId });
+//       } catch (error) {
+//         console.error("Error canceling request:", error);
+//         res.status(500).json({ message: "Server error" });
+//       }
+// }
+
+module.exports = { requestService, getClientRequests, getProviderRequests, updateRequestStatus};
